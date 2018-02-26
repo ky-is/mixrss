@@ -15,14 +15,17 @@ export default {
 
 	computed: {
 		currentFeedUrl () {
+			return this.$store.state.currentFeed.url
 		},
 	},
 
 	created () {
+		this.feedUrl = this.currentFeedUrl
 	},
 
 	methods: {
 		onEnterFeedUrl () {
+			this.$store.dispatch('ADD_FEED_URL', this.feedUrl)
 		},
 	},
 }
