@@ -1,13 +1,14 @@
 <template>
 <div id="app">
-	mixrss
+	<add-feed />
 </div>
 </template>
 
 <script>
+import AddFeed from '@/components/AddFeed'
 export default {
 	components: {
-
+		AddFeed,
 	},
 }
 </script>
