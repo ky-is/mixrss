@@ -1,13 +1,13 @@
 <template>
 <div id="app">
-	<add-feed />
-	<feed-list v-if="currentFeedData" :items="currentFeedData.items" />
+	<AddFeed />
+	<FeedList v-if="currentFeedData" :items="currentFeedData.items" />
 </div>
 </template>
 
 <script>
-import AddFeed from '@/components/AddFeed'
-import FeedList from '@/components/FeedList'
+import AddFeed from '@/components/Feed/Add'
+import FeedList from '@/components/Feed/List'
 
 export default {
 	components: {
