@@ -51,6 +51,24 @@ body {
 	box-sizing: border-box;
 }
 
+/* Text */
+
+.text-small {
+	font-size: 15px;
+}
+
+.text-faint {
+	/* color: #888; */
+	opacity: 0.5;
+}
+
+.hide-child {
+	visibility: hidden;
+}
+.hide-parent:hover .hide-child {
+	visibility: visible;
+}
+
 /* Form */
 
 button, input {
@@ -59,14 +77,15 @@ button, input {
 	padding: 0;
 	outline: none;
 	box-sizing: border-box;
+	color: inherit;
 }
 
 button {
-	background-image: none;
-	background-color: none;
+	background: none;
 	box-shadow: none;
 	cursor: pointer;
 	padding: 0 12px;
+	transition: border-color, background-color 200ms;
 }
 
 input {

@@ -122,6 +122,34 @@ export default new Vuex.Store({
 			state.playback.index += direction
 		},
 
+		TAG (state, { item, tag, add }) {
+			let tags = item.tags
+			if (!tags) {
+				tags = []
+				if (add) {
+					tags.push(tag)
+				}
+				Vue.set(item, 'tags', tags)
+			} else {
+				const lowercaseTag = tag.toLowerCase()
+				for (let idx = tags.length - 1; idx >= 0; idx -= 1) {
+					const checkTag = tags[idx]
+					if (lowercaseTag === checkTag.toLowerCase()) {
+						if (add) {
+							return
+						}
+						tags.splice(idx, 1)
+					}
+				}
+				if (add) {
+					tags.push(tag)
+				}
+			}
+			const data = state.currentFeed.data
+			Vue.set(data, 'date_modified', new Date().toString())
+			storage.setJSON('CURRENT_FEED_DATA', data)
+		},
+
 		SET_CURRENT_FEED (state, { url, data }) {
 			state.playback.index = null
 			state.playback.paused = false
