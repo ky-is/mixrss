@@ -122,7 +122,7 @@ export default new Vuex.Store({
 					return window.alert('This song is already in your playlist!')
 				}
 			}
-			const setAuthor = feedAuthor && state.author.toLowercase() !== feedAuthor.toLowercase() ? state.author : undefined
+			const setAuthor = feedAuthor && state.author.toLowerCase() !== feedAuthor.toLowerCase() ? state.author : undefined
 			items.unshift({
 				id: url,
 				external_url: url,
