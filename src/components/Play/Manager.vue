@@ -65,6 +65,9 @@ export default Vue.extend({
 
 	methods: {
 		onCued (player: any) {
+			if (!this.youtubeId) {
+				return player.stopVideo()
+			}
 			player.setPlaybackQuality('small')
 			player.unMute()
 			player.playVideo()
