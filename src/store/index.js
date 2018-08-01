@@ -122,7 +122,7 @@ export default new Vuex.Store({
 			state.playback.index += direction
 		},
 
-		TAG (state, { item, tag, add }) {
+		SONG_TAG (state, { item, tag, add }) {
 			let tags = item.tags
 			if (!tags) {
 				tags = []
@@ -148,6 +148,11 @@ export default new Vuex.Store({
 			const data = state.currentFeed.data
 			Vue.set(data, 'date_modified', new Date().toString())
 			storage.setJSON('CURRENT_FEED_DATA', data)
+		},
+
+		SONG_DESCRIPTION (state, { item, description}) {
+			Vue.set(item, 'description', description)
+			storage.setJSON('CURRENT_FEED_DATA', state.currentFeed.data)
 		},
 
 		SET_CURRENT_FEED (state, { url, data }) {

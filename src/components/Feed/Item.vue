@@ -1,19 +1,25 @@
 <template>
-<li @click="onItem(index)" class="feed-item">
-	<div class="entry-icon" :style="{ 'background-image': `url(${item.image})` }" />
+<li class="feed-item hover-outer">
+	<div @click="onItem(index)" class="item-icon" :style="{ 'background-image': `url(${item.image})` }" />
 	<div>
 		<div>{{ item.title }}</div>
-		<div class="text-small text-faint">
-			<span>{{ item.duration || item.summary }}</span>
-			・
-			<time :datetime="date">{{ date.toLocaleDateString() }}</time>
-			・
-			<span class="tags">
-				<span v-if="tags">
-					<button v-for="tag in tags" @click.stop="onTag(tag)" class="button-tag hide-parent" :key="tag">{{ tag }}<span class="tag-delete hide-child">✖︎</span></button>
+		<div class="text-small text-faint hover-inner">
+			<div>
+				<span>{{ item.duration || item.summary }}</span>
+				・
+				<time :datetime="date">{{ date.toLocaleDateString() }}</time>
+				・
+				<span class="tags">
+					<span v-if="tags">
+						<button v-for="tag in tags" @click.stop="onTag(tag)" class="button-modify button-tag hide-parent" :key="tag">{{ tag }}<span class="tag-delete hide-child">✖︎</span></button>
+					</span>
+					<button @click.stop="onTagAdd" class="button-modify button-outline">+Tag</button>
 				</span>
-				<button @click.stop="onTagAdd" class="button-outline">+Tag</button>
-			</span>
+			</div>
+			<div class="description-container">
+				<span v-if="item.description" class="description" :title="item.description">{{ item.description }}&nbsp;</span>
+				<button @click.stop="onNoteEdit" class="button-modify button-outline">{{ item.description ? 'Edit' : '+Note' }}</button>
+			</div>
 		</div>
 	</div>
 </li>
@@ -44,15 +50,20 @@ export default {
 		},
 
 		onTag (tag) {
-			console.log(tag)
-			this.$store.commit('TAG', { item: this.item, tag, add: false })
+			this.$store.commit('SONG_TAG', { item: this.item, tag, add: false })
 		},
 
 		onTagAdd () {
 			const tag = window.prompt('Please enter a tag this song belongs to.')
-			console.log(tag)
 			if (tag) {
-				this.$store.commit('TAG', { item: this.item, tag, add: true })
+				this.$store.commit('SONG_TAG', { item: this.item, tag, add: true })
+			}
+		},
+
+		onNoteEdit () {
+			const description = window.prompt('Enter a description to show to listeners of this song.', this.item.description)
+			if (description !== null) {
+				this.$store.commit('SONG_DESCRIPTION', { item: this.item, description })
 			}
 		},
 	},
@@ -65,10 +76,10 @@ export default {
 	align-items: center;
 	padding: 8px;
 	transition: background-color 200ms;
+	border-radius: 2px;
 }
 
 .feed-item:hover {
-	cursor: pointer;
 	background-color: #eee;
 }
 .feed-item:hover:active {
@@ -79,14 +90,25 @@ export default {
 	background: #fde !important;
 }
 
-.entry-icon {
+.item-icon {
 	width: 64px;
 	height: 64px;
+	border-radius: 3px;
 	background-size: cover;
 	margin-right: 8px;
+	flex-shrink: 0;
+	transition: box-shadow 500ms;
 }
 
-.tags button {
+.item-icon:hover {
+	cursor: pointer;
+}
+
+.selected .item-icon {
+	box-shadow: 0 1px 2px #333;
+}
+
+.button-modify {
 	border-radius: 6px;
 	padding: 0 4px;
 	padding-bottom: 1px;
@@ -97,7 +119,7 @@ export default {
 button.button-outline, .button-tag:hover {
 	border-color: #777;
 }
-.tags button:hover {
+.button-modify:hover {
 	background: #fff;
 }
 
@@ -107,4 +129,12 @@ button.button-outline, .button-tag:hover {
 	font-size: 14px;
 }
 
+.description-container {
+	display: flex;
+}
+.description {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 </style>

@@ -62,10 +62,10 @@ body {
 	opacity: 0.5;
 }
 
-.hide-child {
+.hover-inner, .hover-child {
 	visibility: hidden;
 }
-.hide-parent:hover .hide-child {
+.hover-outer:hover .hover-inner, .hover-parent:hover .hover-child {
 	visibility: visible;
 }
 
