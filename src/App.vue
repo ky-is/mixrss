@@ -1,18 +1,21 @@
 <template>
 <div id="app">
 	<LoadFeed />
+	<FeedAdd />
 	<FeedList v-if="currentFeedData" :items="currentFeedData.items" />
 </div>
 </template>
 
 <script>
+import FeedAdd from '@/components/Feed/Add'
 import LoadFeed from '@/components/Feed/Load'
 import FeedList from '@/components/Feed/List'
 
 export default {
 	components: {
-		LoadFeed,
+		FeedAdd,
 		FeedList,
+		LoadFeed,
 	},
 
 	computed: {
