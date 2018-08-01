@@ -111,7 +111,11 @@ export default new Vuex.Store({
 		},
 
 		SONG_TOGGLE (state) {
-			state.playback.paused = !state.playback.paused
+			if (state.playback.index === null) {
+				state.playback.index = 0
+			} else {
+				state.playback.paused = !state.playback.paused
+			}
 		},
 
 		SONG_SEEK (state, direction) {
