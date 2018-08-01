@@ -32,5 +32,4 @@ li {
 	height: 64px;
 	background-size: cover;
 }
-
 </style>
