@@ -1,8 +1,8 @@
 <template>
-<div class="load-feed">
-	<input class="feed-input" type="text" v-model.trim="feedUrl" @keyup.enter="onEnterFeedUrl" placeholder="https://some.playlist/feed.json" autocomplete="off" autocorrect="off">
-	<button class="feed-submit" type="submit" @click="onEnterFeedUrl">Load</button>
-</div>
+<form @submit.prevent="onEnterFeedUrl" class="load-feed">
+	<input type="text" v-model.trim="feedUrl" placeholder="https://some.playlist/feed.json" autocomplete="off" autocorrect="off">
+	<button type="submit">Load</button>
+</form>
 </template>
 
 <script>

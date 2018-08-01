@@ -36,6 +36,11 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: 18px;
+
+	margin: auto;
+	max-width: 600px;
+	padding: 8px;
+	box-sizing: border-box;
 }
 
 /* Form */
@@ -52,6 +57,7 @@ button {
 	background-color: none;
 	box-shadow: none;
 	cursor: pointer;
+	padding: 0 12px;
 }
 
 input {
