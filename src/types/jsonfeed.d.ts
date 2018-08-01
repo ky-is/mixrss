@@ -11,6 +11,7 @@ declare interface JSONFeedItem {
 	id: string
 	title?: string
 	author?: JSONFeedAuthor
+	content_text?: string
 	duration?: string
 	url?: string
 	external_url?: string
@@ -18,6 +19,7 @@ declare interface JSONFeedItem {
 	summary?: string
 	date_published: string
 	date_modified?: string
+	tags?: string[]
 }
 
 declare interface JSONFeedAuthor {

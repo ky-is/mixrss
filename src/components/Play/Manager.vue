@@ -1,45 +1,56 @@
 <template>
 <div class="play-manager">
-	<youtube :video-id="youtubeId" ref="youtube" :player-vars="$options.playerVars" @cued="onCued" width="200" height="200" />
+	<youtube :video-id="youtubeId" ref="youtube" :player-vars="playerVars" @cued="onCued" width="200" height="200" />
 </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
 
-	playerVars: {
-		suggestedQuality: 'small',
+export default Vue.extend({
+	data () {
+		return {
+			playerVars: {
+				suggestedQuality: 'small',
+			},
+		}
 	},
 
 	computed: {
-		songs () {
+		songs (): JSONFeedItem[] {
 			return this.$store.getters.songs
 		},
 
-		paused () {
+		paused (): boolean {
 			return this.$store.state.playback.paused
 		},
 
-		playIndex () {
+		playIndex (): number | null {
 			return this.$store.state.playback.index
 		},
 
-		song () {
+		song (): JSONFeedItem | null {
+			if (!this.playIndex) {
+				return null
+			}
 			return this.songs[this.playIndex]
 		},
 
-		url () {
-			return this.song ? this.song.external_url || this.song.url : null
+		url (): string | null {
+			if (!this.song) {
+				return null
+			}
+			return this.song.external_url || this.song.url || null
 		},
 
-		youtubeId () {
-			return this.url && this.$youtube.getIdFromUrl(this.url)
+		youtubeId (): string | null {
+			return this.url ? this.$youtube.getIdFromUrl(this.url) : null
 		},
 	},
 
 	watch: {
 		paused (paused) {
-			const player = this.$refs.youtube.player
+			const player = (this.$refs.youtube as any).player
 			if (paused) {
 				player.pauseVideo()
 			} else {
@@ -49,13 +60,13 @@ export default {
 	},
 
 	methods: {
-		onCued (player) {
+		onCued (player: any) {
 			player.setPlaybackQuality('small')
 			player.unMute()
 			player.playVideo()
 		},
 	},
-}
+})
 </script>
 
 <style scoped>

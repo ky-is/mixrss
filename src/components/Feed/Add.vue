@@ -25,8 +25,10 @@
 </form>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
 	data () {
 		return {
 			showForm: false,
@@ -39,21 +41,20 @@ export default {
 	},
 
 	computed: {
-		currentFeed () {
+		currentFeed (): any {
 			return this.$store.state.currentFeed
 		},
 
-		feedModified () {
+		feedModified (): boolean {
 			return this.currentFeed.modified
 		},
 
-		feedData () {
+		feedData (): JSONFeed {
 			return this.currentFeed.data
 		},
 	},
 
 	created () {
-		this.feedUrl = this.currentFeed.url
 		this.feedAuthor = this.$store.state.author
 	},
 
@@ -64,7 +65,7 @@ export default {
 
 		onExportFeed () {
 			const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.feedData))}`
-			const el = this.$refs.downloadLink
+			const el = this.$refs.downloadLink as HTMLElement
 			el.setAttribute('href', data)
 			el.click()
 		},
@@ -83,7 +84,7 @@ export default {
 			this.$store.dispatch('ADD_FEED_ITEM', this.itemUrl)
 		},
 	},
-}
+})
 </script>
 
 <style scoped>

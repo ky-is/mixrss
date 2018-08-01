@@ -6,20 +6,22 @@
 </form>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
 	data () {
 		return {
-			feedUrl: null,
+			feedUrl: null as string | null,
 		}
 	},
 
 	computed: {
-		currentFeedUrl () {
+		currentFeedUrl (): string | null {
 			return this.$store.state.currentFeed.url
 		},
 
-		currentFeedModified () {
+		currentFeedModified (): boolean {
 			return this.$store.state.currentFeed.modified
 		},
 	},
@@ -29,7 +31,7 @@ export default {
 	},
 
 	methods: {
-		permit () {
+		permit (): boolean {
 			return !this.currentFeedModified || window.confirm("You've modified the current feed. Make sure you've exported any changes that you want to keep, or press 'Cancel'.")
 		},
 
@@ -47,7 +49,7 @@ export default {
 			this.$store.commit('CLEAR_FEED')
 		},
 	},
-}
+})
 </script>
 
 <style scoped>

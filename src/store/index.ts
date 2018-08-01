@@ -175,7 +175,7 @@ export default new Vuex.Store<RootState>({
 		},
 
 		SONG_DESCRIPTION (state, { item, description}) {
-			Vue.set(item, 'description', description)
+			Vue.set(item, 'content_text', description)
 			storage.setJSON('CURRENT_FEED_DATA', state.currentFeed.data)
 		},
 

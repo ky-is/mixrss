@@ -8,15 +8,17 @@
 </div>
 </template>
 
-<script>
-import FeedAdd from '@/components/Feed/Add'
-import LoadFeed from '@/components/Feed/Load'
-import FeedList from '@/components/Feed/List'
+<script lang="ts">
+import Vue from 'vue'
 
-import PlayBar from '@/components/Play/Bar'
-import PlayManager from '@/components/Play/Manager'
+import FeedAdd from '@/components/Feed/Add.vue'
+import LoadFeed from '@/components/Feed/Load.vue'
+import FeedList from '@/components/Feed/List.vue'
 
-export default {
+import PlayBar from '@/components/Play/Bar.vue'
+import PlayManager from '@/components/Play/Manager.vue'
+
+export default Vue.extend({
 	components: {
 		FeedAdd,
 		FeedList,
@@ -26,11 +28,11 @@ export default {
 	},
 
 	computed: {
-		currentFeedData () {
+		currentFeedData (): JSONFeed {
 			return this.$store.state.currentFeed.data
 		},
 	},
-}
+})
 </script>
 
 <style>

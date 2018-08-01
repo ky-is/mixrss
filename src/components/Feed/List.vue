@@ -4,24 +4,28 @@
 </ul>
 </template>
 
-<script>
-import FeedItem from '@/components/Feed/Item'
+<script lang="ts">
+import Vue from 'vue'
 
-export default {
+import FeedItem from '@/components/Feed/Item.vue'
+
+export default Vue.extend({
 	components: {
 		FeedItem,
 	},
 
 	props: {
-		items: Array,
+		items: {
+			type: Array as () => JSONFeedItem[], //TODO https://github.com/vuejs/vue/pull/6856
+		},
 	},
 
 	computed: {
-		playIndex () {
+		playIndex (): number | null {
 			return this.$store.state.playback.index
 		},
 	},
-}
+})
 </script>
 
 <style scoped>

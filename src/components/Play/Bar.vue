@@ -6,36 +6,38 @@
 </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
 	props: {
-		item: Object,
+		item: Object as () => JSONFeedItem, //TODO https://github.com/vuejs/vue/pull/6856
 	},
 
 	computed: {
-		playbackIndex () {
+		playbackIndex (): number | null {
 			return this.$store.state.playback.index
 		},
 
-		hasSong () {
+		hasSong (): boolean {
 			return this.playbackIndex !== null
 		},
-		hasPreviousSong () {
-			return this.playbackIndex >= 1
+		hasPreviousSong (): boolean {
+			return this.playbackIndex !== null && this.playbackIndex >= 1
 		},
-		hasNextSong () {
-			return this.playbackIndex < this.songs.length - 1
+		hasNextSong (): boolean {
+			return this.playbackIndex !== null && this.playbackIndex < this.songs.length - 1
 		},
 
-		songs () {
+		songs (): JSONFeedItem[] {
 			return this.$store.getters.songs
 		},
 
-		paused () {
+		paused (): boolean {
 			return this.$store.state.playback.paused
 		},
 
-		date () {
+		date (): Date {
 			return new Date(this.item.date_published)
 		},
 	},
@@ -52,7 +54,7 @@ export default {
 			this.$store.commit('SONG_TOGGLE')
 		},
 	},
-}
+})
 </script>
 
 <style scoped>

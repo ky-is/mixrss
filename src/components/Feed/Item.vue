@@ -17,27 +17,29 @@
 				</span>
 			</div>
 			<div class="description-container">
-				<span v-if="item.description" class="description" :title="item.description">{{ item.description }}&nbsp;</span>
-				<button @click.stop="onNoteEdit" class="button-modify button-outline">{{ item.description ? 'Edit' : '+Note' }}</button>
+				<span v-if="item.content_text" class="description" :title="item.content_text">{{ item.content_text }}&nbsp;</span>
+				<button @click.stop="onNoteEdit" class="button-modify button-outline">{{ item.content_text ? 'Edit' : '+Note' }}</button>
 			</div>
 		</div>
 	</div>
 </li>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
 	props: {
 		index: Number,
-		item: Object,
+		item: Object as () => JSONFeedItem, //TODO https://github.com/vuejs/vue/pull/6856
 	},
 
 	computed: {
-		date () {
+		date (): Date {
 			return new Date(this.item.date_published)
 		},
 
-		tags () {
+		tags (): string[] | null {
 			// return [ 'Post-Rock' ]
 			const tags = this.item.tags
 			return tags && tags.length ? tags : null
@@ -45,11 +47,11 @@ export default {
 	},
 
 	methods: {
-		onItem (index) {
+		onItem (index: number) {
 			this.$store.commit('SONG_SET', index)
 		},
 
-		onTag (tag) {
+		onTag (tag: string) {
 			this.$store.commit('SONG_TAG', { item: this.item, tag, add: false })
 		},
 
@@ -61,13 +63,13 @@ export default {
 		},
 
 		onNoteEdit () {
-			const description = window.prompt('Enter a description to show to listeners of this song.', this.item.description)
+			const description = window.prompt('Enter a description to show to listeners of this song.', this.item.content_text)
 			if (description !== null) {
 				this.$store.commit('SONG_DESCRIPTION', { item: this.item, description })
 			}
 		},
 	},
-}
+})
 </script>
 
 <style scoped>
