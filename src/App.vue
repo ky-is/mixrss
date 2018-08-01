@@ -12,7 +12,7 @@ import FeedAdd from '@/components/Feed/Add'
 import LoadFeed from '@/components/Feed/Load'
 import FeedList from '@/components/Feed/List'
 
-import PlayBar from '@/components/Play'
+import PlayBar from '@/components/Play/Bar'
 
 export default {
 	components: {

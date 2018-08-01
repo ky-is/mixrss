@@ -1,7 +1,7 @@
 <template>
 <div class="play-bar">
 	<button @click="onPrevious" :disabled="!hasPreviousSong">⇤</button><!-- ⇤↩︎⏮ -->
-	<button @click="onPlay" :disabled="!hasSong">{{ paused ? '◼︎' : '▶︎' }}</button><!-- ▶︎▶️◼︎⏸ -->
+	<button @click="onPlay" :disabled="!hasSong">{{ hasSong && !paused ? '◼︎' : '▶︎' }}</button><!-- ▶︎▶️◼︎⏸ -->
 	<button @click="onNext" :disabled="!hasNextSong">⇥</button><!-- ⇥↪︎⏭ -->
 </div>
 </template>
@@ -28,7 +28,7 @@ export default {
 		},
 
 		songs () {
-			return this.$store.state.playback.songs
+			return this.$store.getters.songs
 		},
 
 		paused () {
