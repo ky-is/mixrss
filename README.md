@@ -1,9 +1,15 @@
 # mixrss
 
+Create, remix, and play [JSON Feed](https://jsonfeed.org) RSS playlists. It's a collaborative way to share and discover songs. Currently supports YouTube playback.
+
 ## Development
 
-Hot reload:
-> yarn serve
+```bash
+cd mixrss
+npm install
+```
 
-Bundle:
-> yarn build
+```bash
+npm run serve # Dev hot reload
+npm run build # Production build
+```

@@ -1,7 +1,7 @@
 {
 	"name": "mixrss",
 	"version": "0.1.0",
-	"description": "Collaborative playlists built on RSS",
+	"description": "Collaborative playlists built on RSS.",
 	"license": "ISC",
 	"repository": "https://github.com/ky-is/mixrss",
 	"scripts": {
