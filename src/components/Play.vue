@@ -1,6 +1,8 @@
 <template>
 <div class="play-bar">
-	<button>{{ paused ? '◼︎' : '▶︎' }}</button><!-- ⇥⇤↪︎↩︎▶️⏸⏭⏮ -->
+	<button @click="onPrevious" :disabled="!hasPreviousSong">⇤</button><!-- ⇤↩︎⏮ -->
+	<button @click="onPlay" :disabled="!hasSong">{{ paused ? '◼︎' : '▶︎' }}</button><!-- ▶︎▶️◼︎⏸ -->
+	<button @click="onNext" :disabled="!hasNextSong">⇥</button><!-- ⇥↪︎⏭ -->
 </div>
 </template>
 
@@ -11,12 +13,43 @@ export default {
 	},
 
 	computed: {
+		playbackIndex () {
+			return this.$store.state.playback.index
+		},
+
+		hasSong () {
+			return this.playbackIndex !== null
+		},
+		hasPreviousSong () {
+			return this.playbackIndex >= 1
+		},
+		hasNextSong () {
+			return this.playbackIndex < this.songs.length - 1
+		},
+
+		songs () {
+			return this.$store.state.playback.songs
+		},
+
 		paused () {
 			return this.$store.state.playback.paused
 		},
 
 		date () {
 			return new Date(this.item.date_published)
+		},
+	},
+
+	methods: {
+		onPrevious () {
+			this.$store.commit('SONG_SEEK', -1)
+		},
+		onNext () {
+			this.$store.commit('SONG_SEEK', 1)
+		},
+
+		onPlay () {
+			this.$store.commit('SONG_TOGGLE')
 		},
 	},
 }

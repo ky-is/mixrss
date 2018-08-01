@@ -44,6 +44,7 @@ export default new Vuex.Store({
 		playback: {
 			index: null,
 			paused: false,
+			songs: [],
 		},
 
 		currentFeed: {
@@ -107,6 +108,14 @@ export default new Vuex.Store({
 	},
 
 	mutations: {
+		SONG_TOGGLE (state) {
+			state.playback.paused = !state.playback.paused
+		},
+
+		SONG_SEEK (state, direction) {
+			state.playback.index += direction
+		},
+
 		SET_CURRENT_FEED (state, { url, data }) {
 			state.playback.index = null
 			state.playback.paused = false
@@ -162,7 +171,13 @@ export default new Vuex.Store({
 	},
 
 	getters: {
-
+		songs (state) {
+			const feedData = state.currentFeed.data
+			if (!feedData) {
+				return []
+			}
+			return feedData.items //TODO filter playable
+		},
 	},
 
 })
