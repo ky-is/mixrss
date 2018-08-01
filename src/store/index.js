@@ -14,6 +14,7 @@ const DURATION_REGEX = /PT(\d+H)?(\d+M)?(\d+S)?/
 
 //SAMPLE
 // const feed = storage.getJSON('CURRENT_FEED_DATA')
+// console.log(feed)
 // const duration = feed.items[0].content_text
 // console.log(duration, Date.parse(duration), getDurationFromISO(duration))
 
@@ -48,6 +49,21 @@ export default new Vuex.Store({
 	},
 
 	actions: {
+		CREATE_FEED ({ commit }, { title, author, icon }) {
+			const data = {
+				version: 'https://jsonfeed.org/version/1',
+				feed_url: 'SET_TO_THE_URL_WHERE_YOU_UPLOAD_THIS_FEED',
+				icon,
+				title,
+				author,
+				items: [],
+			}
+			if (author) {
+				commit('SET_AUTHOR', author)
+			}
+			commit('SET_CURRENT_FEED', { url: null, data })
+		},
+
 		ADD_FEED_URL ({ commit }, url) {
 			// const jsonpwrapper = `http://jsonpwrapper.com/?urls%5B%5D=${encodeURIComponent(url)}`
 			const json2jsonp = `https://json2jsonp.com/?url=${encodeURIComponent(url)}`
@@ -126,6 +142,11 @@ export default new Vuex.Store({
 			state.currentFeed.data = null
 			storage.remove('CURRENT_FEED_DATA')
 			storage.remove('CURRENT_FEED_URL')
+		},
+
+		SET_AUTHOR (state, author) {
+			state.author = author
+			storage.set('AUTHOR', author)
 		},
 	},
 

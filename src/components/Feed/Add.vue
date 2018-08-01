@@ -2,13 +2,25 @@
 <form @submit.prevent="onSubmit" class="feed-add">
 	<div v-if="!showForm">
 		<button @click.prevent="onToggleForm">Add new entry...</button>
-		<button v-if="modified" @click.prevent="onExportFeed">Save feed</button>
+		<button v-if="feedModified" @click.prevent="onExportFeed">Save feed</button>
 		<a ref="downloadLink" style="display:none" download="feed.json" />
 	</div>
-	<div v-else>
-		<input type="text" v-model.trim="itemUrl" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
+	<div v-else-if="feedData">
+		<input type="url" v-model.trim="itemUrl" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
 		<button type="submit">Load</button>
 		<button @click.prevent="onToggleForm">Cancel</button>
+	</div>
+	<div v-else class="create-playlist">
+		<p>Create a playlist to get started:</p>
+		<div>
+			<input type="text" v-model.trim="feedTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
+			<input type="text" v-model.trim="feedAuthor" placeholder="Your name" autocomplete="off" autocorrect="off">
+			<input type="url" v-model.trim="feedIcon" placeholder="Url to playlist icon (optional)" autocomplete="off" autocorrect="off">
+		</div>
+		<div>
+			<button type="submit">Create</button>
+			<button @click.prevent="onToggleForm">Cancel</button>
+		</div>
 	</div>
 </form>
 </template>
@@ -19,6 +31,10 @@ export default {
 		return {
 			showForm: false,
 			itemUrl: null,
+
+			feedTitle: null,
+			feedAuthor: null,
+			feedIcon: null,
 		}
 	},
 
@@ -27,17 +43,18 @@ export default {
 			return this.$store.state.currentFeed
 		},
 
-		modified () {
+		feedModified () {
 			return this.currentFeed.modified
 		},
 
-		currentFeedUrl () {
-			return this.currentFeed.url
+		feedData () {
+			return this.currentFeed.data
 		},
 	},
 
 	created () {
-		this.feedUrl = this.currentFeedUrl
+		this.feedUrl = this.currentFeed.url
+		this.feedAuthor = this.$store.state.author
 	},
 
 	methods: {
@@ -46,13 +63,20 @@ export default {
 		},
 
 		onExportFeed () {
-			const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.currentFeed.data))}`
+			const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.feedData))}`
 			const el = this.$refs.downloadLink
 			el.setAttribute('href', data)
 			el.click()
 		},
 
 		onSubmit () {
+			if (!this.feedData) {
+				if (!this.feedTitle) {
+					return window.alert('Please enter a title for your playlist')
+				}
+				this.$store.dispatch('CREATE_FEED', { title: this.feedTitle, author: this.feedAuthor, icon: this.feedIcon })
+				return
+			}
 			if (!this.itemUrl) {
 				return window.alert('Please enter a Youtube or SoundCloud link to the song.')
 			}
