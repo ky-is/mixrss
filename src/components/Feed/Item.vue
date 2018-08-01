@@ -87,7 +87,7 @@ export default {
 }
 
 .feed-item.selected {
-	background: #fde !important;
+	background: #ffeef8 !important;
 }
 
 .item-icon {

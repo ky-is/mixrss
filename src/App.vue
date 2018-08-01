@@ -51,6 +51,10 @@ body {
 	box-sizing: border-box;
 }
 
+::selection {
+	background: #fde;
+}
+
 /* Text */
 
 .text-small {
