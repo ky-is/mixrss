@@ -93,6 +93,10 @@ button {
 	padding: 0 12px;
 	transition: border-color, background-color 200ms;
 }
+button[disabled] {
+	opacity: 0.5;
+	cursor: default;
+}
 
 input {
 	padding: 0 4px;
