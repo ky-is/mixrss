@@ -250,10 +250,7 @@ export default new Vuex.Store<RootState>({
 	getters: {
 		songs (state): JSONFeedItem[] {
 			const feedData = state.currentFeed.data
-			if (!feedData) {
-				return []
-			}
-			return feedData.items //TODO filter playable
+			return (feedData && feedData.items) || [] //TODO filter playable
 		},
 
 		hasNextSong (state, getters): boolean {
