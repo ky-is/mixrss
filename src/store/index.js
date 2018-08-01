@@ -107,7 +107,11 @@ export default new Vuex.Store({
 
 	mutations: {
 		SONG_SET (state, index) {
-			state.playback.index = index
+			if (index === state.playback.index) {
+				state.playback.paused = !state.playback.paused
+			} else {
+				state.playback.index = index
+			}
 		},
 
 		SONG_TOGGLE (state) {
