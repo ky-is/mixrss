@@ -14,7 +14,7 @@ const DURATION_REGEX = /PT(\d+H)?(\d+M)?(\d+S)?/
 //SAMPLE
 // const feed = storage.getJSON('CURRENT_FEED_DATA')
 // console.log(feed)
-// const duration = feed.items[0].content_text
+// const duration = feed.items[0].summary
 // console.log(duration, Date.parse(duration), getDurationFromISO(duration))
 
 function padTime (string: string, hasLargerTime: boolean) {
@@ -215,7 +215,7 @@ export default new Vuex.Store<RootState>({
 			const feedItem: JSONFeedItem = {
 				id: url,
 				external_url: url,
-				duration,
+				_duration: duration,
 				summary: duration,
 				title,
 				image,

@@ -8,7 +8,7 @@
 		</div>
 		<div class="text-small text-faint hover-inner">
 			<div>
-				<span>{{ item.duration || item.summary }}</span>
+				<span>{{ item._duration || item.summary }}</span>
 				・
 				<time :datetime="date">{{ date.toLocaleDateString() }}</time>
 				・
