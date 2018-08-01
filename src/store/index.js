@@ -120,6 +120,13 @@ export default new Vuex.Store({
 			storage.setJSON('CURRENT_FEED_DATA', feedData)
 			storage.set('CURRENT_FEED_MODIFIED', true)
 		},
+
+		CLEAR_FEED (state) {
+			state.currentFeed.url = null
+			state.currentFeed.data = null
+			storage.remove('CURRENT_FEED_DATA')
+			storage.remove('CURRENT_FEED_URL')
+		},
 	},
 
 	getters: {
