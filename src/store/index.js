@@ -41,6 +41,11 @@ export default new Vuex.Store({
 	state: {
 		author: storage.get('AUTHOR'),
 
+		playback: {
+			index: null,
+			paused: false,
+		},
+
 		currentFeed: {
 			url: storage.get('CURRENT_FEED_URL'),
 			data: storage.getJSON('CURRENT_FEED_DATA'),
@@ -103,6 +108,8 @@ export default new Vuex.Store({
 
 	mutations: {
 		SET_CURRENT_FEED (state, { url, data }) {
+			state.playback.index = null
+			state.playback.paused = false
 			state.currentFeed.url = url
 			state.currentFeed.data = data
 			storage.set('CURRENT_FEED_URL', url)
@@ -135,9 +142,13 @@ export default new Vuex.Store({
 			})
 			storage.setJSON('CURRENT_FEED_DATA', feedData)
 			storage.set('CURRENT_FEED_MODIFIED', true)
+			if (state.playback.index !== null) {
+				state.playback.index += 1
+			}
 		},
 
 		CLEAR_FEED (state) {
+			state.playback.index = null
 			state.currentFeed.url = null
 			state.currentFeed.data = null
 			storage.remove('CURRENT_FEED_DATA')

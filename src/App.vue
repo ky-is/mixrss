@@ -3,6 +3,7 @@
 	<LoadFeed />
 	<FeedAdd />
 	<FeedList v-if="currentFeedData" :items="currentFeedData.items" />
+	<PlayBar />
 </div>
 </template>
 
@@ -11,11 +12,14 @@ import FeedAdd from '@/components/Feed/Add'
 import LoadFeed from '@/components/Feed/Load'
 import FeedList from '@/components/Feed/List'
 
+import PlayBar from '@/components/Play'
+
 export default {
 	components: {
 		FeedAdd,
 		FeedList,
 		LoadFeed,
+		PlayBar,
 	},
 
 	computed: {
@@ -38,6 +42,7 @@ body {
 	font-size: 18px;
 
 	margin: auto;
+	margin-bottom: 80px;
 	max-width: 600px;
 	padding: 8px;
 	box-sizing: border-box;
