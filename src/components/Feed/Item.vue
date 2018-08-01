@@ -2,23 +2,27 @@
 <li class="feed-item hover-outer">
 	<div @click="onItem(index)" class="item-icon" :style="{ 'background-image': `url(${item.image})` }" />
 	<div>
-		<div>{{ item.title }}</div>
+		<div class="title">
+			<div>{{ item.title }}</div>
+			<button @click="onTitle" class="button-modify button-outline text-small text-faint hover-inner">Edit</button>
+		</div>
 		<div class="text-small text-faint hover-inner">
 			<div>
 				<span>{{ item.duration || item.summary }}</span>
 				・
 				<time :datetime="date">{{ date.toLocaleDateString() }}</time>
 				・
+				<span v-if="item.author">{{ item.author.name }} ・</span>
 				<span class="tags">
 					<span v-if="tags">
-						<button v-for="tag in tags" @click.stop="onTag(tag)" class="button-modify button-tag hide-parent" :key="tag">{{ tag }}<span class="tag-delete hide-child">✖︎</span></button>
+						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag hide-parent" :key="tag">{{ tag }}<span class="tag-delete hide-child">✖︎</span></button>
 					</span>
-					<button @click.stop="onTagAdd" class="button-modify button-outline">+Tag</button>
+					<button @click="onTagAdd" class="button-modify button-outline">+Tag</button>
 				</span>
 			</div>
 			<div class="description-container">
 				<span v-if="item.content_text" class="description" :title="item.content_text">{{ item.content_text }}&nbsp;</span>
-				<button @click.stop="onNoteEdit" class="button-modify button-outline">{{ item.content_text ? 'Edit' : '+Note' }}</button>
+				<button @click="onNoteEdit" class="button-modify button-outline">{{ item.content_text ? 'Edit' : '+Note' }}</button>
 			</div>
 		</div>
 	</div>
@@ -51,19 +55,26 @@ export default Vue.extend({
 			this.$store.commit('SONG_SET', index)
 		},
 
+		onTitle () {
+			const title = window.prompt('Please enter a title for this song:', this.item.title)
+			if (title) {
+				this.$store.commit('SONG_TITLE', { item: this.item, title })
+			}
+		},
+
 		onTag (tag: string) {
 			this.$store.commit('SONG_TAG', { item: this.item, tag, add: false })
 		},
 
 		onTagAdd () {
-			const tag = window.prompt('Please enter a tag this song belongs to.')
+			const tag = window.prompt('Please enter a tag this song belongs to:')
 			if (tag) {
 				this.$store.commit('SONG_TAG', { item: this.item, tag, add: true })
 			}
 		},
 
 		onNoteEdit () {
-			const description = window.prompt('Enter a description to show to listeners of this song.', this.item.content_text)
+			const description = window.prompt('Enter a description to show to listeners of this song:', this.item.content_text)
 			if (description !== null) {
 				this.$store.commit('SONG_DESCRIPTION', { item: this.item, description })
 			}
@@ -100,6 +111,14 @@ export default Vue.extend({
 	margin-right: 8px;
 	flex-shrink: 0;
 	transition: box-shadow 500ms;
+}
+
+.title {
+	display: flex;
+	align-items: baseline;
+}
+.title button {
+	margin-left: 4px;
 }
 
 .item-icon:hover {

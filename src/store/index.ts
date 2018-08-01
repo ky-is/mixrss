@@ -144,6 +144,11 @@ export default new Vuex.Store<RootState>({
 			state.playback.index += direction
 		},
 
+		SONG_TITLE (state, { item, title }) {
+			item.title = title
+			storage.setJSON('CURRENT_FEED_DATA', state.currentFeed.data)
+		},
+
 		SONG_TAG (state, { item, tag, add }) {
 			let tags = item.tags
 			if (!tags) {
@@ -174,7 +179,7 @@ export default new Vuex.Store<RootState>({
 			}
 		},
 
-		SONG_DESCRIPTION (state, { item, description}) {
+		SONG_DESCRIPTION (state, { item, description }) {
 			Vue.set(item, 'content_text', description)
 			storage.setJSON('CURRENT_FEED_DATA', state.currentFeed.data)
 		},
