@@ -43,6 +43,7 @@ export default new Vuex.Store({
 		currentFeed: {
 			url: storage.get('CURRENT_FEED_URL'),
 			data: storage.getJSON('CURRENT_FEED_DATA'),
+			modified: storage.getBool('CURRENT_FEED_MODIFIED', false),
 		},
 	},
 
@@ -90,6 +91,7 @@ export default new Vuex.Store({
 			state.currentFeed.data = data
 			storage.set('CURRENT_FEED_URL', url)
 			storage.setJSON('CURRENT_FEED_DATA', data)
+			storage.set('CURRENT_FEED_MODIFIED', false)
 		},
 
 		PREPEND_TO_FEED (state, { url, title, duration, image }) {
@@ -116,6 +118,7 @@ export default new Vuex.Store({
 				date_published: new Date(),
 			})
 			storage.setJSON('CURRENT_FEED_DATA', feedData)
+			storage.set('CURRENT_FEED_MODIFIED', true)
 		},
 	},
 

@@ -22,6 +22,10 @@ export default {
 		return defaultValue
 	},
 
+	getBool (key, defaultValue = null) {
+		return this.get(key, defaultValue) == 'true'
+	},
+
 	set (key, value) {
 		return storage && storage.setItem(key, value)
 	},

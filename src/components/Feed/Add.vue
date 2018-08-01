@@ -1,11 +1,14 @@
 <template>
 <form @submit.prevent="onSubmit" class="feed-add">
 	<div v-if="!showForm">
-		<button class="add-start" @click.prevent="onToggleForm">Add new entry...</button>
+		<button @click.prevent="onToggleForm">Add new entry...</button>
+		<button v-if="modified" @click.prevent="onExportFeed">Save feed</button>
+		<a ref="downloadLink" style="display:none" download="feed.json" />
 	</div>
 	<div v-else>
 		<input type="text" v-model.trim="itemUrl" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
 		<button type="submit">Load</button>
+		<button @click.prevent="onToggleForm">Cancel</button>
 	</div>
 </form>
 </template>
@@ -20,8 +23,16 @@ export default {
 	},
 
 	computed: {
+		currentFeed () {
+			return this.$store.state.currentFeed
+		},
+
+		modified () {
+			return this.currentFeed.modified
+		},
+
 		currentFeedUrl () {
-			return this.$store.state.currentFeed.url
+			return this.currentFeed.url
 		},
 	},
 
@@ -32,6 +43,13 @@ export default {
 	methods: {
 		onToggleForm () {
 			this.showForm = !this.showForm
+		},
+
+		onExportFeed () {
+			const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.currentFeed.data))}`
+			const el = this.$refs.downloadLink
+			el.setAttribute('href', data)
+			el.click()
 		},
 
 		onSubmit () {
