@@ -91,8 +91,15 @@ export default {
 	margin: 8px 0;
 }
 
-.feed-add > div {
-	display: flex;
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+input, button {
 	height: 44px;
+}
+
+.create-playlist input, .create-playlist button {
+	width: 50%;
 }
 </style>

@@ -50,6 +50,7 @@ button, input {
 	border: 1px solid #ddd;
 	padding: 0;
 	outline: none;
+	box-sizing: border-box;
 }
 
 button {
