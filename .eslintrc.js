@@ -3,6 +3,7 @@ module.exports = {
 	"extends": [
 		"plugin:vue/recommended",
 		"eslint:recommended",
+		"@vue/typescript",
 	],
 	"env": {
 		"browser": true,
@@ -10,6 +11,7 @@ module.exports = {
 	},
 	"parserOptions": {
 		"ecmaVersion": 2017,
+		"parser": "typescript-eslint-parser",
 	},
 	"rules": {
 		"comma-dangle": [ "error", "always-multiline" ],

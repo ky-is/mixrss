@@ -14,21 +14,28 @@
 		"npm": "^6.0.0"
 	},
 	"dependencies": {
-		"fetch-jsonp": "^1.1.3",
-		"get-youtube-id": "^1.0.0",
 		"vue": "^2.5.16",
+		"fetch-jsonp": "^1.1.3",
 		"vue-youtube": "^1.2.5"
 	},
 	"devDependencies": {
 		"@vue/cli-plugin-babel": "^3.0.0-rc.10",
 		"@vue/cli-plugin-eslint": "^3.0.0-rc.10",
+		"@vue/cli-plugin-typescript": "^3.0.0-rc.10",
 		"@vue/cli-service": "^3.0.0-rc.10",
+		"@vue/eslint-config-typescript": "^3.0.0-rc.10",
+		"typescript": "^3.0.0",
 		"vue-template-compiler": "^2.5.16",
 		"vuex": "^3.0.1"
 	},
 	"babel": {
 		"presets": [
-			"@vue/app"
+			[
+				"@vue/app",
+				{
+					"jsx": false
+				}
+			]
 		]
 	},
 	"postcss": {

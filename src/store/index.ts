@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import fetchJsonp from 'fetch-jsonp'
-import getYoutubeId from 'get-youtube-id'
 
 import storage from '@/helpers/storage'
 
@@ -18,23 +17,40 @@ const DURATION_REGEX = /PT(\d+H)?(\d+M)?(\d+S)?/
 // const duration = feed.items[0].content_text
 // console.log(duration, Date.parse(duration), getDurationFromISO(duration))
 
-function padTime (string, hasLargerTime) {
+function padTime (string: string, hasLargerTime: boolean) {
 	const number = parseInt(string.slice(0, -1), 10)
 	return (hasLargerTime && number < 10 ? '0' : '') + number
 }
 
-function getDurationFromISO (duration) {
-	const [ _, hours, minutes, seconds ] = DURATION_REGEX.exec(duration)
+function getDurationFromISO (duration: string) {
+	const durations = DURATION_REGEX.exec(duration)
+	if (!durations) {
+		return ''
+	}
+	const [ _, hours, minutes, seconds ]: string[] = durations
 	const result = []
 	if (hours != null) {
-		result.push(padTime(hours, result.length))
+		result.push(padTime(hours, !!result.length))
 	}
-	result.push(padTime(minutes || '0M', result.length))
+	result.push(padTime(minutes || '0M', !!result.length))
 	result.push(padTime(seconds, true))
 	return result.join(':')
 }
 
-export default new Vuex.Store({
+interface RootState {
+	author: string
+	playback: {
+		index: number | null
+		paused: boolean
+	}
+	currentFeed: {
+		url: string | null
+		data: JSONFeed | null
+		modified: boolean
+	}
+}
+
+export default new Vuex.Store<RootState>({
 
 	strict: process.env.NODE_ENV !== 'production',
 
@@ -55,12 +71,14 @@ export default new Vuex.Store({
 
 	actions: {
 		CREATE_FEED ({ commit }, { title, author, icon }) {
-			const data = {
+			const data: JSONFeed = {
 				version: 'https://jsonfeed.org/version/1',
 				feed_url: 'SET_TO_THE_URL_WHERE_YOU_UPLOAD_THIS_FEED',
 				icon,
 				title,
-				author,
+				author: {
+					name: author,
+				},
 				items: [],
 			}
 			if (author) {
@@ -72,21 +90,21 @@ export default new Vuex.Store({
 		ADD_FEED_URL ({ commit }, url) {
 			// const jsonpwrapper = `http://jsonpwrapper.com/?urls%5B%5D=${encodeURIComponent(url)}`
 			const json2jsonp = `https://json2jsonp.com/?url=${encodeURIComponent(url)}`
-			fetchJsonp(json2jsonp).then(response => response.json())
-			.then(data => {
+			fetchJsonp(json2jsonp).then((response: any) => response.json())
+			.then((data: JSONFeed) => {
 				commit('SET_CURRENT_FEED', { url, data })
 			})
-			.catch(error => {
+			.catch((error: any) => {
 				console.error(error)
 			})
 		},
 
 		ADD_FEED_ITEM ({ commit }, url) {
-			const youtubeId = url.length === 11 ? url : getYoutubeId(url)
+			const youtubeId = url.length === 11 ? url : Vue.prototype.$youtube.getIdFromUrl(url) //TODO
 			if (youtubeId) {
 				const youtubeUrl =`https://www.googleapis.com/youtube/v3/videos?id=${youtubeId}&key=${YOUTUBE_API}&part=snippet,contentDetails,status`
-				fetchJsonp(youtubeUrl).then(response => response.json())
-				.then(data => {
+				fetchJsonp(youtubeUrl).then((response: any) => response.json())
+				.then((data: any) => {
 					const video = data.items[0]
 					if (!video) {
 						return window.alert('No video found for that URL. Please check the video link/id you copied and try again, thanks!')
@@ -98,7 +116,7 @@ export default new Vuex.Store({
 					const image = thumbnail ? thumbnail.url : null
 					commit('PREPEND_TO_FEED', { url, title, duration, image })
 				})
-				.catch(error => {
+				.catch((error: any) => {
 					console.error(error)
 				})
 			}
@@ -150,8 +168,10 @@ export default new Vuex.Store({
 				}
 			}
 			const data = state.currentFeed.data
-			Vue.set(data, 'date_modified', new Date().toString())
-			storage.setJSON('CURRENT_FEED_DATA', data)
+			if (data) {
+				Vue.set(data, 'date_modified', new Date().toString())
+				storage.setJSON('CURRENT_FEED_DATA', data)
+			}
 		},
 
 		SONG_DESCRIPTION (state, { item, description}) {
@@ -171,27 +191,36 @@ export default new Vuex.Store({
 
 		PREPEND_TO_FEED (state, { url, title, duration, image }) {
 			const feedData = state.currentFeed.data
-			let feedAuthor = state.author && feedData.author
-			if (feedAuthor && feedAuthor.name) {
-				feedAuthor = feedAuthor.name
+			if (!feedData) {
+				return
 			}
-			const items = feedData.items
+			const localAuthor = state.author
+			const authorObject = localAuthor ? feedData.author : null
+			const rawAuthor = authorObject ? authorObject.name : null
+			const items = feedData.items || []
+			if (!feedData.items) {
+				Vue.set(feedData, 'items', items)
+			}
 			for (const item of items) {
 				if (item.url === url || item.external_url === url) {
 					return window.alert('This song is already in your playlist!')
 				}
 			}
-			const setAuthor = feedAuthor && state.author.toLowerCase() !== feedAuthor.toLowerCase() ? state.author : undefined
-			items.unshift({
+			const authorName = rawAuthor && localAuthor.toLowerCase() !== rawAuthor.toLowerCase() ? localAuthor : undefined
+			const feedItem: JSONFeedItem = {
 				id: url,
 				external_url: url,
 				duration,
 				summary: duration,
 				title,
 				image,
-				author: setAuthor,
-				date_published: new Date(),
-			})
+				date_published: new Date().toString(),
+			}
+			if (authorName) {
+				const feedAuthor: JSONFeedAuthor = { name: authorName }
+				feedItem.author = feedAuthor
+			}
+			items.unshift(feedItem)
 			storage.setJSON('CURRENT_FEED_DATA', feedData)
 			storage.set('CURRENT_FEED_MODIFIED', true)
 			if (state.playback.index !== null) {

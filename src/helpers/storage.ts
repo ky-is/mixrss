@@ -1,6 +1,12 @@
-let storage = false
+interface Storage {
+	getItem(key: string): string | null
+	setItem(key: string, value: any): void
+	removeItem(key: string): void
+}
+
+let storage: Storage
 {
-	const sampleDate = new Date()
+	const sampleDate = new Date().toString()
 	try {
 		window.localStorage.setItem(sampleDate, sampleDate)
 		window.localStorage.removeItem(sampleDate)
@@ -12,7 +18,7 @@ let storage = false
 
 export default {
 
-	get (key, defaultValue = null) {
+	get (key: string, defaultValue: any = null) {
 		if (storage) {
 			const value = storage.getItem(key)
 			if (value !== undefined && value !== 'null') {
@@ -22,20 +28,20 @@ export default {
 		return defaultValue
 	},
 
-	getBool (key, defaultValue = null) {
+	getBool (key: string, defaultValue: boolean | null = null) {
 		return this.get(key, defaultValue) == 'true'
 	},
 
-	set (key, value) {
+	set (key: string, value: any) {
 		return storage && storage.setItem(key, value)
 	},
 
-	remove (key) {
+	remove (key: string) {
 		return storage && storage.removeItem(key)
 	},
 
-	getJSON (key) {
-		const raw = this.get(key)
+	getJSON (key: string) {
+		const raw = this.get(key, null)
 		if (raw) {
 			try {
 				return JSON.parse(raw)
@@ -47,7 +53,7 @@ export default {
 		return null
 	},
 
-	setJSON (key, value) {
+	setJSON (key: string, value: object | null) {
 		return this.set(key, JSON.stringify(value))
 	},
 
