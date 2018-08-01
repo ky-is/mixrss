@@ -1,6 +1,6 @@
 <template>
 <div class="play-manager">
-	<youtube :video-id="youtubeId" ref="youtube" :player-vars="playerVars" @cued="onCued" width="200" height="200" />
+	<youtube :video-id="youtubeId" ref="youtube" :player-vars="playerVars" @cued="onCued" @ended="onEnded" width="200" height="200" />
 </div>
 </template>
 
@@ -27,6 +27,10 @@ export default Vue.extend({
 
 		playIndex (): number | null {
 			return this.$store.state.playback.index
+		},
+
+		hasNextSong (): boolean {
+			return this.$store.getters.hasNextSong
 		},
 
 		song (): JSONFeedItem | null {
@@ -64,6 +68,12 @@ export default Vue.extend({
 			player.setPlaybackQuality('small')
 			player.unMute()
 			player.playVideo()
+		},
+
+		onEnded () {
+			if (this.hasNextSong) {
+				this.$store.commit('SONG_SEEK', 1)
+			}
 		},
 	},
 })

@@ -26,7 +26,7 @@ export default Vue.extend({
 			return this.playbackIndex !== null && this.playbackIndex >= 1
 		},
 		hasNextSong (): boolean {
-			return this.playbackIndex !== null && this.playbackIndex < this.songs.length - 1
+			return this.$store.getters.hasNextSong
 		},
 
 		songs (): JSONFeedItem[] {
