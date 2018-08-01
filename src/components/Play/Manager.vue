@@ -30,7 +30,7 @@ export default Vue.extend({
 		},
 
 		song (): JSONFeedItem | null {
-			if (!this.playIndex) {
+			if (this.playIndex === null) {
 				return null
 			}
 			return this.songs[this.playIndex]
