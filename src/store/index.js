@@ -44,7 +44,6 @@ export default new Vuex.Store({
 		playback: {
 			index: null,
 			paused: false,
-			songs: [],
 		},
 
 		currentFeed: {
@@ -92,8 +91,7 @@ export default new Vuex.Store({
 					if (!video) {
 						return window.alert('No video found for that URL. Please check the video link/id you copied and try again, thanks!')
 					}
-					// console.log(video)
-					const url = video.snippet.url
+					const url = `https://www.youtube.com/watch?v=${youtubeId}`
 					const title = video.snippet.title
 					const duration = getDurationFromISO(video.contentDetails.duration)
 					const thumbnail = video.snippet.thumbnails.medium || video.snippet.thumbnails.default
