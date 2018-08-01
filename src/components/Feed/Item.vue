@@ -1,5 +1,5 @@
 <template>
-<li class="feed-item">
+<li @click="onItem(index)" class="feed-item">
 	<div class="entry-icon" :style="{ 'background-image': `url(${item.image})` }" />
 	<div>{{ item.title }}</div>・
 	<time :datetime="date">{{ date.toLocaleDateString() }}</time>
@@ -9,12 +9,19 @@
 <script>
 export default {
 	props: {
+		index: Number,
 		item: Object,
 	},
 
 	computed: {
 		date () {
 			return new Date(this.item.date_published)
+		},
+	},
+
+	methods: {
+		onItem (index) {
+			this.$store.commit('SONG_SET', index)
 		},
 	},
 }
@@ -24,6 +31,20 @@ export default {
 .feed-item {
 	display: flex;
 	align-items: center;
+	padding: 8px;
+	transition: background-color 200ms;
+}
+
+.feed-item:hover {
+	cursor: pointer;
+	background-color: #eee;
+}
+.feed-item:hover:active {
+	background-color: #ddd;
+}
+
+.feed-item.selected {
+	background: #fde !important;
 }
 
 .entry-icon {

@@ -1,6 +1,6 @@
 <template>
 <ul class="feed-list">
-	<FeedItem v-for="item in items" :item="item" :key="item.id" />
+	<FeedItem v-for="(item, index) in items" :item="item" :index="index" :key="item.id" :class="{ selected: index === playIndex }" />
 </ul>
 </template>
 
@@ -15,6 +15,12 @@ export default {
 	props: {
 		items: Array,
 	},
+
+	computed: {
+		playIndex () {
+			return this.$store.state.playback.index
+		},
+	},
 }
 </script>
 
@@ -23,9 +29,5 @@ ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-}
-
-li {
-	margin: 8px;
 }
 </style>
