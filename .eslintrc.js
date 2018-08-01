@@ -8,16 +8,28 @@ module.exports = {
 		"browser": true,
 		"node": true,
 	},
+	"parserOptions": {
+		"ecmaVersion": 2017,
+	},
 	"rules": {
 		"comma-dangle": [ "error", "always-multiline" ],
+		"curly": "error",
 		"no-console": 0,
-		"no-multiple-empty-lines": [ "error", { "max": 1 } ],
-		"no-unused-vars": [ 1, { "argsIgnorePattern": "^_" } ],
+		"no-multiple-empty-lines": [ "error", {
+			"max": 1,
+		}],
+		"no-unused-vars": [ "warn", {
+			"varsIgnorePattern": "^_",
+			"argsIgnorePattern": "^_",
+		}],
 		"no-var": "error",
 		"vue/attribute-hyphenation": "never",
 		"vue/attributes-order": "never",
 		"vue/html-indent": 0,
-		"vue/max-attributes-per-line": [ 2, { "singleline": 999, "multiline": 0 } ],
+		"vue/max-attributes-per-line": [ "error", {
+			"singleline": 999,
+			"multiline": 0,
+		}],
 		"vue/require-default-prop": 0,
 	},
 }

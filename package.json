@@ -6,7 +6,7 @@
 	"repository": "https://github.com/ky-is/mixrss",
 	"scripts": {
 		"serve": "vue-cli-service serve --open",
-		"build": "vue-cli-service build",
+		"build": "vue-cli-service build --modern",
 		"lint": "vue-cli-service lint"
 	},
 	"engines": {
@@ -36,9 +36,15 @@
 			"autoprefixer": {}
 		}
 	},
-	"browserslist": [
-		"> 1%",
-		"last 2 versions",
-		"not ie <= 8"
-	]
+	"browserslist": {
+		"production": [
+			"> 1%",
+			"last 2 versions",
+			"not ie <= 8"
+		],
+		"development": [
+			"last 1 version",
+			"not dead"
+		]
+	}
 }
