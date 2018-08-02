@@ -75,7 +75,7 @@ export default Vue.extend({
 
 		onEnded () {
 			if (this.hasNextSong) {
-				this.$store.commit('SONG_SEEK', 1)
+				this.$store.commit('SEEK_DIRECTION', 1)
 			}
 		},
 	},

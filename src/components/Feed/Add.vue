@@ -41,21 +41,21 @@ export default Vue.extend({
 	},
 
 	computed: {
-		currentFeed (): any {
-			return this.$store.state.currentFeed
+		feed (): any {
+			return this.$store.state.feed
 		},
 
 		feedModified (): boolean {
-			return this.currentFeed.modified
+			return this.feed.modified
 		},
 
 		feedData (): JSONFeed {
-			return this.currentFeed.data
+			return this.feed.data
 		},
 	},
 
 	created () {
-		this.feedAuthor = this.$store.state.author
+		this.feedAuthor = this.$store.state.local.author
 	},
 
 	methods: {

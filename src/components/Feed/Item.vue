@@ -52,7 +52,7 @@ export default Vue.extend({
 
 	methods: {
 		onItem (index: number) {
-			this.$store.commit('SONG_SET', index)
+			this.$store.commit('SET_INDEX', index)
 		},
 
 		onTitle () {

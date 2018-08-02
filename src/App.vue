@@ -2,7 +2,7 @@
 <div id="app">
 	<LoadFeed />
 	<FeedAdd />
-	<FeedList v-if="currentFeedData" :items="currentFeedData.items" />
+	<FeedList v-if="feedData" :items="feedData.items" />
 	<PlayBar />
 	<PlayManager />
 </div>
@@ -28,8 +28,8 @@ export default Vue.extend({
 	},
 
 	computed: {
-		currentFeedData (): JSONFeed {
-			return this.$store.state.currentFeed.data
+		feedData (): JSONFeed {
+			return this.$store.state.feed.data
 		},
 	},
 })

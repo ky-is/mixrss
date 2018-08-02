@@ -1,6 +1,6 @@
 <template>
 <form @submit.prevent="onEnterFeedUrl" class="load-feed">
-	<input type="url" v-model.trim="feedUrl" placeholder="https://some.playlist/feed.json" autocomplete="off" autocorrect="off">
+	<input type="url" v-model.trim="url" placeholder="https://some.playlist/feed.json" autocomplete="off" autocorrect="off">
 	<button type="submit">Load</button>
 	<button @click.prevent="onClear">╳</button>
 </form>
@@ -12,34 +12,34 @@ import Vue from 'vue'
 export default Vue.extend({
 	data () {
 		return {
-			feedUrl: null as string | null,
+			url: null as string | null,
 		}
 	},
 
 	computed: {
-		currentFeedUrl (): string | null {
-			return this.$store.state.currentFeed.url
+		feedUrl (): string | null {
+			return this.$store.state.feed.url
 		},
 
-		currentFeedModified (): boolean {
-			return this.$store.state.currentFeed.modified
+		feedModified (): boolean {
+			return this.$store.state.feed.modified
 		},
 	},
 
 	created () {
-		this.feedUrl = this.currentFeedUrl
+		this.url = this.feedUrl
 	},
 
 	methods: {
 		permit (): boolean {
-			return !this.currentFeedModified || window.confirm("You've modified the current feed. Make sure you've exported any changes that you want to keep, or press 'Cancel'.")
+			return !this.feedModified || window.confirm("You've modified the current feed. Make sure you've exported any changes that you want to keep, or press 'Cancel'.")
 		},
 
 		onEnterFeedUrl () {
 			if (!this.permit()) {
 				return
 			}
-			this.$store.dispatch('ADD_FEED_URL', this.feedUrl)
+			this.$store.dispatch('ADD_FEED_URL', this.url)
 		},
 
 		onClear () {
@@ -47,6 +47,7 @@ export default Vue.extend({
 				return
 			}
 			this.$store.commit('CLEAR_FEED')
+			this.$store.commit('CLEAR_PLAYBACK')
 		},
 	},
 })

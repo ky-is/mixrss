@@ -44,14 +44,14 @@ export default Vue.extend({
 
 	methods: {
 		onPrevious () {
-			this.$store.commit('SONG_SEEK', -1)
+			this.$store.commit('SEEK_DIRECTION', -1)
 		},
 		onNext () {
-			this.$store.commit('SONG_SEEK', 1)
+			this.$store.commit('SEEK_DIRECTION', 1)
 		},
 
 		onPlay () {
-			this.$store.commit('SONG_TOGGLE')
+			this.$store.commit('TOGGLE_PAUSED')
 		},
 	},
 })
