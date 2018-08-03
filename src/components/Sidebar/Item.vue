@@ -4,6 +4,7 @@
 	<div>
 		<div class="title">{{ item.title }}</div>
 		<span class="text-faint text-small">{{ item.items ? item.items.length : 0 }} songs ・ {{ item.author.name || 'Unknown' }}</span>
+		<div class="text-faint text-tiny hover-inner">{{ shortUrl }}</div>
 	</div>
 </li>
 </template>
@@ -25,6 +26,29 @@ export default Vue.extend({
 
 		feedUrl (): string | null {
 			return this.$store.state.feed.url
+		},
+
+		shortUrl (): string {
+			let result = this.url
+			let split = result.split('://')
+			if (split.length > 1) {
+				result = split[1]
+			}
+			split = result.split('.')
+			if (split.length > 1 && split[0].includes('www')) {
+				split.shift()
+				result = split.join('.')
+			}
+			if (result.endsWith('.json')) {
+				result = result.slice(0, -5)
+			}
+			if (result.endsWith('.feed')) {
+				result = result.slice(0, -5)
+			}
+			if (result.endsWith('/')) {
+				result = result.slice(0, -1)
+			}
+			return result
 		},
 	},
 
