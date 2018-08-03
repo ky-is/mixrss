@@ -6,7 +6,7 @@
 	<div class="feed-container scrolls">
 		<div class="feed-content">
 			<LoadFeed />
-			<FeedAdd />
+			<FeedEdit />
 			<FeedList v-if="feedData" :items="feedData.items" />
 		</div>
 	</div>
@@ -16,7 +16,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import FeedAdd from '@/components/Feed/Add.vue'
+import FeedEdit from '@/components/Feed/Edit.vue'
 import LoadFeed from '@/components/Feed/Load.vue'
 import FeedList from '@/components/Feed/List.vue'
 
@@ -24,7 +24,7 @@ import TheSidebar from '@/components/Sidebar/index.vue'
 
 export default Vue.extend({
 	components: {
-		FeedAdd,
+		FeedEdit,
 		FeedList,
 		LoadFeed,
 		TheSidebar,
