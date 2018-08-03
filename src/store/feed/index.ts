@@ -12,8 +12,9 @@ import { FeedState } from '@/types/store'
 
 const YOUTUBE_API = 'AIzaSyCWalFG38MaNJ_aQdHmEG5aVurjfWlzOj4'
 
+const TITLE_STRIP = [ 'official', 'official video', 'audio' ].map(t => `(\\[|\\()${t}(\\]|\\))`).join('|')
+const TITLE_REGEX = new RegExp(TITLE_STRIP, 'ig')
 const DURATION_REGEX = /PT(\d+H)?(\d+M)?(\d+S)?/
-const TITLE_REGEX = /\(official\)|\(official video\)|\(audio\)/ig
 
 function padTime (string: string, hasLargerTime: boolean) {
 	const number = parseInt(string.slice(0, -1), 10)
