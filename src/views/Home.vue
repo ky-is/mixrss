@@ -1,9 +1,9 @@
 <template>
-<div class="view-home inherit">
-	<div class="sidebar-container">
+<div class="view-home">
+	<div class="sidebar-container scrolls">
 		<TheSidebar />
 	</div>
-	<div class="feed-container">
+	<div class="feed-container scrolls">
 		<div class="feed-content">
 			<LoadFeed />
 			<FeedAdd />
@@ -42,31 +42,28 @@ export default Vue.extend({
 .view-home {
 	display: flex;
 	align-items: stretch;
+	height: 100%;
 }
 
-.sidebar-container, .feed-container {
+.scrolls {
+	height: 100%;
+	box-sizing: border-box;
 	overflow-y: scroll;
-	height: inherit;
 }
 
 .sidebar-container {
 	width: 288px;
-	padding-bottom: 80px;
-	box-sizing: border-box;
 	background-color: #f7f7f7;
 }
 
 .feed-container {
 	width: 100%;
-	padding-bottom: 80px;
-	box-sizing: border-box;
 }
 
 .feed-content {
 	max-width: 600px;
 	margin: auto;
 	padding: 8px;
-	box-sizing: border-box;
 }
 
 @media (max-width: 900px) {

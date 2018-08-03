@@ -59,11 +59,6 @@ export default Vue.extend({
 
 <style scoped>
 .play-bar {
-	position: fixed;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	height: 80px;
 	background: #eee;
 
 	display: flex;

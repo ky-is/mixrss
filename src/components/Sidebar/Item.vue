@@ -1,5 +1,5 @@
 <template>
-<li @click="onItem" class="feed-item hover-outer">
+<li @click="onItem" class="sidebar-item hover-outer">
 	<div class="item-icon" :style="{ 'background-image': `url(${item.icon})` }" />
 	<div>
 		<div class="title">{{ item.title }}</div>
@@ -33,14 +33,15 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.feed-item {
+.sidebar-item {
 	display: flex;
 	cursor: pointer;
 	align-items: center;
 	padding: 6px;
+	margin: 16px 0;
 	transition: background-color 250ms;
 }
-.feed-item:hover {
+.sidebar-item:hover {
 	background-color: #fff;
 }
 

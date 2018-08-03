@@ -32,7 +32,7 @@ html {
 	height: 100%;
 }
 
-body, #app, .inherit {
+body, #app {
 	width: inherit;
 	height: inherit;
 }
@@ -46,16 +46,22 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: 18px;
+
+	display: flex;
+	flex-direction: column;
 }
 
 ::selection {
 	background: #fde;
 }
 
-/* Flexbox */
+.view-home {
+	flex-grow: 100;
+}
 
-.flex {
-	display: flex;
+.play-bar {
+	flex-shrink: 0;
+	height: 64px;
 }
 
 /* Text */
