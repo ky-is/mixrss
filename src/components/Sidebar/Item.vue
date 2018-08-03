@@ -1,5 +1,5 @@
 <template>
-<li @click="onItem" class="sidebar-item hover-outer">
+<li @click="onItem" class="sidebar-item hover-outer" :class="{ selected: url === feedUrl }">
 	<div class="item-icon" :style="{ 'background-image': `url(${item.icon})` }" />
 	<div>
 		<div class="title">{{ item.title }}</div>
@@ -22,6 +22,10 @@ export default Vue.extend({
 		item (): JSONFeedItem {
 			return storage.getJSON(this.url)
 		},
+
+		feedUrl (): string | null {
+			return this.$store.state.feed.url
+		},
 	},
 
 	methods: {
@@ -42,6 +46,10 @@ export default Vue.extend({
 	transition: background-color 250ms;
 }
 .sidebar-item:hover {
+	background-color: #fff1f5;
+}
+.sidebar-item.selected {
+	cursor: default;
 	background-color: #fff;
 }
 
