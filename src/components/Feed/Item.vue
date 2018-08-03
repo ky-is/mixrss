@@ -108,6 +108,7 @@ export default Vue.extend({
 	height: 64px;
 	border-radius: 3px;
 	background-size: cover;
+	background-position: center;
 	margin-right: 8px;
 	flex-shrink: 0;
 	transition: box-shadow 500ms;
