@@ -46,7 +46,7 @@ export default Vue.extend({
 	data () {
 		return {
 			editTitle: false,
-			itemTitle: null,
+			itemTitle: '',
 		}
 	},
 
@@ -69,7 +69,7 @@ export default Vue.extend({
 
 		onTitleToggle () {
 			this.editTitle = !this.editTitle
-			this.itemTitle = this.editTitle ? this.item.title : null
+			this.itemTitle = (this.editTitle && this.item.title) || ''
 		},
 		onTitleSave () {
 			if (this.itemTitle !== this.item.title) {

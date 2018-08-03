@@ -44,7 +44,7 @@ export default Vue.extend({
 			feedUrl: '',
 			itemUrl: null,
 
-			feedTitle: '',
+			feedTitle: null as string | null,
 			feedAuthor: null,
 			feedIcon: null,
 		}
@@ -118,7 +118,10 @@ export default Vue.extend({
 			this.showEdit = !this.showEdit
 		},
 		onSaveEdit () {
-			this.$store.commit('UPDATE_FEED', { title: this.feedTitle, url: this.feedUrl })
+			if (!this.feedTitle) {
+				this.feedTitle = this.currentTitle
+			}
+			this.$store.commit('UPDATE_FEED', { title: this.feedTitle || '', url: this.feedUrl })
 			this.onToggleEdit()
 		},
 
