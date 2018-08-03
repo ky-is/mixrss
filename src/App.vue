@@ -1,8 +1,6 @@
 <template>
 <div id="app">
-	<LoadFeed />
-	<FeedAdd />
-	<FeedList v-if="feedData" :items="feedData.items" />
+	<HomeView />
 	<PlayBar />
 	<PlayManager />
 </div>
@@ -11,31 +9,34 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import FeedAdd from '@/components/Feed/Add.vue'
-import LoadFeed from '@/components/Feed/Load.vue'
-import FeedList from '@/components/Feed/List.vue'
+import HomeView from '@/views/Home.vue'
 
 import PlayBar from '@/components/Play/Bar.vue'
 import PlayManager from '@/components/Play/Manager.vue'
 
+import TheSidebar from '@/components/Sidebar'
+
 export default Vue.extend({
 	components: {
-		FeedAdd,
-		FeedList,
-		LoadFeed,
+		HomeView,
 		PlayBar,
 		PlayManager,
-	},
-
-	computed: {
-		feedData (): JSONFeed {
-			return this.$store.state.feed.data
-		},
+		TheSidebar,
 	},
 })
 </script>
 
 <style>
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body, #app, .inherit {
+	width: inherit;
+	height: inherit;
+}
+
 body {
 	margin: 0;
 }
@@ -45,16 +46,16 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: 18px;
-
-	margin: auto;
-	margin-bottom: 80px;
-	max-width: 600px;
-	padding: 8px;
-	box-sizing: border-box;
 }
 
 ::selection {
 	background: #fde;
+}
+
+/* Flexbox */
+
+.flex {
+	display: flex;
 }
 
 /* Text */
