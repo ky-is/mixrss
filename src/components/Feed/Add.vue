@@ -41,10 +41,10 @@ export default Vue.extend({
 			showForm: false,
 			showEdit: false,
 
-			feedUrl: null,
+			feedUrl: '',
 			itemUrl: null,
 
-			feedTitle: null,
+			feedTitle: '',
 			feedAuthor: null,
 			feedIcon: null,
 		}
@@ -64,7 +64,7 @@ export default Vue.extend({
 		},
 
 		currentFeedUrl (): string | null {
-			return this.feedData.feed_url
+			return this.feedData.feed_url || null
 		},
 
 		fileName (): string {
@@ -81,7 +81,9 @@ export default Vue.extend({
 	created () {
 		this.feedAuthor = this.$store.state.local.author
 		this.feedTitle = this.feedData.title
-		this.feedUrl = this.currentFeedUrl
+		if (this.currentFeedUrl) {
+			this.feedUrl = this.currentFeedUrl
+		}
 	},
 
 	methods: {

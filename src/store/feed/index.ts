@@ -173,7 +173,6 @@ const mutations: MutationTree<FeedState> = {
 		writeFeedData(state)
 	},
 
-
 	PREPEND_TO_FEED (state, { localAuthor, url, title, duration, image }) {
 		const feedData = state.data
 		if (!feedData) {
