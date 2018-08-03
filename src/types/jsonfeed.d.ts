@@ -1,6 +1,6 @@
 declare interface JSONFeed {
 	version: string
-	feed_url: string
+	feed_url?: string
 	title: string
 	icon?: string
 	author?: JSONFeedAuthor

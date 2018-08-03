@@ -1,9 +1,16 @@
 <template>
 <form @submit.prevent="onSubmit" class="feed-add">
-	<div v-if="!showForm">
+	<div v-if="showEdit">
+		<input type="text" v-model.trim="feedTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
+		<input type="url" v-model.trim="feedUrl" placeholder="The URL where you'll host this feed." autocomplete="off" autocorrect="off">
+		<button @click.prevent="onSaveEdit">Save</button>
+		<button @click.prevent="onToggleEdit">Cancel</button>
+	</div>
+	<div v-else-if="!showForm">
 		<button @click.prevent="onToggleForm">Add new entry...</button>
+		<button @click.prevent="onToggleEdit">Edit metadata</button>
 		<button v-if="songs.length" @click.prevent="onExportFeed">Save feed</button>
-		<a ref="downloadLink" style="display:none" download="feed.json" />
+		<a ref="downloadLink" style="display:none" :download="fileName" />
 	</div>
 	<div v-else-if="feedData">
 		<input type="url" v-model.trim="itemUrl" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
@@ -32,6 +39,9 @@ export default Vue.extend({
 	data () {
 		return {
 			showForm: false,
+			showEdit: false,
+
+			feedUrl: null,
 			itemUrl: null,
 
 			feedTitle: null,
@@ -52,15 +62,39 @@ export default Vue.extend({
 		feedData (): JSONFeed {
 			return this.feed.data
 		},
+
+		currentFeedUrl (): string | null {
+			return this.feedData.feed_url
+		},
+
+		fileName (): string {
+			if (this.currentFeedUrl) {
+				const split = this.currentFeedUrl.split('/')
+				if (split.length > 1) {
+					return split[split.length - 1]
+				}
+			}
+			return 'feed.json'
+		},
 	},
 
 	created () {
 		this.feedAuthor = this.$store.state.local.author
+		this.feedTitle = this.feedData.title
+		this.feedUrl = this.currentFeedUrl
 	},
 
 	methods: {
 		onToggleForm () {
 			this.showForm = !this.showForm
+		},
+
+		onToggleEdit () {
+			this.showEdit = !this.showEdit
+		},
+		onSaveEdit () {
+			this.$store.commit('UPDATE_FEED', { title: this.feedTitle, url: this.feedUrl })
+			this.onToggleEdit()
 		},
 
 		onExportFeed () {
