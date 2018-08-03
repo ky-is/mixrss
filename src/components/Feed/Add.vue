@@ -76,14 +76,37 @@ export default Vue.extend({
 			}
 			return 'feed.json'
 		},
+
+		localAuthor (): string {
+			return this.$store.state.local.author
+		},
+
+		currentTitle (): string | null {
+			return (this.feedData && this.feedData.title) || null
+		},
 	},
 
-	created () {
-		this.feedAuthor = this.$store.state.local.author
-		this.feedTitle = this.feedData.title
-		if (this.currentFeedUrl) {
-			this.feedUrl = this.currentFeedUrl
-		}
+	watch: {
+		localAuthor: {
+			immediate: true,
+			handler (localAuthor) {
+				this.feedAuthor = localAuthor
+			},
+		},
+
+		currentTitle: {
+			immediate: true,
+			handler (currentTitle) {
+				this.feedTitle = currentTitle
+			},
+		},
+
+		currentFeedUrl: {
+			immediate: true,
+			handler (currentFeedUrl) {
+				this.feedUrl = currentFeedUrl
+			},
+		},
 	},
 
 	methods: {
