@@ -59,12 +59,13 @@ const actions: ActionTree<FeedState, any> = {
 	SET_FEED ({ commit }, feedContainer) {
 		commit('SET_CURRENT_FEED', feedContainer)
 		commit('WRITE_CURRENT_FEED', feedContainer)
-		commit('CLEAR_PLAYBACK')
 	},
 
-	SEET_FEED_BY_URL ({ commit, dispatch }, url) {
-		const data = storage.getJSON(url)
-		commit('SET_CURRENT_FEED', { url, data })
+	SEET_FEED_BY_URL ({ state, commit, dispatch }, url) {
+		if (url !== state.url) {
+			const data = storage.getJSON(url)
+			commit('SET_CURRENT_FEED', { url, data })
+		}
 		dispatch('LOAD_FEED_URL', url)
 	},
 

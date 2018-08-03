@@ -36,11 +36,6 @@ const mutations: MutationTree<PlaybackState> = {
 		}
 		state.index += direction
 	},
-
-	CLEAR_PLAYBACK (state) {
-		state.index = null
-		state.paused = false
-	},
 }
 
 //ACTIONS

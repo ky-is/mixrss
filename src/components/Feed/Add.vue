@@ -64,7 +64,7 @@ export default Vue.extend({
 		},
 
 		currentFeedUrl (): string | null {
-			return this.feedData.feed_url || null
+			return (this.feedData && this.feedData.feed_url) || null
 		},
 
 		fileName (): string {

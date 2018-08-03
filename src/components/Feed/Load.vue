@@ -47,7 +47,6 @@ export default Vue.extend({
 				return
 			}
 			this.$store.commit('CLEAR_FEED')
-			this.$store.commit('CLEAR_PLAYBACK')
 		},
 	},
 })
