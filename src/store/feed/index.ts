@@ -32,7 +32,7 @@ function getDurationFromISO (duration: string) {
 		result.push(padTime(hours, !!result.length))
 	}
 	result.push(padTime(minutes || '0M', !!result.length))
-	result.push(padTime(seconds, true))
+	result.push(padTime(seconds || '0S', true))
 	return result.join(':')
 }
 
