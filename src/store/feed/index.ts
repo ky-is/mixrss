@@ -47,6 +47,7 @@ function writeFeedData (state: FeedState) {
 }
 
 const state: FeedState = {
+	list: storage.getJSON('FEED_LIST') || [],
 	url: currentFeed,
 	data: storage.getJSON(currentFeed || LOCAL_FEED),
 	modified: storage.getBool('CURRENT_FEED_MODIFIED', false),
@@ -163,6 +164,10 @@ const mutations: MutationTree<FeedState> = {
 		storage.set('CURRENT_FEED_URL', url)
 		storage.set('CURRENT_FEED_MODIFIED', false)
 		writeFeedData(state)
+		if (url && state.list.indexOf(url) === -1) {
+			state.list.unshift(url)
+			storage.setJSON('FEED_LIST', state.list)
+		}
 	},
 
 	UPDATE_FEED (state, { title, url }) {

@@ -1,4 +1,5 @@
 export interface FeedState {
+	list: string[]
 	url: string | null
 	data: JSONFeed | null
 	modified: boolean
