@@ -70,7 +70,9 @@ export default Vue.extend({
 			}
 			player.setPlaybackQuality('small')
 			player.unMute()
-			player.playVideo()
+			if (!this.paused) {
+				player.playVideo()
+			}
 		},
 
 		onEnded () {
