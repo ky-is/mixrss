@@ -20,7 +20,7 @@ import FeedAdd from '@/components/Feed/Add.vue'
 import LoadFeed from '@/components/Feed/Load.vue'
 import FeedList from '@/components/Feed/List.vue'
 
-import TheSidebar from '@/components/Sidebar'
+import TheSidebar from '@/components/Sidebar/index.vue'
 
 export default Vue.extend({
 	components: {

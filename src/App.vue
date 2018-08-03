@@ -14,14 +14,11 @@ import HomeView from '@/views/Home.vue'
 import PlayBar from '@/components/Play/Bar.vue'
 import PlayManager from '@/components/Play/Manager.vue'
 
-import TheSidebar from '@/components/Sidebar'
-
 export default Vue.extend({
 	components: {
 		HomeView,
 		PlayBar,
 		PlayManager,
-		TheSidebar,
 	},
 })
 </script>
