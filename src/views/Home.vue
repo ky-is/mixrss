@@ -1,7 +1,7 @@
 <template>
 <div class="view-home">
-	<div class="sidebar-container scrolls">
-		<TheSidebar />
+	<div v-if="feedList.length" class="sidebar-container scrolls">
+		<TheSidebar :feedList="feedList" />
 	</div>
 	<div class="feed-container scrolls">
 		<div class="feed-content">
@@ -31,6 +31,10 @@ export default Vue.extend({
 	},
 
 	computed: {
+		feedList (): string[] {
+			return this.$store.state.feed.list
+		},
+
 		feedData (): JSONFeed {
 			return this.$store.state.feed.data
 		},

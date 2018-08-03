@@ -14,10 +14,8 @@ export default Vue.extend({
 		SidebarItem,
 	},
 
-	computed: {
-		feedList (): string[] {
-			return this.$store.state.feed.list
-		},
+	props: {
+		feedList: Array as () => string[], //TODO https://github.com/vuejs/vue/pull/6856
 	},
 })
 </script>
