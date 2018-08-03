@@ -48,9 +48,19 @@ body {
 	flex-direction: column;
 }
 
+/* Theme colors */
+
 ::selection {
 	background: #fde;
 }
+.theme-color {
+	color: #f8a;
+}
+.backed {
+	background: #f8a;
+}
+
+/* Home */
 
 .view-home {
 	flex-grow: 100;
@@ -74,6 +84,16 @@ body {
 	/* color: #888; */
 	opacity: 0.5;
 }
+
+.text-center {
+	text-align: center;
+}
+
+.margin-auto {
+	margin: auto;
+}
+
+/* Hover */
 
 .hover-inner, .hover-child {
 	visibility: hidden;
@@ -107,5 +127,15 @@ button[disabled] {
 
 input {
 	padding: 0 4px;
+}
+
+button.backed {
+	border-radius: 5px;
+	border: 0;
+	height: 48px;
+	min-width: 224px;
+	color: #fff;
+	font-weight: 600;
+	font-size: 24px;
 }
 </style>

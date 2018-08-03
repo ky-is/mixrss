@@ -7,6 +7,7 @@ export interface FeedState {
 
 export interface LocalState {
 	author: string | null
+	addingFeed: boolean
 }
 
 export interface PlaybackState {

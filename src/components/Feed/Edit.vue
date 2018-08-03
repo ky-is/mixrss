@@ -2,6 +2,8 @@
 <form @submit.prevent="onSubmit" class="feed-add">
 	<div v-if="showEdit">
 		<input type="text" v-model.trim="feedTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
+		<input type="text" v-model.trim="feedAuthor" placeholder="Your name" autocomplete="off" autocorrect="off">
+		<input type="url" v-model.trim="feedIcon" placeholder="Url to playlist icon (optional)" autocomplete="off" autocorrect="off">
 		<input type="url" v-model.trim="feedUrl" placeholder="The URL where you'll host this feed." autocomplete="off" autocorrect="off">
 		<button @click.prevent="onSaveEdit">Save</button>
 		<button @click.prevent="onToggleEdit">Cancel</button>
@@ -9,25 +11,13 @@
 	<div v-else-if="!showForm">
 		<button @click.prevent="onToggleForm">Add new entry...</button>
 		<button @click.prevent="onToggleEdit">Edit metadata</button>
-		<button v-if="songs.length" @click.prevent="onExportFeed">Save feed</button>
+		<button v-if="songs.length" @click.prevent="onExportFeed">Download</button>
 		<a ref="downloadLink" style="display:none" :download="fileName" />
 	</div>
 	<div v-else-if="feedData">
 		<input type="url" v-model.trim="itemUrl" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
 		<button type="submit">Load</button>
 		<button @click.prevent="onToggleForm">Cancel</button>
-	</div>
-	<div v-else class="create-playlist">
-		<p>Create a playlist to get started:</p>
-		<div>
-			<input type="text" v-model.trim="feedTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
-			<input type="text" v-model.trim="feedAuthor" placeholder="Your name" autocomplete="off" autocorrect="off">
-			<input type="url" v-model.trim="feedIcon" placeholder="Url to playlist icon (optional)" autocomplete="off" autocorrect="off">
-		</div>
-		<div>
-			<button type="submit">Create</button>
-			<button @click.prevent="onToggleForm">Cancel</button>
-		</div>
 	</div>
 </form>
 </template>

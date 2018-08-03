@@ -9,6 +9,8 @@ import { LocalState } from '@/types/store'
 
 const state: LocalState = {
 	author: storage.get('AUTHOR'),
+
+	addingFeed: false,
 }
 
 //MUTATIONS
@@ -17,6 +19,10 @@ const mutations: MutationTree<LocalState> = {
 	SET_AUTHOR (state, author) {
 		state.author = author
 		storage.set('AUTHOR', author)
+	},
+
+	TOGGLE_ADD_FEED (state, show) {
+		state.addingFeed = show === undefined ? !state.addingFeed : show
 	},
 }
 

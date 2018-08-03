@@ -37,14 +37,14 @@ function getDurationFromISO (duration: string) {
 	return result.join(':')
 }
 
-//STATE
-
 const currentFeed: string | null = storage.get('CURRENT_FEED_URL')
 const LOCAL_FEED = 'LOCAL_FEED'
 
 function writeFeedData (state: FeedState) {
 	storage.setJSON(state.url || LOCAL_FEED, state.data)
 }
+
+//STATE
 
 const state: FeedState = {
 	list: storage.getJSON('FEED_LIST') || [],
@@ -61,7 +61,8 @@ const actions: ActionTree<FeedState, any> = {
 		commit('WRITE_CURRENT_FEED', feedContainer)
 	},
 
-	SEET_FEED_BY_URL ({ state, commit, dispatch }, url) {
+	SET_FEED_BY_URL ({ state, commit, dispatch }, url) {
+		commit('TOGGLE_ADD_FEED', false)
 		if (url !== state.url) {
 			const data = storage.getJSON(url)
 			commit('SET_CURRENT_FEED', { url, data })

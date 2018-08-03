@@ -1,5 +1,5 @@
 <template>
-<li @click="onItem" class="sidebar-item hover-outer" :class="{ selected: url === feedUrl }">
+<li @click="onItem" class="sidebar-item hover-outer" :class="{ selected }">
 	<div class="item-icon" :style="{ 'background-image': `url(${item.icon})` }" />
 	<div>
 		<div class="title">{{ item.title }}</div>
@@ -17,15 +17,12 @@ import storage from '@/helpers/storage'
 export default Vue.extend({
 	props: {
 		url: String,
+		selected: Boolean,
 	},
 
 	computed: {
 		item (): JSONFeedItem {
 			return storage.getJSON(this.url || 'LOCAL_FEED')
-		},
-
-		feedUrl (): string | null {
-			return this.$store.state.feed.url
 		},
 
 		shortUrl (): string {
@@ -57,7 +54,7 @@ export default Vue.extend({
 
 	methods: {
 		onItem () {
-			this.$store.dispatch('SEET_FEED_BY_URL', this.url)
+			this.$store.dispatch('SET_FEED_BY_URL', this.url)
 		},
 	},
 })
@@ -88,5 +85,9 @@ export default Vue.extend({
 	background-position: center;
 	margin-right: 4px;
 	flex-shrink: 0;
+}
+
+.selected .hover-inner {
+	visibility: visible;
 }
 </style>

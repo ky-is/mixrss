@@ -1,13 +1,13 @@
 <template>
 <div class="view-home">
-	<div v-if="feedList.length" class="sidebar-container scrolls">
+	<div v-if="feedData" class="sidebar-container scrolls">
 		<TheSidebar :feedList="feedList" />
 	</div>
 	<div class="feed-container scrolls">
-		<div class="feed-content">
-			<LoadFeed />
+		<FeedCreate v-if="!feedData || addingFeed" :showCreate="!feedData" class="feed-content" />
+		<div v-else class="feed-content">
 			<FeedEdit />
-			<FeedList v-if="feedData" :items="feedData.items" />
+			<FeedList :items="feedData.items" />
 		</div>
 	</div>
 </div>
@@ -16,17 +16,18 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import FeedCreate from '@/components/Create/Feed.vue'
+
 import FeedEdit from '@/components/Feed/Edit.vue'
-import LoadFeed from '@/components/Feed/Load.vue'
 import FeedList from '@/components/Feed/List.vue'
 
 import TheSidebar from '@/components/Sidebar/index.vue'
 
 export default Vue.extend({
 	components: {
+		FeedCreate,
 		FeedEdit,
 		FeedList,
-		LoadFeed,
 		TheSidebar,
 	},
 
@@ -37,6 +38,10 @@ export default Vue.extend({
 
 		feedData (): JSONFeed {
 			return this.$store.state.feed.data
+		},
+
+		addingFeed (): boolean {
+			return this.$store.state.local.addingFeed
 		},
 	},
 })
