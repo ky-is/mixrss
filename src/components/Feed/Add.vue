@@ -2,7 +2,7 @@
 <form @submit.prevent="onSubmit" class="feed-add">
 	<div v-if="!showForm">
 		<button @click.prevent="onToggleForm">Add new entry...</button>
-		<button v-if="feedModified" @click.prevent="onExportFeed">Save feed</button>
+		<button v-if="songs.length" @click.prevent="onExportFeed">Save feed</button>
 		<a ref="downloadLink" style="display:none" download="feed.json" />
 	</div>
 	<div v-else-if="feedData">
@@ -45,8 +45,8 @@ export default Vue.extend({
 			return this.$store.state.feed
 		},
 
-		feedModified (): boolean {
-			return this.feed.modified
+		songs (): JSONFeedItem[] {
+			return this.$store.getters.songs
 		},
 
 		feedData (): JSONFeed {
@@ -64,7 +64,7 @@ export default Vue.extend({
 		},
 
 		onExportFeed () {
-			const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.feedData))}`
+			const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.feedData, null, '	'))}`
 			const el = this.$refs.downloadLink as HTMLElement
 			el.setAttribute('href', data)
 			el.click()
