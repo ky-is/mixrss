@@ -1,5 +1,6 @@
 <template>
 <div class="sidebar">
+	<SidebarItem :url="null" />
 	<SidebarItem v-for="feedUrl in feedList" :url="feedUrl" :key="feedUrl" />
 </div>
 </template>

@@ -66,7 +66,9 @@ const actions: ActionTree<FeedState, any> = {
 			const data = storage.getJSON(url)
 			commit('SET_CURRENT_FEED', { url, data })
 		}
-		dispatch('LOAD_FEED_URL', url)
+		if (url) {
+			dispatch('LOAD_FEED_URL', url)
+		}
 	},
 
 	CREATE_FEED ({ commit, dispatch }, { title, author, icon }) {

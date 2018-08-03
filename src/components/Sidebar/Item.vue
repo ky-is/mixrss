@@ -21,7 +21,7 @@ export default Vue.extend({
 
 	computed: {
 		item (): JSONFeedItem {
-			return storage.getJSON(this.url)
+			return storage.getJSON(this.url || 'LOCAL_FEED')
 		},
 
 		feedUrl (): string | null {
@@ -30,6 +30,9 @@ export default Vue.extend({
 
 		shortUrl (): string {
 			let result = this.url
+			if (!result) {
+				return 'Local feed'
+			}
 			let split = result.split('://')
 			if (split.length > 1) {
 				result = split[1]
