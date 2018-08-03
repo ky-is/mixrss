@@ -37,9 +37,16 @@ function getDurationFromISO (duration: string) {
 
 //STATE
 
+const currentFeed: string | null = storage.get('CURRENT_FEED_URL')
+const LOCAL_FEED = 'LOCAL_FEED'
+
+function writeFeedData (state: FeedState) {
+	storage.setJSON(state.url || LOCAL_FEED, state.data)
+}
+
 const state: FeedState = {
-	url: storage.get('CURRENT_FEED_URL'),
-	data: storage.getJSON('CURRENT_FEED_DATA'),
+	url: currentFeed,
+	data: storage.getJSON(currentFeed || LOCAL_FEED),
 	modified: storage.getBool('CURRENT_FEED_MODIFIED', false),
 }
 
@@ -110,7 +117,7 @@ const actions: ActionTree<FeedState, any> = {
 const mutations: MutationTree<FeedState> = {
 	SONG_TITLE (state, { item, title }) {
 		item.title = title
-		storage.setJSON('CURRENT_FEED_DATA', state.data)
+		writeFeedData(state)
 	},
 
 	SONG_TAG (state, { item, tag, add }) {
@@ -139,21 +146,21 @@ const mutations: MutationTree<FeedState> = {
 		const data = state.data
 		if (data) {
 			Vue.set(data, 'date_modified', new Date().toString())
-			storage.setJSON('CURRENT_FEED_DATA', data)
+			writeFeedData(state)
 		}
 	},
 
 	SONG_DESCRIPTION (state, { item, description }) {
 		Vue.set(item, 'content_text', description)
-		storage.setJSON('CURRENT_FEED_DATA', state.data)
+		writeFeedData(state)
 	},
 
 	SET_CURRENT_FEED (state, { url, data }) {
 		state.url = url
 		state.data = data
 		storage.set('CURRENT_FEED_URL', url)
-		storage.setJSON('CURRENT_FEED_DATA', data)
 		storage.set('CURRENT_FEED_MODIFIED', false)
+		writeFeedData(state)
 	},
 
 	PREPEND_TO_FEED (state, { localAuthor, url, title, duration, image }) {
@@ -187,14 +194,13 @@ const mutations: MutationTree<FeedState> = {
 			feedItem.author = feedAuthor
 		}
 		items.unshift(feedItem)
-		storage.setJSON('CURRENT_FEED_DATA', feedData)
+		writeFeedData(state)
 		storage.set('CURRENT_FEED_MODIFIED', true)
 	},
 
 	CLEAR_FEED (state) {
 		state.url = null
 		state.data = null
-		storage.remove('CURRENT_FEED_DATA')
 		storage.remove('CURRENT_FEED_URL')
 	},
 }
