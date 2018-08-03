@@ -91,7 +91,9 @@ const actions: ActionTree<FeedState, any> = {
 		const json2jsonp = `https://json2jsonp.com/?url=${encodeURIComponent(url)}`
 		fetchJsonp(json2jsonp).then((response: any) => response.json())
 		.then((data: JSONFeed) => {
-			dispatch('SET_FEED', { url, data })
+			if (url === state.url) {
+				dispatch('SET_FEED', { url, data })
+			}
 		})
 		.catch((error: any) => {
 			console.error(error)

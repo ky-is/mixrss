@@ -26,8 +26,13 @@ export default Vue.extend({
 		},
 	},
 
-	created () {
-		this.url = this.feedUrl
+	watch: {
+		feedUrl: {
+			immediate: true,
+			handler (feedUrl) {
+				this.url = feedUrl
+			},
+		},
 	},
 
 	methods: {
