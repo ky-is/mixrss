@@ -158,7 +158,7 @@ const mutations: MutationTree<FeedState> = {
 		}
 		const data = state.data
 		if (data) {
-			Vue.set(data, 'date_modified', new Date().toString())
+			Vue.set(data, 'date_modified', new Date().toISOString())
 			writeFeedData(state)
 		}
 	},
@@ -216,7 +216,7 @@ const mutations: MutationTree<FeedState> = {
 			summary: duration,
 			title,
 			image,
-			date_published: new Date().toString(),
+			date_published: new Date().toISOString(),
 		}
 		if (authorName) {
 			const feedAuthor: JSONFeedAuthor = { name: authorName }
