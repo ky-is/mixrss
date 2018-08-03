@@ -26,6 +26,7 @@ export default Vue.extend({
 
 	methods: {
 		onItem () {
+			this.$store.dispatch('SEET_FEED_BY_URL', this.url)
 		},
 	},
 })

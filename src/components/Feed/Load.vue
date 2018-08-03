@@ -39,7 +39,7 @@ export default Vue.extend({
 			if (!this.permit()) {
 				return
 			}
-			this.$store.dispatch('ADD_FEED_URL', this.url)
+			this.$store.dispatch('LOAD_FEED_URL', this.url)
 		},
 
 		onClear () {

@@ -56,9 +56,16 @@ const state: FeedState = {
 //ACTIONS
 
 const actions: ActionTree<FeedState, any> = {
-	SET_FEED ({ commit }, feed) {
-		commit('SET_CURRENT_FEED', feed)
+	SET_FEED ({ commit }, feedContainer) {
+		commit('SET_CURRENT_FEED', feedContainer)
+		commit('WRITE_CURRENT_FEED', feedContainer)
 		commit('CLEAR_PLAYBACK')
+	},
+
+	SEET_FEED_BY_URL ({ commit, dispatch }, url) {
+		const data = storage.getJSON(url)
+		commit('SET_CURRENT_FEED', { url, data })
+		dispatch('LOAD_FEED_URL', url)
 	},
 
 	CREATE_FEED ({ commit, dispatch }, { title, author, icon }) {
@@ -78,7 +85,7 @@ const actions: ActionTree<FeedState, any> = {
 		dispatch('SET_FEED', { url: null, data })
 	},
 
-	ADD_FEED_URL ({ dispatch }, url) {
+	LOAD_FEED_URL ({ dispatch }, url) {
 		// const jsonpwrapper = `http://jsonpwrapper.com/?urls%5B%5D=${encodeURIComponent(url)}`
 		const json2jsonp = `https://json2jsonp.com/?url=${encodeURIComponent(url)}`
 		fetchJsonp(json2jsonp).then((response: any) => response.json())
@@ -163,6 +170,9 @@ const mutations: MutationTree<FeedState> = {
 		state.data = data
 		storage.set('CURRENT_FEED_URL', url)
 		storage.set('CURRENT_FEED_MODIFIED', false)
+	},
+
+	WRITE_CURRENT_FEED (state, { url }) {
 		writeFeedData(state)
 		if (url && state.list.indexOf(url) === -1) {
 			state.list.unshift(url)
