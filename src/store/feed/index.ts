@@ -13,7 +13,7 @@ import { FeedState } from '@/types/store'
 const YOUTUBE_API = 'AIzaSyCWalFG38MaNJ_aQdHmEG5aVurjfWlzOj4'
 
 const DURATION_REGEX = /PT(\d+H)?(\d+M)?(\d+S)?/
-const TITLE_REGEX = / \(audio\)/i
+const TITLE_REGEX = /\(official\)|\(official video\)|\(audio\)/ig
 
 function padTime (string: string, hasLargerTime: boolean) {
 	const number = parseInt(string.slice(0, -1), 10)
@@ -99,7 +99,7 @@ const actions: ActionTree<FeedState, any> = {
 					return window.alert('No video found for that URL. Please check the video link/id you copied and try again, thanks!')
 				}
 				const url = `https://www.youtube.com/watch?v=${youtubeId}`
-				const title = video.snippet.title.replace(TITLE_REGEX, '')
+				const title = video.snippet.title.replace(TITLE_REGEX, '').trim()
 				const duration = getDurationFromISO(video.contentDetails.duration)
 				const thumbnail = video.snippet.thumbnails.medium || video.snippet.thumbnails.default
 				const image = thumbnail ? thumbnail.url : null
