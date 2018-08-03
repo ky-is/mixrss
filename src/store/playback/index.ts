@@ -22,11 +22,12 @@ const mutations: MutationTree<PlaybackState> = {
 		}
 	},
 
-	TOGGLE_PAUSED (state) {
+	TOGGLE_PAUSED (state, paused) {
 		if (state.index === null) {
 			state.index = 0
 		} else {
-			state.paused = !state.paused
+			const pausing = paused !== undefined ? paused : !state.paused
+			state.paused = pausing
 		}
 	},
 

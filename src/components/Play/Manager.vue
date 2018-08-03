@@ -1,6 +1,6 @@
 <template>
 <div class="play-manager">
-	<youtube :video-id="youtubeId" ref="youtube" :player-vars="playerVars" @cued="onCued" @ended="onEnded" width="200" height="200" />
+	<youtube :video-id="youtubeId" ref="youtube" :player-vars="playerVars" @cued="onCued" @playing="onPaused(false)" @paused="onPaused(true)" @ended="onEnded" width="200" height="200" />
 </div>
 </template>
 
@@ -73,6 +73,10 @@ export default Vue.extend({
 			if (!this.paused) {
 				player.playVideo()
 			}
+		},
+
+		onPaused (paused: boolean) {
+			this.$store.commit('TOGGLE_PAUSED', paused)
 		},
 
 		onEnded () {
