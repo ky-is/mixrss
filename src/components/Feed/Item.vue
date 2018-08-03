@@ -3,8 +3,13 @@
 	<div @click="onItem(index)" class="item-icon" :style="{ 'background-image': `url(${item.image})` }" />
 	<div>
 		<div class="title">
-			<div>{{ item.title }}</div>
-			<button @click="onTitle" class="button-modify button-outline text-small text-faint hover-inner">Edit</button>
+			<div v-if="editTitle">
+				<input type="text" v-model.trim="itemTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
+				<button @click="onTitleSave" class="button-modify button-outline">Save</button>
+			</div>
+			<div v-else>
+				<button @click="onTitleToggle" class="button-plain">{{ item.title }}</button>
+			</div>
 		</div>
 		<div class="text-small text-faint hover-inner">
 			<div>
@@ -38,6 +43,13 @@ export default Vue.extend({
 		item: Object as () => JSONFeedItem, //TODO https://github.com/vuejs/vue/pull/6856
 	},
 
+	data () {
+		return {
+			editTitle: false,
+			itemTitle: null,
+		}
+	},
+
 	computed: {
 		date (): Date {
 			return new Date(this.item.date_published)
@@ -55,17 +67,20 @@ export default Vue.extend({
 			this.$store.commit('SET_INDEX', index)
 		},
 
-		onTitle () {
-			const title = window.prompt('Please enter a title for this song:', this.item.title)
-			if (title) {
-				this.$store.commit('SONG_TITLE', { item: this.item, title })
+		onTitleToggle () {
+			this.editTitle = !this.editTitle
+			this.itemTitle = this.editTitle ? this.item.title : null
+		},
+		onTitleSave () {
+			if (this.itemTitle !== this.item.title) {
+				this.$store.commit('SONG_TITLE', { item: this.item, title: this.itemTitle })
 			}
+			this.onTitleToggle()
 		},
 
 		onTag (tag: string) {
 			this.$store.commit('SONG_TAG', { item: this.item, tag, add: false })
 		},
-
 		onTagAdd () {
 			const tag = window.prompt('Please enter a tag this song belongs to:')
 			if (tag) {
@@ -128,6 +143,12 @@ export default Vue.extend({
 
 .selected .item-icon {
 	box-shadow: 0 1px 2px #333;
+}
+
+button.button-plain {
+	border: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .button-modify {
