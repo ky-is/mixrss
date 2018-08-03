@@ -64,7 +64,10 @@ body {
 /* Text */
 
 .text-small {
-	font-size: 15px;
+	font-size: 0.8em;
+}
+.text-tiny {
+	font-size: 0.6em;
 }
 
 .text-faint {
