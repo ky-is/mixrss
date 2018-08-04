@@ -92,16 +92,20 @@ const actions: ActionTree<FeedState, any> = {
 	},
 
 	LOAD_FEED_URL ({ dispatch }, { url, adding }) {
-		// const jsonpwrapper = `http://jsonpwrapper.com/?urls%5B%5D=${encodeURIComponent(url)}`
-		const json2jsonp = `https://json2jsonp.com/?url=${encodeURIComponent(url)}`
-		fetchJsonp(json2jsonp).then((response: any) => response.json())
-		.then((data: JSONFeed) => {
-			if (adding || url === state.url) {
-				dispatch('SET_FEED', { url, data })
-			}
-		})
-		.catch((error: any) => {
-			console.error(error)
+		return new Promise((resolve, reject) => {
+			// const jsonpwrapper = `http://jsonpwrapper.com/?urls%5B%5D=${encodeURIComponent(url)}`
+			const json2jsonp = `https://json2jsonp.com/?url=${encodeURIComponent(url)}`
+			fetchJsonp(json2jsonp).then((response: any) => response.json())
+			.then((data: JSONFeed) => {
+				if (adding || url === state.url) {
+					dispatch('SET_FEED', { url, data })
+				}
+				resolve(url)
+			})
+			.catch((error: any) => {
+				console.error(error)
+				reject(error)
+			})
 		})
 	},
 

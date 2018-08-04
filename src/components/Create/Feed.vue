@@ -31,7 +31,13 @@ export default Vue.extend({
 			if (!this.$store.getters.localFeed) {
 				this.onCreateFeed()
 			}
-			this.$store.dispatch('LOAD_FEED_URL', { url: this.url, adding: true })
+			this.$store.dispatch('LOAD_FEED_URL', { url: this.url, adding: true }).then(loadedUrl => {
+				if (loadedUrl === this.url) {
+					this.$store.commit('TOGGLE_ADD_FEED', false)
+				}
+			}, error => {
+				window.alert('A valid feed could not be found at this URL, please try again. ' + error)
+			})
 		},
 
 		onCreateFeed () {
