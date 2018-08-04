@@ -89,6 +89,10 @@ body {
 	text-align: center;
 }
 
+.text-italic {
+	font-style: italic;
+}
+
 .margin-auto {
 	margin: auto;
 }

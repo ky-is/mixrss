@@ -1,8 +1,9 @@
 <template>
-<li @click="onItem" class="sidebar-item hover-outer" :class="{ selected }">
+<li v-if="item" @click="onItem" class="sidebar-item hover-outer" :class="{ selected }">
 	<div class="item-icon" :style="{ 'background-image': `url(${item.icon})` }" />
 	<div>
-		<div class="title">{{ item.title }}</div>
+		<div v-if="item.title" class="title">{{ item.title }}</div>
+		<div v-else class="title text-italic">Untitled playlist</div>
 		<span class="text-faint text-small">{{ item.items ? item.items.length : 0 }} songs ・ {{ item.author.name || 'Unknown' }}</span>
 		<div class="text-faint text-tiny hover-inner">{{ shortUrl }}</div>
 	</div>
@@ -22,7 +23,7 @@ export default Vue.extend({
 
 	computed: {
 		item (): JSONFeedItem {
-			return storage.getJSON(this.url || 'LOCAL_FEED')
+			return this.selected ? this.$store.state.feed.data : storage.getJSON(this.url || 'LOCAL_FEED')
 		},
 
 		shortUrl (): string {

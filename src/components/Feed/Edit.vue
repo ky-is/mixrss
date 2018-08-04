@@ -1,12 +1,18 @@
 <template>
 <form @submit.prevent="onSubmit" class="feed-add">
 	<div v-if="showEdit">
-		<input type="text" v-model.trim="feedTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
-		<input type="text" v-model.trim="feedAuthor" placeholder="Your name" autocomplete="off" autocorrect="off">
-		<input type="url" v-model.trim="feedIcon" placeholder="Url to playlist icon (optional)" autocomplete="off" autocorrect="off">
-		<input type="url" v-model.trim="feedUrl" placeholder="The URL where you'll host this feed." autocomplete="off" autocorrect="off">
-		<button @click.prevent="onSaveEdit">Save</button>
-		<button @click.prevent="onToggleEdit">Cancel</button>
+		<div>
+			<input type="text" v-model.trim="feedTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
+			<input type="text" v-model.trim="feedAuthor" placeholder="Your name" autocomplete="off" autocorrect="off">
+		</div>
+		<div>
+			<input type="url" v-model.trim="feedIcon" placeholder="URL to playlist icon (optional)" autocomplete="off" autocorrect="off">
+			<input type="url" v-model.trim="feedUrl" placeholder="URL where you'll host this feed." autocomplete="off" autocorrect="off">
+		</div>
+		<div>
+			<button type="submit">Save</button>
+			<button @click.prevent="onToggleEdit">Cancel</button>
+		</div>
 	</div>
 	<div v-else-if="!showForm">
 		<button @click.prevent="onToggleForm">Add new entry...</button>
@@ -24,6 +30,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
+
+import { PLACEHOLDER_FEED_URL } from '@/helpers/constants'
 
 export default Vue.extend({
 	data () {
@@ -88,15 +96,23 @@ export default Vue.extend({
 			immediate: true,
 			handler (currentTitle) {
 				this.feedTitle = currentTitle
+				this.showEdit =  !currentTitle || !this.localAuthor
 			},
 		},
 
 		currentFeedUrl: {
 			immediate: true,
 			handler (currentFeedUrl) {
-				this.feedUrl = currentFeedUrl
+				this.feedUrl = currentFeedUrl !== PLACEHOLDER_FEED_URL ? currentFeedUrl : null
 			},
 		},
+	},
+
+	created () {
+		const feedAuthor = this.feedData.author
+		if (!feedAuthor || !feedAuthor.name || !this.feedData.title) {
+			this.showEdit = true
+		}
 	},
 
 	methods: {
@@ -107,13 +123,6 @@ export default Vue.extend({
 		onToggleEdit () {
 			this.showEdit = !this.showEdit
 		},
-		onSaveEdit () {
-			if (!this.feedTitle) {
-				this.feedTitle = this.currentTitle
-			}
-			this.$store.commit('UPDATE_FEED', { title: this.feedTitle || '', url: this.feedUrl })
-			this.onToggleEdit()
-		},
 
 		onExportFeed () {
 			const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.feedData, null, '	'))}`
@@ -123,15 +132,16 @@ export default Vue.extend({
 		},
 
 		onSubmit () {
-			if (!this.feedData) {
+			if (this.showEdit) {
 				if (!this.feedTitle) {
-					return window.alert('Please enter a title for your playlist')
+					this.feedTitle = this.currentTitle
 				}
-				this.$store.dispatch('CREATE_FEED', { title: this.feedTitle, author: this.feedAuthor, icon: this.feedIcon })
+				this.$store.commit('UPDATE_FEED', { title: this.feedTitle || '', url: this.feedUrl })
+				this.onToggleEdit()
 				return
 			}
 			if (!this.itemUrl) {
-				return window.alert('Please enter a Youtube or SoundCloud link to the song.')
+				return window.alert('Please enter a Youtube link to the song.')
 			}
 			this.$store.dispatch('ADD_FEED_ITEM', this.itemUrl)
 		},

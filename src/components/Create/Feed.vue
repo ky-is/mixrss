@@ -28,13 +28,14 @@ export default Vue.extend({
 
 	methods: {
 		onEnterFeedUrl () {
-			if (!this.permit()) {
-				return
+			if (!this.$store.getters.localFeed) {
+				this.onCreateFeed()
 			}
-			this.$store.dispatch('LOAD_FEED_URL', this.url)
+			this.$store.dispatch('LOAD_FEED_URL', { url: this.url, adding: true })
 		},
 
 		onCreateFeed () {
+			this.$store.dispatch('CREATE_FEED')
 		},
 	},
 })

@@ -4,7 +4,9 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 
 import fetchJsonp from 'fetch-jsonp'
 
+import { PLACEHOLDER_FEED_URL } from '@/helpers/constants'
 import storage from '@/helpers/storage'
+
 //eslint-disable-next-line no-unused-vars
 import { FeedState } from '@/types/store'
 
@@ -38,10 +40,13 @@ function getDurationFromISO (duration: string) {
 }
 
 const currentFeed: string | null = storage.get('CURRENT_FEED_URL')
-const LOCAL_FEED = 'LOCAL_FEED'
 
 function writeFeedData (state: FeedState) {
-	storage.setJSON(state.url || LOCAL_FEED, state.data)
+	storage.setJSON(state.url || 'LOCAL_FEED', state.data)
+}
+
+function getLocalFeed (url: string | null) {
+	return storage.getJSON(url || 'LOCAL_FEED')
 }
 
 //STATE
@@ -49,7 +54,7 @@ function writeFeedData (state: FeedState) {
 const state: FeedState = {
 	list: storage.getJSON('FEED_LIST') || [],
 	url: currentFeed,
-	data: storage.getJSON(currentFeed || LOCAL_FEED),
+	data: getLocalFeed(currentFeed),
 	modified: storage.getBool('CURRENT_FEED_MODIFIED', false),
 }
 
@@ -64,37 +69,34 @@ const actions: ActionTree<FeedState, any> = {
 	SET_FEED_BY_URL ({ state, commit, dispatch }, url) {
 		commit('TOGGLE_ADD_FEED', false)
 		if (url !== state.url) {
-			const data = storage.getJSON(url)
+			const data = getLocalFeed(url)
 			commit('SET_CURRENT_FEED', { url, data })
 		}
 		if (url) {
-			dispatch('LOAD_FEED_URL', url)
+			dispatch('LOAD_FEED_URL', { url })
 		}
 	},
 
-	CREATE_FEED ({ commit, dispatch }, { title, author, icon }) {
+	CREATE_FEED ({ dispatch, rootState }) {
 		const data: JSONFeed = {
 			version: 'https://jsonfeed.org/version/1',
-			feed_url: 'SET_TO_THE_URL_WHERE_YOU_UPLOAD_THIS_FEED',
-			icon,
-			title,
+			feed_url: PLACEHOLDER_FEED_URL,
+			title: '',
+			icon: '',
 			author: {
-				name: author,
+				name: rootState.local.author,
 			},
 			items: [],
-		}
-		if (author) {
-			commit('SET_AUTHOR', author)
 		}
 		dispatch('SET_FEED', { url: null, data })
 	},
 
-	LOAD_FEED_URL ({ dispatch }, url) {
+	LOAD_FEED_URL ({ dispatch }, { url, adding }) {
 		// const jsonpwrapper = `http://jsonpwrapper.com/?urls%5B%5D=${encodeURIComponent(url)}`
 		const json2jsonp = `https://json2jsonp.com/?url=${encodeURIComponent(url)}`
 		fetchJsonp(json2jsonp).then((response: any) => response.json())
 		.then((data: JSONFeed) => {
-			if (url === state.url) {
+			if (adding || url === state.url) {
 				dispatch('SET_FEED', { url, data })
 			}
 		})
@@ -243,6 +245,10 @@ const getters: GetterTree<FeedState, any> = {
 	songs (state): JSONFeedItem[] {
 		const feedData = state.data
 		return (feedData && feedData.items) || [] //TODO filter playable
+	},
+
+	localFeed (state): JSONFeedItem | null {
+		return state.url === null ? state.data : getLocalFeed(null)
 	},
 }
 
