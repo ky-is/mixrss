@@ -61,6 +61,11 @@ export default Vue.extend({
 			return this.feed.data
 		},
 
+		currentFeedAuthor (): string | null {
+			const author = this.feedData.author
+			return (author && author.name) || null
+		},
+
 		currentFeedUrl (): string | null {
 			return (this.feedData && this.feedData.feed_url) || null
 		},
@@ -96,7 +101,7 @@ export default Vue.extend({
 			immediate: true,
 			handler (currentTitle) {
 				this.feedTitle = currentTitle
-				this.showEdit =  !currentTitle || !this.localAuthor
+				this.showEdit =  !currentTitle || !this.currentFeedAuthor
 			},
 		},
 
