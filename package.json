@@ -19,6 +19,7 @@
 		"vue-youtube": "^1.2.5"
 	},
 	"devDependencies": {
+		"@ky-is/vue-cli-plugin-tabs": "^0.1.0",
 		"@vue/cli-plugin-babel": "^3.0.0-rc.10",
 		"@vue/cli-plugin-eslint": "^3.0.0-rc.10",
 		"@vue/cli-plugin-typescript": "^3.0.0-rc.10",
