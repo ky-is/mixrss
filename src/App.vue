@@ -48,14 +48,31 @@ body {
 	flex-direction: column;
 }
 
+/* Links */
+
+a {
+	text-decoration: none;
+}
+a[href] {
+	color: #f24;
+}
+a[href]:hover {
+	opacity: 0.67;
+}
+a[href]:hover:active {
+	opacity: 0.5;
+}
+
 /* Theme colors */
 
 ::selection {
 	background: #fde;
 }
+
 .theme-color {
 	color: #f8a;
 }
+
 .backed {
 	background: #f8a;
 }
