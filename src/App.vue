@@ -48,6 +48,12 @@ body {
 	flex-direction: column;
 }
 
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
 /* Links */
 
 a {
@@ -73,7 +79,7 @@ a[href]:hover:active {
 	color: #f8a;
 }
 
-.backed {
+.backed, button.selected {
 	background: #f8a;
 }
 
@@ -160,7 +166,10 @@ button.backed {
 	font-size: 24px;
 }
 
-button.borderless {
+button.borderless, button.unstyled {
 	border: 0;
+}
+button.unstyled {
+	padding: 0;
 }
 </style>

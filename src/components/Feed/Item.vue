@@ -8,7 +8,7 @@
 				<button @click="onTitleSave" class="button-modify button-outline">Save</button>
 			</div>
 			<div v-else>
-				<button @click="onTitleToggle" class="button-plain">{{ item.title }}</button>
+				<button @click="onTitleToggle" class="unstyled">{{ item.title }}</button>
 			</div>
 		</div>
 		<div class="text-small text-faint hover-inner">
@@ -26,8 +26,8 @@
 				</span>
 			</div>
 			<div class="description-container">
-				<span v-if="item.content_text" class="description" :title="item.content_text">{{ item.content_text }}&nbsp;</span>
-				<button @click="onNoteEdit" class="button-modify button-outline">{{ item.content_text ? 'Edit' : '+Note' }}</button>
+				<button v-if="item.content_text" @click="onNoteEdit" class="description unstyled">{{ item.content_text }}</button>
+				<button v-else @click="onNoteEdit" class="button-modify button-outline">{{ item.content_text ? 'Edit' : '+Note' }}</button>
 			</div>
 		</div>
 	</div>
@@ -133,9 +133,6 @@ export default Vue.extend({
 	display: flex;
 	align-items: baseline;
 }
-.title button {
-	margin-left: 4px;
-}
 
 .item-icon {
 	box-shadow: 0 1px 2px #bbb;
@@ -145,12 +142,6 @@ export default Vue.extend({
 }
 .item-icon:hover {
 	cursor: pointer;
-}
-
-button.button-plain {
-	border: 0;
-	margin: 0;
-	padding: 0;
 }
 
 .button-modify {
