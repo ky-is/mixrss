@@ -5,7 +5,7 @@
 		<div v-if="item.title" class="title">{{ item.title }}</div>
 		<div v-else class="title text-italic">Untitled playlist</div>
 		<span class="text-faint text-small">{{ item.items ? item.items.length : 0 }} songs ・ {{ item.author.name || 'Unknown' }}</span>
-		<div class="text-faint text-tiny hover-inner">{{ shortUrl }}</div>
+		<a :href="selected ? url : null" target="_blank" class="feed-url text-faint text-tiny hover-inner" rel="noopener">{{ shortUrl }}</a>
 	</div>
 </li>
 </template>
@@ -90,5 +90,9 @@ export default Vue.extend({
 
 .selected .hover-inner {
 	visibility: visible;
+}
+
+.feed-url {
+	display: block;
 }
 </style>
