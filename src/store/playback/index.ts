@@ -19,6 +19,7 @@ const mutations: MutationTree<PlaybackState> = {
 			state.paused = !state.paused
 		} else {
 			state.index = index
+			state.paused = false
 		}
 	},
 
