@@ -16,10 +16,10 @@ new Vue({
 
 const query = window.location.search
 if (query) {
-	const split = query.split('urls=')
-	const urls = split[split.length - 1].split(',')
-	if (urls.length) {
-		for (const url of urls) {
+	const split = query.split('feeds=')
+	const feedUrls = split[split.length - 1].split(',')
+	if (feedUrls.length) {
+		for (const url of feedUrls) {
 			store.dispatch('LOAD_FEED_URL', { url, adding: true })
 		}
 	}
