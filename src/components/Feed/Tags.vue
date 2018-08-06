@@ -21,33 +21,50 @@ export default Vue.extend({
 
 	computed: {
 		tags (): string[] {
-			const tagHash = new Map<string, string>()
+			const tagMap = new Map<string, string>()
 			for (const item of this.items) {
 				if (!item.tags) {
 					continue
 				}
 				for (const tag of item.tags) {
 					const id = tag.toLowerCase()
-					if (!tagHash.has(id)) {
-						tagHash.set(id, tag)
+					if (!tagMap.has(id)) {
+						tagMap.set(id, tag)
 					}
 				}
 			}
-			return Array.from(tagHash.values())
+			return Array.from(tagMap.values())
 		},
 	},
 
 	methods: {
 		onTag (tag: string) {
 			const tagId = tag.toLowerCase()
-			const selectedTags = this.selected.slice()
-			const tagIndex = selectedTags.indexOf(tagId)
+			const selectedTagIds = this.selected.slice()
+			const tagIndex = selectedTagIds.indexOf(tagId)
 			if (tagIndex === -1) {
-				selectedTags.push(tagId)
+				selectedTagIds.push(tagId)
 			} else {
-				selectedTags.splice(tagIndex, 1)
+				selectedTagIds.splice(tagIndex, 1)
 			}
-			this.$emit('input', selectedTags)
+			this.$emit('input', selectedTagIds)
+		},
+	},
+
+	watch: {
+		tags (tags: string[]) {
+			let modified = false
+			const tagIds = tags.map(tag => tag.toLowerCase())
+			const selectedTagIds = this.selected.slice()
+			for (let idx = selectedTagIds.length; idx >= 0; idx -= 1) {
+				if (tagIds.indexOf(selectedTagIds[idx]) === -1) {
+					selectedTagIds.splice(idx, 1)
+					modified = true
+				}
+			}
+			if (modified) {
+				this.$emit('input', selectedTagIds)
+			}
 		},
 	},
 })
