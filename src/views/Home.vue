@@ -7,7 +7,8 @@
 		<FeedCreate v-if="!feedData || addingFeed" :showCreate="!feedData" class="feed-content" />
 		<div v-else class="feed-content">
 			<FeedEdit />
-			<FeedList :items="feedData.items" />
+			<FeedTags v-model="selectedTags" :items="feedData.items" />
+			<FeedList :items="feedData.items" :tags="selectedTags" />
 		</div>
 	</div>
 </div>
@@ -20,6 +21,7 @@ import FeedCreate from '@/components/Create/Feed.vue'
 
 import FeedEdit from '@/components/Feed/Edit.vue'
 import FeedList from '@/components/Feed/List.vue'
+import FeedTags from '@/components/Feed/Tags.vue'
 
 import TheSidebar from '@/components/Sidebar/index.vue'
 
@@ -28,7 +30,14 @@ export default Vue.extend({
 		FeedCreate,
 		FeedEdit,
 		FeedList,
+		FeedTags,
 		TheSidebar,
+	},
+
+	data () {
+		return {
+			selectedTags: [] as string[]
+		}
 	},
 
 	computed: {
