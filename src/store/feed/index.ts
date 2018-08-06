@@ -252,6 +252,10 @@ const mutations: MutationTree<FeedState> = {
 			state.selectedTagIds.splice(tagIndex, 1)
 		}
 	},
+
+	CLEAR_TAGS (state) {
+		state.selectedTagIds = []
+	},
 }
 
 //GETTERS
@@ -276,6 +280,8 @@ const getters: GetterTree<FeedState, any> = {
 						return true
 					}
 				}
+			} else if (selectedTagIds.indexOf('?') !== -1) {
+				return true
 			}
 			return false
 		})

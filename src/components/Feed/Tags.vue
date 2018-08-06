@@ -1,8 +1,10 @@
 <template>
 <ul class="tag-list">
 	<li v-for="tag in tags" :key="tag">
-		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>
+		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>		
 	</li>
+	<li v-if="tags.length"><button @click="onTag('?')" :class="{ selected: selectedTagIds.indexOf('?') !== -1 }">?</button></li>
+	<button v-if="selectedTagIds.length" @click="onClearTags">✕</button>
 </ul>
 </template>
 
@@ -40,6 +42,10 @@ export default Vue.extend({
 		onTag (tag: string) {
 			this.$store.commit('TOGGLE_TAG_ID', tag.toLowerCase())
 		},
+
+		onClearTags () {
+			this.$store.commit('CLEAR_TAGS')
+		},
 	},
 
 	watch: {
@@ -64,5 +70,6 @@ li {
 button {
 	padding: 1px 5px;
 	border-radius: 5px;
+	min-width: 28px;
 }
 </style>
