@@ -38,16 +38,6 @@ export default Vue.extend({
 		},
 	},
 
-	methods: {
-		onTag (tag: string) {
-			this.$store.commit('TOGGLE_TAG_ID', tag.toLowerCase())
-		},
-
-		onClearTags () {
-			this.$store.commit('CLEAR_TAGS')
-		},
-	},
-
 	watch: {
 		tags (tags: string[]) {
 			const tagIds = tags.map(tag => tag.toLowerCase())
@@ -56,6 +46,16 @@ export default Vue.extend({
 					this.$store.commit('TOGGLE_TAG_ID', selectedTagId)
 				}
 			}
+		},
+	},
+
+	methods: {
+		onTag (tag: string) {
+			this.$store.commit('TOGGLE_TAG_ID', tag.toLowerCase())
+		},
+
+		onClearTags () {
+			this.$store.commit('CLEAR_TAGS')
 		},
 	},
 })
