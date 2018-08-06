@@ -1,6 +1,6 @@
 <template>
 <li class="feed-item hover-outer">
-	<div @click="onItem(index)" class="item-icon" :style="{ 'background-image': `url(${item.image})` }" />
+	<button @click="onItem(index)" class="item-icon borderless" :style="{ 'background-image': `url(${item.image})` }" />
 	<div>
 		<div class="title">
 			<div v-if="editTitle">
@@ -137,12 +137,14 @@ export default Vue.extend({
 	margin-left: 4px;
 }
 
+.item-icon {
+	box-shadow: 0 1px 2px #bbb;
+}
+.selected .item-icon {
+	box-shadow: 0 1px 2px #666;
+}
 .item-icon:hover {
 	cursor: pointer;
-}
-
-.selected .item-icon {
-	box-shadow: 0 1px 2px #333;
 }
 
 button.button-plain {

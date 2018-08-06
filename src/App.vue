@@ -159,4 +159,8 @@ button.backed {
 	font-weight: 600;
 	font-size: 24px;
 }
+
+button.borderless {
+	border: 0;
+}
 </style>
