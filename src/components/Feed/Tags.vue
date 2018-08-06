@@ -42,7 +42,7 @@ export default Vue.extend({
 		tags (tags: string[]) {
 			const tagIds = tags.map(tag => tag.toLowerCase())
 			for (const selectedTagId of this.selectedTagIds) {
-				if (tagIds.indexOf(selectedTagId) === -1) {
+				if (selectedTagId !== '?' && tagIds.indexOf(selectedTagId) === -1) {
 					this.$store.commit('TOGGLE_TAG_ID', selectedTagId)
 				}
 			}

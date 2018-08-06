@@ -273,7 +273,7 @@ const getters: GetterTree<FeedState, any> = {
 		}
 		return items.filter(item => {
 			const itemTags = item.tags
-			if (itemTags) {
+			if (itemTags && itemTags.length) {
 				const itemTagIds = itemTags.map(tag => tag.toLowerCase())
 				for (const filterTagId of selectedTagIds) {
 					if (itemTagIds.indexOf(filterTagId) !== -1) {
