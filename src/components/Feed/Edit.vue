@@ -101,7 +101,7 @@ export default Vue.extend({
 			immediate: true,
 			handler (currentTitle) {
 				this.feedTitle = currentTitle
-				this.showEdit =  !currentTitle || !this.currentFeedAuthor
+				this.showEdit = !currentTitle || !this.currentFeedAuthor
 			},
 		},
 
