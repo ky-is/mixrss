@@ -14,13 +14,13 @@
 		<div class="text-small text-faint hover-inner">
 			<div>
 				<span>{{ item._duration || item.summary }}</span>
-				・
+				<span> ・ </span>
 				<time :datetime="date">{{ date.toLocaleDateString() }}</time>
-				・
-				<span v-if="item.author">{{ item.author.name }} ・</span>
+				<span> ・</span>
+				<span v-if="item.author"> {{ item.author.name }} ・</span>
 				<span class="tags">
 					<span v-if="tags">
-						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag hide-parent" :key="tag">{{ tag }}<span class="tag-delete hide-child">✖︎</span></button>
+						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag hover-parent" :key="tag">{{ tag }}<span class="tag-delete hover-child">✖︎</span></button>
 					</span>
 					<button @click="onTagAdd" class="button-modify button-outline">+Tag</button>
 				</span>
@@ -159,10 +159,14 @@ button.button-outline, .button-tag:hover {
 	background: #fff;
 }
 
+.button-tag {
+	margin: 0;
+}
+
 .tag-delete {
 	line-height: 0;
-	margin-left: 2px;
-	font-size: 14px;
+	margin-left: 1px;
+	font-size: 12px;
 }
 
 .description-container {
