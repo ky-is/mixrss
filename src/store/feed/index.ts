@@ -56,6 +56,7 @@ const state: FeedState = {
 	url: currentFeed,
 	data: getLocalFeed(currentFeed),
 	modified: storage.getBool('CURRENT_FEED_MODIFIED', false),
+	selectedTagIds: [],
 }
 
 //ACTIONS
@@ -180,6 +181,7 @@ const mutations: MutationTree<FeedState> = {
 	SET_CURRENT_FEED (state, { url, data }) {
 		state.url = url
 		state.data = data
+		state.selectedTagIds = []
 		storage.set('CURRENT_FEED_URL', url)
 		storage.set('CURRENT_FEED_MODIFIED', false)
 	},
@@ -241,6 +243,15 @@ const mutations: MutationTree<FeedState> = {
 		state.data = null
 		storage.remove('CURRENT_FEED_URL')
 	},
+
+	TOGGLE_TAG_ID (state, tagId) {
+		const tagIndex = state.selectedTagIds.indexOf(tagId)
+		if (tagIndex === -1) {
+			state.selectedTagIds.push(tagId)
+		} else {
+			state.selectedTagIds.splice(tagIndex, 1)
+		}
+	},
 }
 
 //GETTERS
@@ -248,7 +259,26 @@ const mutations: MutationTree<FeedState> = {
 const getters: GetterTree<FeedState, any> = {
 	songs (state): JSONFeedItem[] {
 		const feedData = state.data
-		return (feedData && feedData.items) || [] //TODO filter playable
+		const items = feedData && feedData.items
+		if (!items) {
+			return []
+		}
+		const selectedTagIds = state.selectedTagIds
+		if (!selectedTagIds.length) {
+			return items
+		}
+		return items.filter(item => {
+			const itemTags = item.tags
+			if (itemTags) {
+				const itemTagIds = itemTags.map(tag => tag.toLowerCase())
+				for (const filterTagId of selectedTagIds) {
+					if (itemTagIds.indexOf(filterTagId) !== -1) {
+						return true
+					}
+				}
+			}
+			return false
+		})
 	},
 
 	localFeed (state): JSONFeedItem | null {

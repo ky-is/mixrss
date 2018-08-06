@@ -3,6 +3,7 @@ export interface FeedState {
 	url: string | null
 	data: JSONFeed | null
 	modified: boolean
+	selectedTagIds: string[]
 }
 
 export interface LocalState {

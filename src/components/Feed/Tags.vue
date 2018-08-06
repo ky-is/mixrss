@@ -1,7 +1,7 @@
 <template>
 <ul class="tag-list">
 	<li v-for="tag in tags" :key="tag">
-		<button @click="onTag(tag)" :class="{ selected: selected.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>
+		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>
 	</li>
 </ul>
 </template>
@@ -12,11 +12,6 @@ import Vue from 'vue'
 export default Vue.extend({
 	props: {
 		items: Array as () => JSONFeedItem[], //TODO https://github.com/vuejs/vue/pull/6856
-		selected: Array as () => string[],
-	},
-
-	model: {
-		prop: 'selected',
 	},
 
 	computed: {
@@ -35,35 +30,25 @@ export default Vue.extend({
 			}
 			return Array.from(tagMap.values())
 		},
+
+		selectedTagIds (): string[] {
+			return this.$store.state.feed.selectedTagIds
+		},
 	},
 
 	methods: {
 		onTag (tag: string) {
-			const tagId = tag.toLowerCase()
-			const selectedTagIds = this.selected.slice()
-			const tagIndex = selectedTagIds.indexOf(tagId)
-			if (tagIndex === -1) {
-				selectedTagIds.push(tagId)
-			} else {
-				selectedTagIds.splice(tagIndex, 1)
-			}
-			this.$emit('input', selectedTagIds)
+			this.$store.commit('TOGGLE_TAG_ID', tag.toLowerCase())
 		},
 	},
 
 	watch: {
 		tags (tags: string[]) {
-			let modified = false
 			const tagIds = tags.map(tag => tag.toLowerCase())
-			const selectedTagIds = this.selected.slice()
-			for (let idx = selectedTagIds.length; idx >= 0; idx -= 1) {
-				if (tagIds.indexOf(selectedTagIds[idx]) === -1) {
-					selectedTagIds.splice(idx, 1)
-					modified = true
+			for (const selectedTagId of this.selectedTagIds) {
+				if (tagIds.indexOf(selectedTagId) === -1) {
+					this.$store.commit('TOGGLE_TAG_ID', selectedTagId)
 				}
-			}
-			if (modified) {
-				this.$emit('input', selectedTagIds)
 			}
 		},
 	},
