@@ -13,8 +13,6 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import storage from '@/helpers/storage'
-
 export default Vue.extend({
 	props: {
 		url: String,
@@ -23,7 +21,7 @@ export default Vue.extend({
 
 	computed: {
 		item (): JSONFeedItem {
-			return this.selected ? this.$store.state.feed.data : storage.getJSON(this.url || 'LOCAL_FEED')
+			return this.selected ? this.$store.state.feed.data : this.$store.getters.feedForUrl(this.url)
 		},
 
 		shortUrl (): string {

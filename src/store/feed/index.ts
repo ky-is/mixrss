@@ -45,9 +45,9 @@ function writeFeedData (state: FeedState) {
 	storage.setJSON(state.url || 'LOCAL_FEED', state.data)
 }
 
-function getLocalFeed (url: string | null) {
 	return storage.getJSON(url || 'LOCAL_FEED')
 }
+function getLocalFeed (url: string | null): JSONFeed | null {
 
 //STATE
 
@@ -261,6 +261,8 @@ const mutations: MutationTree<FeedState> = {
 //GETTERS
 
 const getters: GetterTree<FeedState, any> = {
+	feedForUrl: () => getLocalFeed,
+
 	songs (state): JSONFeedItem[] {
 		const feedData = state.data
 		const items = feedData && feedData.items
@@ -285,10 +287,6 @@ const getters: GetterTree<FeedState, any> = {
 			}
 			return false
 		})
-	},
-
-	localFeed (state): JSONFeedItem | null {
-		return state.url === null ? state.data : getLocalFeed(null)
 	},
 }
 
