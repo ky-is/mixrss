@@ -41,12 +41,16 @@ function getDurationFromISO (duration: string) {
 
 const currentFeed: string | null = storage.get('CURRENT_FEED_URL')
 
+function feedKey (url: string | null): string {
+	return url || 'LOCAL_FEED'
+}
+
 function writeFeedData (state: FeedState) {
-	storage.setJSON(state.url || 'LOCAL_FEED', state.data)
+	storage.setJSON(feedKey(state.url), state.data)
 }
 
 function getLocalFeed (url: string | null): JSONFeed | null {
-	return storage.getJSON(url || 'LOCAL_FEED')
+	return storage.getJSON(feedKey(url))
 }
 
 //STATE
@@ -132,6 +136,27 @@ const actions: ActionTree<FeedState, any> = {
 			.catch((error: any) => {
 				console.error(error)
 			})
+		}
+	},
+
+	DELETE_FEED ({ commit }, url) {
+		commit('REMOVE_FEED', url)
+		if (state.url === url) {
+			let newUrl = null
+			let data: JSONFeed | null = null
+			if (url) {
+				data = getLocalFeed(null)
+			}
+			if (data === null) {
+				for (const listUrl of state.list) {
+					data = getLocalFeed(listUrl)
+					if (data) {
+						newUrl = listUrl
+						break
+					}
+				}
+			}
+			commit('SET_CURRENT_FEED', { url: newUrl, data })
 		}
 	},
 }
@@ -256,6 +281,17 @@ const mutations: MutationTree<FeedState> = {
 
 	CLEAR_TAGS (state) {
 		state.selectedTagIds = []
+	},
+
+	REMOVE_FEED (state, url) {
+		storage.remove(feedKey(url))
+		if (url) {
+			const index = state.list.indexOf(url)
+			if (index !== -1) {
+				state.list.splice(index, 1)
+				storage.setJSON('FEED_LIST', state.list)
+			}
+		}
 	},
 }
 

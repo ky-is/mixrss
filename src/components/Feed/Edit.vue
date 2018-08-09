@@ -12,6 +12,7 @@
 		<div>
 			<button type="submit">Save</button>
 			<button @click.prevent="onToggleEdit">Cancel</button>
+			<button @click.prevent="onDelete">Delete</button>
 		</div>
 	</div>
 	<div v-else-if="!showForm">
@@ -149,6 +150,10 @@ export default Vue.extend({
 				return window.alert('Please enter a Youtube link to the song.')
 			}
 			this.$store.dispatch('ADD_FEED_ITEM', this.itemUrl)
+		},
+
+		onDelete () {
+			this.$store.dispatch('DELETE_FEED', this.feed.url)
 		},
 	},
 })
