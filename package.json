@@ -20,11 +20,11 @@
 	},
 	"devDependencies": {
 		"@ky-is/vue-cli-plugin-tabs": "^1.0.0",
-		"@vue/cli-plugin-babel": "^3.0.0-rc.10",
-		"@vue/cli-plugin-eslint": "^3.0.0-rc.10",
-		"@vue/cli-plugin-typescript": "^3.0.0-rc.10",
-		"@vue/cli-service": "^3.0.0-rc.10",
-		"@vue/eslint-config-typescript": "^3.0.0-rc.10",
+		"@vue/cli-plugin-babel": "^3.0.0-rc.12",
+		"@vue/cli-plugin-eslint": "^3.0.0-rc.12",
+		"@vue/cli-plugin-typescript": "^3.0.0-rc.12",
+		"@vue/cli-service": "^3.0.0-rc.12",
+		"@vue/eslint-config-typescript": "^3.0.0-rc.12",
 		"typescript": "^3.0.0",
 		"vue-template-compiler": "^2.5.17",
 		"vuex": "^3.0.1"
