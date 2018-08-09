@@ -5,7 +5,7 @@
 		<input type="url" v-model.trim="url" placeholder="https://some.playlist/feed.json" autocomplete="off" autocorrect="off">
 		<button type="submit" class="button-load">Load</button>
 	</form>
-	<div v-if="showCreate" class="text-center">
+	<div v-if="!hasLocalFeed" class="text-center">
 		<div class="separator">~ or ~</div>
 		<button @click="onCreateFeed" class="backed">Create a new feed</button>
 	</div>
@@ -16,21 +16,21 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-	props: {
-		showCreate: Boolean,
-	},
-
 	data () {
 		return {
 			url: null as string | null,
 		}
 	},
 
+	computed: {
+		hasLocalFeed (): boolean {
+			const feed = this.$store.state.feed.url ? this.$store.getters.feedForUrl(null) : this.$store.state.feed.data
+			return feed !== null
+		},
+	},
+
 	methods: {
 		onEnterFeedUrl () {
-			if (!this.$store.getters.localFeed) {
-				this.onCreateFeed()
-			}
 			this.$store.dispatch('LOAD_FEED_URL', { url: this.url, adding: true }).then(loadedUrl => {
 				if (loadedUrl === this.url) {
 					this.$store.commit('TOGGLE_ADD_FEED', false)
@@ -41,7 +41,7 @@ export default Vue.extend({
 		},
 
 		onCreateFeed () {
-			this.$store.dispatch('CREATE_FEED')
+			this.$store.dispatch('CREATE_LOCAL_FEED')
 		},
 	},
 })

@@ -45,9 +45,9 @@ function writeFeedData (state: FeedState) {
 	storage.setJSON(state.url || 'LOCAL_FEED', state.data)
 }
 
+function getLocalFeed (url: string | null): JSONFeed | null {
 	return storage.getJSON(url || 'LOCAL_FEED')
 }
-function getLocalFeed (url: string | null): JSONFeed | null {
 
 //STATE
 
@@ -62,9 +62,9 @@ const state: FeedState = {
 //ACTIONS
 
 const actions: ActionTree<FeedState, any> = {
-	SET_FEED ({ commit }, feedContainer) {
-		commit('SET_CURRENT_FEED', feedContainer)
-		commit('WRITE_CURRENT_FEED', feedContainer)
+	SET_FEED ({ commit }, urlAndData) {
+		commit('SET_CURRENT_FEED', urlAndData)
+		commit('WRITE_CURRENT_FEED', urlAndData)
 	},
 
 	SET_FEED_BY_URL ({ state, commit, dispatch }, url) {
@@ -78,7 +78,7 @@ const actions: ActionTree<FeedState, any> = {
 		}
 	},
 
-	CREATE_FEED ({ dispatch, rootState }) {
+	CREATE_LOCAL_FEED ({ commit, dispatch, rootState }) {
 		const data: JSONFeed = {
 			version: 'https://jsonfeed.org/version/1',
 			feed_url: PLACEHOLDER_FEED_URL,
@@ -90,6 +90,7 @@ const actions: ActionTree<FeedState, any> = {
 			items: [],
 		}
 		dispatch('SET_FEED', { url: null, data })
+		commit('TOGGLE_ADD_FEED', false)
 	},
 
 	LOAD_FEED_URL ({ dispatch }, { url, adding }) {

@@ -4,7 +4,7 @@
 		<TheSidebar :feedList="feedList" />
 	</div>
 	<div class="feed-container scrolls">
-		<FeedCreate v-if="!feedData || addingFeed" :showCreate="!feedData" class="feed-content" />
+		<FeedCreate v-if="!feedData || addingFeed" class="feed-content" />
 		<div v-else class="feed-content">
 			<FeedEdit />
 			<FeedTags :items="feedData.items" />
