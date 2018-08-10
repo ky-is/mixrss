@@ -135,7 +135,7 @@ const actions: ActionTree<FeedState, any> = {
 				const duration = getDurationFromISO(video.contentDetails.duration)
 				const thumbnail = video.snippet.thumbnails.medium || video.snippet.thumbnails.default
 				const image = thumbnail ? thumbnail.url : null
-				commit('PREPEND_TO_FEED', { localAuthor: rootState.author, url, title, duration, image })
+				commit('PREPEND_TO_FEED', { id: youtubeId, localAuthor: rootState.author, url, title, duration, image, type: 'youtube' })
 			})
 			.catch((error: any) => {
 				console.error(error)
@@ -237,7 +237,7 @@ const mutations: MutationTree<FeedState> = {
 		writeFeedData(state)
 	},
 
-	PREPEND_TO_FEED (state, { localAuthor, url, title, duration, image }) {
+	PREPEND_TO_FEED (state, { id, localAuthor, url, title, duration, image, type }) {
 		const feedData = state.data
 		if (!feedData) {
 			return
@@ -257,6 +257,7 @@ const mutations: MutationTree<FeedState> = {
 		const feedItem: JSONFeedItem = {
 			id: url,
 			external_url: url,
+			content_html: type === 'youtube' ? `<iframe src="https://www.youtube.com/embed/${id}" width="100%"/>` : undefined,
 			_duration: duration,
 			summary: duration,
 			title,

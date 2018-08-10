@@ -12,6 +12,7 @@ declare interface JSONFeedItem {
 	title?: string
 	author?: JSONFeedAuthor
 	content_text?: string
+	content_html?: string
 	_duration?: string
 	url?: string
 	external_url?: string
