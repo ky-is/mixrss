@@ -15,18 +15,22 @@ export default Vue.extend({
 	},
 
 	computed: {
-		playbackIndex (): number | null {
-			return this.$store.state.playback.index
+		playUrl (): string | null {
+			return this.$store.state.playback.url
 		},
 
 		hasSong (): boolean {
-			return this.playbackIndex !== null
+			return this.playUrl !== null
+		},
+
+		playbackIndex (): number | null {
+			return this.$store.getters.playbackIndex
 		},
 		hasPreviousSong (): boolean {
-			return this.playbackIndex !== null && this.playbackIndex >= 1
+			return this.playbackIndex !== null && this.playbackIndex > 0
 		},
 		hasNextSong (): boolean {
-			return this.$store.getters.hasNextSong
+			return this.playbackIndex !== null && this.playbackIndex < this.songs.length - 1
 		},
 
 		songs (): JSONFeedItem[] {
@@ -44,14 +48,14 @@ export default Vue.extend({
 
 	methods: {
 		onPrevious () {
-			this.$store.commit('SEEK_DIRECTION', -1)
+			this.$store.dispatch('SEEK_DIRECTION', -1)
 		},
 		onNext () {
-			this.$store.commit('SEEK_DIRECTION', 1)
+			this.$store.dispatch('SEEK_DIRECTION', 1)
 		},
 
 		onPlay () {
-			this.$store.commit('TOGGLE_PAUSED')
+			this.$store.dispatch('PRESS_PAUSE')
 		},
 	},
 })

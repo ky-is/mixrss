@@ -13,42 +13,21 @@ export default Vue.extend({
 			playerVars: {
 				suggestedQuality: 'small',
 			},
+			loading: false,
 		}
 	},
 
 	computed: {
-		songs (): JSONFeedItem[] {
-			return this.$store.getters.songs
-		},
-
 		paused (): boolean {
 			return this.$store.state.playback.paused
 		},
 
-		playIndex (): number | null {
-			return this.$store.state.playback.index
-		},
-
-		hasNextSong (): boolean {
-			return this.$store.getters.hasNextSong
-		},
-
-		song (): JSONFeedItem | null {
-			if (this.playIndex === null) {
-				return null
-			}
-			return this.songs[this.playIndex]
-		},
-
-		url (): string | null {
-			if (!this.song) {
-				return null
-			}
-			return this.song.external_url || this.song.url || null
+		playUrl (): number | null {
+			return this.$store.state.playback.url
 		},
 
 		youtubeId (): string | null {
-			return this.url ? this.$youtube.getIdFromUrl(this.url) : null
+			return this.playUrl ? this.$youtube.getIdFromUrl(this.playUrl) : null
 		},
 	},
 
@@ -61,6 +40,10 @@ export default Vue.extend({
 				player.playVideo()
 			}
 		},
+
+		youtubeId () {
+			this.loading = true
+		},
 	},
 
 	methods: {
@@ -68,6 +51,7 @@ export default Vue.extend({
 			if (!this.youtubeId) {
 				return
 			}
+			this.loading = false
 			player.setPlaybackQuality('small')
 			player.unMute()
 			if (!this.paused) {
@@ -76,13 +60,14 @@ export default Vue.extend({
 		},
 
 		onPaused (paused: boolean) {
-			this.$store.commit('TOGGLE_PAUSED', paused)
+			if (paused && this.loading) {
+				return
+			}
+			this.$store.dispatch('PRESS_PAUSE', paused)
 		},
 
 		onEnded () {
-			if (this.hasNextSong) {
-				this.$store.commit('SEEK_DIRECTION', 1)
-			}
+			this.$store.dispatch('SEEK_DIRECTION', 1)
 		},
 	},
 })

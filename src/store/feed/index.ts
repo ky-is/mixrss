@@ -131,7 +131,6 @@ const actions: ActionTree<FeedState, any> = {
 				const thumbnail = video.snippet.thumbnails.medium || video.snippet.thumbnails.default
 				const image = thumbnail ? thumbnail.url : null
 				commit('PREPEND_TO_FEED', { localAuthor: rootState.author, url, title, duration, image })
-				commit('SEEK_DIRECTION', 1)
 			})
 			.catch((error: any) => {
 				console.error(error)

@@ -1,6 +1,6 @@
 <template>
 <li class="feed-item hover-outer">
-	<button @click="onItem(index)" class="item-icon borderless" :style="{ 'background-image': `url(${item.image})` }" />
+	<button @click="onItem" class="item-icon borderless" :style="{ 'background-image': `url(${item.image})` }" />
 	<div>
 		<div class="title">
 			<div v-if="editTitle">
@@ -39,7 +39,6 @@ import Vue from 'vue'
 
 export default Vue.extend({
 	props: {
-		index: Number,
 		item: Object as () => JSONFeedItem, //TODO https://github.com/vuejs/vue/pull/6856
 	},
 
@@ -51,6 +50,10 @@ export default Vue.extend({
 	},
 
 	computed: {
+		url (): string {
+			return this.item.url || this.item.external_url || ''
+		},
+
 		date (): Date {
 			return new Date(this.item.date_published)
 		},
@@ -63,8 +66,8 @@ export default Vue.extend({
 	},
 
 	methods: {
-		onItem (index: number) {
-			this.$store.commit('SET_INDEX', index)
+		onItem () {
+			this.$store.commit('SET_PLAYBACK_URL', this.url)
 		},
 
 		onTitleToggle () {

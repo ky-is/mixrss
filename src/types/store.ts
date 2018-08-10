@@ -12,7 +12,7 @@ export interface LocalState {
 }
 
 export interface PlaybackState {
-	index: number | null
+	url: string | null
 	paused: boolean
 }
 
