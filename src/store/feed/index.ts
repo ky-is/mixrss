@@ -61,6 +61,7 @@ const state: FeedState = {
 	data: getLocalFeed(currentFeed),
 	modified: storage.getBool('CURRENT_FEED_MODIFIED', false),
 	selectedTagIds: [],
+	loading: 0,
 }
 
 //ACTIONS
@@ -97,8 +98,9 @@ const actions: ActionTree<FeedState, any> = {
 		commit('TOGGLE_ADD_FEED', false)
 	},
 
-	LOAD_FEED_URL ({ dispatch }, { url, adding }) {
+	LOAD_FEED_URL ({ commit, dispatch }, { url, adding }) {
 		return new Promise((resolve, reject) => {
+			commit('FEED_LOADING', 1)
 			// const jsonpwrapper = `http://jsonpwrapper.com/?urls%5B%5D=${encodeURIComponent(url)}`
 			const json2jsonp = `https://json2jsonp.com/?url=${encodeURIComponent(url)}`
 			fetchJsonp(json2jsonp).then((response: any) => response.json())
@@ -111,6 +113,9 @@ const actions: ActionTree<FeedState, any> = {
 			.catch((error: any) => {
 				console.error(error)
 				reject(error)
+			})
+			.finally(() => {
+				commit('FEED_LOADING', -1)
 			})
 		})
 	},
@@ -163,6 +168,10 @@ const actions: ActionTree<FeedState, any> = {
 //MUTATIONS
 
 const mutations: MutationTree<FeedState> = {
+	FEED_LOADING (state, amount) {
+		state.loading += amount
+	},
+
 	SONG_TITLE (state, { item, title }) {
 		item.title = title
 		writeFeedData(state)

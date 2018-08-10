@@ -1,5 +1,8 @@
 <template>
-<div>
+<div v-if="loading">
+	<h2>Loading requested feed...</h2>
+</div>
+<div v-else>
 	<h2>Load a remote feed</h2>
 	<form @submit.prevent="onEnterFeedUrl" class="load-feed">
 		<input type="url" v-model.trim="url" placeholder="https://some.playlist/feed.json" autocomplete="off" autocorrect="off">
@@ -23,6 +26,10 @@ export default Vue.extend({
 	},
 
 	computed: {
+		loading (): boolean {
+			return this.$store.state.feed.loading > 0
+		},
+
 		hasLocalFeed (): boolean {
 			const feed = this.$store.state.feed.url ? this.$store.getters.feedForUrl(null) : this.$store.state.feed.data
 			return feed !== null

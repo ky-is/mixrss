@@ -4,6 +4,7 @@ export interface FeedState {
 	data: JSONFeed | null
 	modified: boolean
 	selectedTagIds: string[]
+	loading: number
 }
 
 export interface LocalState {
