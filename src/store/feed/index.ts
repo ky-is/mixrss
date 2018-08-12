@@ -6,6 +6,7 @@ import fetchJsonp from 'fetch-jsonp'
 
 import { PLACEHOLDER_FEED_URL } from '@/helpers/constants'
 import storage from '@/helpers/storage'
+import soundcloudIds from '@/helpers/soundcloud_ids'
 
 //eslint-disable-next-line no-unused-vars
 import { FeedState } from '@/types/store'
@@ -21,6 +22,14 @@ const DURATION_REGEX = /PT(\d+H)?(\d+M)?(\d+S)?/
 function padTime (string: string, hasLargerTime: boolean) {
 	const number = parseInt(string.slice(0, -1), 10)
 	return (hasLargerTime && number < 10 ? '0' : '') + number
+}
+
+function getDurationFromMS (duration: number) {
+	let seconds = Math.round(duration / 1000)
+	const minutes = Math.floor(seconds / 60)
+	seconds %= 60
+	const secondsString = seconds < 10 ? `0${seconds}` : `${seconds}`
+	return `${minutes}:${secondsString}`
 }
 
 function getDurationFromISO (duration: string) {
@@ -51,6 +60,40 @@ function writeFeedData (state: FeedState) {
 
 function getLocalFeed (url: string | null): JSONFeed | null {
 	return storage.getJSON(feedKey(url))
+}
+
+//API
+
+function loadSoundcloudInfo (url: string, callback: Function, retry?: boolean) {
+	const soundcloudId = soundcloudIds.next()
+	const soundcloudUrl = `https://api.soundcloud.com/resolve?url=${url}&client_id=${soundcloudId}`
+	fetchJsonp(soundcloudUrl).then((response: any) => response.json())
+	.then((data: any) => {
+		callback(data)
+	})
+	.catch((error: any) => {
+		if (!retry) {
+			loadSoundcloudInfo(url, callback, true)
+		} else {
+			console.error(error)
+			window.alert('Unable to load from SoundCloud. Please check your URL and try again.')
+		}
+	})
+}
+
+function loadYouTubeInfo (url: string, callback: Function) {
+	const youtubeId = url.length === 11 ? url : Vue.prototype.$youtube.getIdFromUrl(url)
+	if (youtubeId) {
+		const youtubeUrl =`https://www.googleapis.com/youtube/v3/videos?id=${youtubeId}&key=${YOUTUBE_API}&part=snippet,contentDetails,status`
+		fetchJsonp(youtubeUrl).then((response: any) => response.json())
+		.then((data: any) => {
+			callback(data.items[0])
+		})
+		.catch((error: any) => {
+			console.error(error)
+			window.alert('Unable to load from SoundCloud. Please check your URL and try again.')
+		})
+	}
 }
 
 //STATE
@@ -121,24 +164,30 @@ const actions: ActionTree<FeedState, any> = {
 	},
 
 	ADD_FEED_ITEM ({ commit, rootState }, url) {
-		const youtubeId = url.length === 11 ? url : Vue.prototype.$youtube.getIdFromUrl(url) //TODO
-		if (youtubeId) {
-			const youtubeUrl =`https://www.googleapis.com/youtube/v3/videos?id=${youtubeId}&key=${YOUTUBE_API}&part=snippet,contentDetails,status`
-			fetchJsonp(youtubeUrl).then((response: any) => response.json())
-			.then((data: any) => {
-				const video = data.items[0]
-				if (!video) {
-					return window.alert('No video found for that URL. Please check the video link/id you copied and try again, thanks!')
+		if (url.toLowerCase().indexOf('soundcloud.com') !== -1) {
+			loadSoundcloudInfo(url, (data: any) => {
+				if (data.embeddable_by !== 'all') {
+					return window.alert(`Sorry, this track is not allowed to be played externally (restricted to ${data.embeddable_by}). Please use another song, or try finding a version on YouTube.`)
 				}
-				const url = `https://www.youtube.com/watch?v=${youtubeId}`
-				const title = video.snippet.title.replace(TITLE_REGEX, '').trim()
-				const duration = getDurationFromISO(video.contentDetails.duration)
-				const thumbnail = video.snippet.thumbnails.medium || video.snippet.thumbnails.default
-				const image = thumbnail ? thumbnail.url : null
-				commit('PREPEND_TO_FEED', { id: youtubeId, localAuthor: rootState.author, url, title, duration, image, type: 'youtube' })
+				const id = data.id
+				const url = data.permalink_url
+				const title = data.title
+				const duration = getDurationFromMS(data.duration)
+				const image = data.artwork_url
+				commit('PREPEND_TO_FEED', { type: 'soundcloud', id, localAuthor: rootState.author, url, title, duration, image })
 			})
-			.catch((error: any) => {
-				console.error(error)
+		} else {
+			loadYouTubeInfo(url, (data: any) => {
+				if (data.status.embeddable === false) {
+					return window.alert(`Sorry, this video is not allowed to be played externally. Please use another song, or try finding a version on SoundCloud.`)
+				}
+				const id = data.id
+				const url = `https://www.youtube.com/watch?v=${id}`
+				const title = data.snippet.title.replace(TITLE_REGEX, '').trim()
+				const duration = getDurationFromISO(data.contentDetails.duration)
+				const thumbnail = data.snippet.thumbnails.medium || data.snippet.thumbnails.default
+				const image = thumbnail ? thumbnail.url : null
+				commit('PREPEND_TO_FEED', { type: 'youtube', id, localAuthor: rootState.author, url, title, duration, image })
 			})
 		}
 	},
