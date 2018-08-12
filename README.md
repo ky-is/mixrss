@@ -1,6 +1,6 @@
 # mixrss
 
-Create, remix, and play [JSON Feed](https://jsonfeed.org) RSS playlists. It's a collaborative way to share and discover songs. Currently supports YouTube playback.
+Create, remix, and play [JSON Feed](https://jsonfeed.org) RSS playlists. It's a collaborative way to share and discover songs. Supports importing and playing songs from YouTube and SoundCloud.
 
 ## Development
 
