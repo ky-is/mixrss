@@ -1,5 +1,6 @@
 <template>
 <div class="play-manager">
+	<SoundCloudManager v-if="soundcloudUrl" :url="soundcloudUrl" :paused="paused" @playing="onPlaying" @ended="onEnded" />
 	<YouTubeManager :videoId="youtubeId" :paused="paused" @playing="onPlaying" @ended="onEnded" />
 </div>
 </template>
@@ -7,10 +8,12 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import SoundCloudManager from '@/components/Play/Manager/SoundCloud.vue'
 import YouTubeManager from '@/components/Play/Manager/YouTube.vue'
 
 export default Vue.extend({
 	components: {
+		SoundCloudManager,
 		YouTubeManager,
 	},
 
@@ -19,12 +22,17 @@ export default Vue.extend({
 			return this.$store.state.playback.paused
 		},
 
-		playUrl (): number | null {
+		playUrl (): string | null {
 			return this.$store.state.playback.url
 		},
 
 		youtubeId (): string | null {
 			return this.playUrl ? this.$youtube.getIdFromUrl(this.playUrl) : null
+		},
+
+		soundcloudUrl (): string | null {
+			const url = this.playUrl
+			return url && url.toLowerCase().indexOf('soundcloud.com') !== -1 ? url : null
 		},
 	},
 

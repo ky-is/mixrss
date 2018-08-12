@@ -61,12 +61,3 @@ export default Vue.extend({
 	},
 })
 </script>
-
-<style scoped>
-.play-manager {
-	position: absolute;
-	left: 0;
-	top: 0;
-	transform: translate(-200px, -200px);
-}
-</style>
