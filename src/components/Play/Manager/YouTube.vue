@@ -26,6 +26,9 @@ export default Vue.extend({
 		},
 	
 		paused (paused) {
+			if (!this.videoId) {
+				return
+			}
 			const player = (this.$refs.youtube as any).player
 			if (paused) {
 				player.pauseVideo()
@@ -49,7 +52,7 @@ export default Vue.extend({
 		},
 
 		onPaused (paused: boolean) {
-			if (paused && this.loading) {
+			if (!this.videoId || (paused && this.loading)) {
 				return
 			}
 			this.$emit('playing', !paused)

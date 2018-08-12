@@ -17,23 +17,35 @@ export default Vue.extend({
 		return {
 			loading: false,
 			player: null as any,
+			disableChrome: null as boolean | null,
 		}
 	},
 
 	computed: {
 		playbackUrl (): string | null {
-			return this.url ? `https://w.soundcloud.com/player/?url=${this.url}&auto_play=false&show_artwork=false&single_active=false&buying=false&sharing=false&download=false&show_playcount=false&show_user=false` : null
+			return this.disableChrome !== true ? `https://w.soundcloud.com/player/?url=${this.url}&auto_play=true&show_artwork=false&single_active=false&buying=false&sharing=false&download=false&show_playcount=false&show_user=false` : null
 		},
 	},
 
 	watch: {
-		url () {
-			this.loading = true
-			this.player.setVolume(100)
-			this.player.play()
+		url: {
+			immediate: true,
+			handler () {
+				this.loading = true
+				if (this.disableChrome === null && window.hasOwnProperty('chrome')) {
+					const splitChrome = navigator.appVersion.split('Chrome/')[1]
+					if (splitChrome) {
+						const splitVersion = splitChrome.split('.')[0]
+						const version = parseInt(splitVersion, 10)
+						if (!isNaN(version) && version < 70) {
+							this.disableChrome = window.confirm('SoundCloud playback may not work in your current version of Chrome. You can try another browser instead, or continue instead.')
+						}
+					}
+				}
+			},
 		},
 	
-		paused (paused) {
+		paused (paused: boolean) {
 			if (paused) {
 				this.player.pause()
 			} else {
@@ -55,15 +67,17 @@ export default Vue.extend({
 	methods: {
 		onCued () {
 			this.loading = false
-			this.player.play()
+			this.player.setVolume(100)
 		},
 
 		onPlay () {
-			this.$emit('playing', true)
+			if (this.paused) {
+				this.$emit('playing', true)
+			}
 		},
 
 		onPaused () {
-			if (!this.loading) {
+			if (!this.paused) {
 				this.$emit('playing', false)
 			}
 		},
