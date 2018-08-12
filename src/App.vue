@@ -12,7 +12,7 @@ import Vue from 'vue'
 import HomeView from '@/views/Home.vue'
 
 import PlayBar from '@/components/Play/Bar.vue'
-import PlayManager from '@/components/Play/Manager.vue'
+import PlayManager from '@/components/Play/Manager/index.vue'
 
 export default Vue.extend({
 	components: {

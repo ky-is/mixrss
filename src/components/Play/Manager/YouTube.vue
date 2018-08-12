@@ -1,13 +1,16 @@
 <template>
-<div class="play-manager">
-	<youtube :video-id="youtubeId" ref="youtube" :player-vars="playerVars" @cued="onCued" @playing="onPaused(false)" @paused="onPaused(true)" @ended="onEnded" width="200" height="200" />
-</div>
+<youtube :video-id="videoId" :player-vars="playerVars" ref="youtube" @cued="onCued" @playing="onPaused(false)" @paused="onPaused(true)" @ended="onEnded" width="200" height="200" />
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
+	props: {
+		videoId: String,
+		paused: Boolean,
+	},
+
 	data () {
 		return {
 			playerVars: {
@@ -17,21 +20,11 @@ export default Vue.extend({
 		}
 	},
 
-	computed: {
-		paused (): boolean {
-			return this.$store.state.playback.paused
-		},
-
-		playUrl (): number | null {
-			return this.$store.state.playback.url
-		},
-
-		youtubeId (): string | null {
-			return this.playUrl ? this.$youtube.getIdFromUrl(this.playUrl) : null
-		},
-	},
-
 	watch: {
+		videoId () {
+			this.loading = true
+		},
+	
 		paused (paused) {
 			const player = (this.$refs.youtube as any).player
 			if (paused) {
@@ -40,15 +33,11 @@ export default Vue.extend({
 				player.playVideo()
 			}
 		},
-
-		youtubeId () {
-			this.loading = true
-		},
 	},
 
 	methods: {
 		onCued (player: any) {
-			if (!this.youtubeId) {
+			if (!this.videoId) {
 				return
 			}
 			this.loading = false
@@ -63,11 +52,11 @@ export default Vue.extend({
 			if (paused && this.loading) {
 				return
 			}
-			this.$store.dispatch('PRESS_PAUSE', paused)
+			this.$emit('playing', !paused)
 		},
 
 		onEnded () {
-			this.$store.dispatch('SEEK_DIRECTION', 1)
+			this.$emit('ended')
 		},
 	},
 })
