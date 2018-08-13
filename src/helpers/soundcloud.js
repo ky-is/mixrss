@@ -162,13 +162,13 @@ SC.Widget = (function(n) {
 				(!t || A(n.origin) === A(t.domain)) &&
 					(t
 						? (r === L.READY && ((t.isReady = !0), m(t, C), E(C, t)),
-						  r !== L.PLAY || t.playEventFired || (t.playEventFired = !0),
-						  r !== L.PLAY_PROGRESS ||
+							r !== L.PLAY || t.playEventFired || (t.playEventFired = !0),
+							r !== L.PLAY_PROGRESS ||
 								t.playEventFired ||
 								((t.playEventFired = !0), m(t, L.PLAY, [o])),
-						  (i = []),
-						  void 0 !== o && i.push(o),
-						  void m(t, r, i))
+							(i = []),
+							void 0 !== o && i.push(o),
+							void m(t, r, i))
 						: (r === L.READY && T.push(n.source), !1))
 			);
 		}
@@ -203,9 +203,9 @@ SC.Widget = (function(n) {
 				return s && s.instance
 					? s.instance
 					: ((o = T.indexOf(c(n)) > -1),
-					  (a = new _(n)),
-					  I.push(new y(a, n, o)),
-					  a);
+						(a = new _(n)),
+						I.push(new y(a, n, o)),
+						a);
 			}),
 			(O.Events = L),
 			(window.SC = window.SC || {}),
@@ -260,7 +260,7 @@ SC.Widget = (function(n) {
 												e.bind(n, t);
 											},
 											r
-									  )),
+										)),
 						this
 					);
 				},

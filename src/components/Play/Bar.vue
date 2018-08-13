@@ -1,7 +1,7 @@
 <template>
 <div class="play-bar">
 	<button @click="onPrevious" :disabled="!hasPreviousSong">⇤</button><!-- ⇤↩︎⏮ -->
-	<button @click="onPlay" :disabled="!songs.length">{{ hasSong && !paused ? '◼︎' : '▶︎' }}</button><!-- ▶︎▶️◼︎⏸ -->
+	<button @click="onPlay" :disabled="!songs.length">{{ hasPlaylist && !paused ? '◼︎' : '▶︎' }}</button><!-- ▶︎▶️◼︎⏸ -->
 	<button @click="onNext" :disabled="!hasNextSong">⇥</button><!-- ⇥↪︎⏭ -->
 </div>
 </template>
@@ -10,16 +10,12 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-	props: {
-		item: Object as () => JSONFeedItem, //TODO https://github.com/vuejs/vue/pull/6856
-	},
-
 	computed: {
 		playUrl (): string | null {
 			return this.$store.state.playback.url
 		},
 
-		hasSong (): boolean {
+		hasPlaylist (): boolean {
 			return this.playUrl !== null
 		},
 
@@ -39,10 +35,6 @@ export default Vue.extend({
 
 		paused (): boolean {
 			return this.$store.state.playback.paused
-		},
-
-		date (): Date {
-			return new Date(this.item.date_published)
 		},
 	},
 
