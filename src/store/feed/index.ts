@@ -181,6 +181,15 @@ const actions: ActionTree<FeedState, any> = {
 				if (data.status.embeddable === false) {
 					return window.alert(`Sorry, this video is not allowed to be played externally. Please use another song, or try finding a version on SoundCloud.`)
 				}
+				const regionRestriction = data.contentDetails.regionRestriction
+				if (regionRestriction) {
+					const description = regionRestriction.allowed ? 'only playable' : 'unplayable'
+					const list = regionRestriction.allowed || regionRestriction.blocked
+					const confirmed = window.confirm(`This video is ${description} in the following countries due to region restrictions:\n${list.join(', ')}.\nAdd anyway?`)
+					if (!confirmed) {
+						return
+					}
+				}
 				const id = data.id
 				const url = `https://www.youtube.com/watch?v=${id}`
 				const title = data.snippet.title.replace(TITLE_REGEX, '').trim()
