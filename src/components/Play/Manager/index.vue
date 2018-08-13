@@ -53,6 +53,6 @@ export default Vue.extend({
 	position: absolute;
 	left: 0;
 	top: 0;
-	transform: translate(-200px, -200px);
+	transform: translate(-200px, -400px);
 }
 </style>
