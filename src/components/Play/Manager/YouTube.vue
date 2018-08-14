@@ -25,7 +25,7 @@ export default Vue.extend({
 			this.loading = true
 		},
 	
-		paused (paused) {
+		paused (paused: boolean) {
 			if (!this.videoId) {
 				return
 			}
