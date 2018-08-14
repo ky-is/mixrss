@@ -147,6 +147,10 @@ export default Vue.extend({
 	cursor: pointer;
 }
 
+.selected .hover-inner {
+	visibility: visible;
+}
+
 .button-modify {
 	border-radius: 6px;
 	padding: 0 4px;
