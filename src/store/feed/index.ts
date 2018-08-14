@@ -178,6 +178,7 @@ const actions: ActionTree<FeedState, any> = {
 			})
 		} else {
 			loadYouTubeInfo(url, (data: any) => {
+				// console.log(data) //SAMPLE
 				if (data.status.embeddable === false) {
 					return window.alert(`Sorry, this video is not allowed to be played externally. Please use another version, or try finding a version on SoundCloud.`)
 				}
@@ -201,6 +202,13 @@ const actions: ActionTree<FeedState, any> = {
 				commit('PREPEND_TO_FEED', { type: 'youtube', id, localAuthor: rootState.author, url, title, duration, image, imageAlign })
 			})
 		}
+	},
+
+	REMOVE_FEED_ITEM ({ commit, dispatch, rootState }, { id, url }) {
+		if (url === rootState.playback.url) {
+			dispatch('SEEK_DIRECTION', 1)
+		}
+		commit('SONG_DELETE', id)
 	},
 
 	DELETE_FEED ({ commit }, url) {
@@ -269,6 +277,15 @@ const mutations: MutationTree<FeedState> = {
 
 	SONG_DESCRIPTION (state, { item, description }) {
 		Vue.set(item, 'content_text', description)
+		writeFeedData(state)
+	},
+
+	SONG_DELETE (state, id) {
+		const feedData = state.data
+		if (!feedData || !feedData.items) {
+			return
+		}
+		feedData.items = feedData.items.filter(item => item.id !== id)
 		writeFeedData(state)
 	},
 

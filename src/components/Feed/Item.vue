@@ -1,7 +1,7 @@
 <template>
 <li class="feed-item hover-outer">
 	<button @click="onItem" class="item-icon borderless" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
-	<div>
+	<div class="song-details">
 		<div class="title">
 			<div v-if="editTitle">
 				<input type="text" v-model.trim="itemTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
@@ -30,6 +30,9 @@
 				<button v-else @click="onNoteEdit" class="button-modify button-outline">{{ item.content_text ? 'Edit' : '+Note' }}</button>
 			</div>
 		</div>
+	</div>
+	<div class="hover-inner">
+		<button @click="onDelete" class="button-delete unstyled">✕</button>
 	</div>
 </li>
 </template>
@@ -97,6 +100,13 @@ export default Vue.extend({
 				this.$store.commit('SONG_DESCRIPTION', { item: this.item, description })
 			}
 		},
+
+		onDelete () {
+			const confirmed = window.confirm(`Delete ${this.item.title} from this playlist?`)
+			if (confirmed) {
+				this.$store.dispatch('REMOVE_FEED_ITEM', { id: this.item.id, url: this.url })
+			}
+		},
 	},
 })
 </script>
@@ -121,6 +131,8 @@ export default Vue.extend({
 	background: #ffeef8 !important;
 }
 
+/* ALBUM ART */
+
 .item-icon {
 	width: 64px;
 	height: 64px;
@@ -136,6 +148,15 @@ export default Vue.extend({
 	background-position: -9.5px -9.5px;
 }
 
+/* SONG DETAILS */
+
+.song-details {
+	flex-grow: 1;
+}
+.selected .song-details .hover-inner {
+	visibility: visible;
+}
+
 .title {
 	display: flex;
 	align-items: baseline;
@@ -149,10 +170,6 @@ export default Vue.extend({
 }
 .item-icon:hover {
 	cursor: pointer;
-}
-
-.selected .hover-inner {
-	visibility: visible;
 }
 
 .button-modify {
@@ -187,5 +204,14 @@ button.button-outline, .button-tag:hover {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+/* MANAGE */
+
+.button-delete {
+	width: 48px;
+	height: 48px;
+	color: #f33;
+	font-weight: 900;
 }
 </style>
