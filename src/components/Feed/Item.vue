@@ -1,6 +1,6 @@
 <template>
 <li class="feed-item hover-outer">
-	<button @click="onItem" class="item-icon borderless" :style="{ 'background-image': `url(${item.image})` }" />
+	<button @click="onItem" class="item-icon borderless" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
 	<div>
 		<div class="title">
 			<div v-if="editTitle">
@@ -130,6 +130,10 @@ export default Vue.extend({
 	margin-right: 8px;
 	flex-shrink: 0;
 	transition: box-shadow 500ms;
+}
+.item-icon.youtube {
+	background-size: 262%;
+	background-position: -9.5px -9.5px;
 }
 
 .title {
