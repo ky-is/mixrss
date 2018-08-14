@@ -6,47 +6,14 @@ import fetchJsonp from 'fetch-jsonp'
 
 import { PLACEHOLDER_FEED_URL } from '@/helpers/constants'
 import storage from '@/helpers/storage'
-import soundcloudIds from '@/helpers/soundcloud_ids'
+
+import importSoundCloud from '@/import/SoundCloud'
+import importYouTube from '@/import/YouTube'
 
 //eslint-disable-next-line no-unused-vars
 import { FeedState } from '@/types/store'
 
 //LOCAL
-
-const YOUTUBE_API = 'AIzaSyCWalFG38MaNJ_aQdHmEG5aVurjfWlzOj4'
-
-const TITLE_STRIP = [ 'official', 'official video', 'audio' ].map(t => `(\\[|\\()${t}(\\]|\\))`).join('|')
-const TITLE_REGEX = new RegExp(TITLE_STRIP, 'ig')
-const DURATION_REGEX = /PT(\d+H)?(\d+M)?(\d+S)?/
-
-function padTime (string: string, hasLargerTime: boolean) {
-	const number = parseInt(string.slice(0, -1), 10)
-	return (hasLargerTime && number < 10 ? '0' : '') + number
-}
-
-function getDurationFromMS (duration: number) {
-	let seconds = Math.round(duration / 1000)
-	const minutes = Math.floor(seconds / 60)
-	seconds %= 60
-	const secondsString = seconds < 10 ? `0${seconds}` : `${seconds}`
-	return `${minutes}:${secondsString}`
-}
-
-function getDurationFromISO (duration: string) {
-	const durations = DURATION_REGEX.exec(duration)
-	if (!durations) {
-		return ''
-	}
-
-	const [ _, hours, minutes, seconds ]: string[] = durations
-	const result = []
-	if (hours != null) {
-		result.push(padTime(hours, !!result.length))
-	}
-	result.push(padTime(minutes || '0M', !!result.length))
-	result.push(padTime(seconds || '0S', true))
-	return result.join(':')
-}
 
 const currentFeed: string | null = storage.get('CURRENT_FEED_URL')
 
@@ -60,40 +27,6 @@ function writeFeedData (state: FeedState) {
 
 function getLocalFeed (url: string | null): JSONFeed | null {
 	return storage.getJSON(feedKey(url))
-}
-
-//API
-
-function loadSoundcloudInfo (url: string, callback: Function, retry?: boolean) {
-	const soundcloudId = soundcloudIds.next()
-	const soundcloudUrl = `https://api.soundcloud.com/resolve?url=${url}&client_id=${soundcloudId}`
-	fetchJsonp(soundcloudUrl).then((response: any) => response.json())
-	.then((data: any) => {
-		callback(data)
-	})
-	.catch((error: any) => {
-		if (!retry) {
-			loadSoundcloudInfo(url, callback, true)
-		} else {
-			console.error(error)
-			window.alert('Unable to load from SoundCloud. Please check your URL and try again.')
-		}
-	})
-}
-
-function loadYouTubeInfo (url: string, callback: Function) {
-	const youtubeId = url.length === 11 ? url : Vue.prototype.$youtube.getIdFromUrl(url)
-	if (youtubeId) {
-		const youtubeUrl =`https://www.googleapis.com/youtube/v3/videos?id=${youtubeId}&key=${YOUTUBE_API}&part=snippet,contentDetails,status`
-		fetchJsonp(youtubeUrl).then((response: any) => response.json())
-		.then((data: any) => {
-			callback(data.items[0])
-		})
-		.catch((error: any) => {
-			console.error(error)
-			window.alert('Unable to load from SoundCloud. Please check your URL and try again.')
-		})
-	}
 }
 
 //STATE
@@ -165,41 +98,14 @@ const actions: ActionTree<FeedState, any> = {
 
 	ADD_FEED_ITEM ({ commit, rootState }, url) {
 		if (url.toLowerCase().indexOf('soundcloud.com') !== -1) {
-			loadSoundcloudInfo(url, (data: any) => {
-				if (data.embeddable_by !== 'all') {
-					return window.alert(`Sorry, this track is not allowed to be played externally (restricted to ${data.embeddable_by}). Please use another song, or try finding a version on YouTube.`)
-				}
-				const id = data.id
-				const url = data.permalink_url
-				const title = data.title
-				const duration = getDurationFromMS(data.duration)
-				const image = data.artwork_url
-				commit('PREPEND_TO_FEED', { type: 'soundcloud', id, localAuthor: rootState.author, url, title, duration, image })
+			importSoundCloud.load(url, (data: any) => {
+				data.localAuthor = rootState.author
+				commit('PREPEND_TO_FEED', data)
 			})
 		} else {
-			loadYouTubeInfo(url, (data: any) => {
-				// console.log(data) //SAMPLE
-				if (data.status.embeddable === false) {
-					return window.alert(`Sorry, this video is not allowed to be played externally. Please use another version, or try finding a version on SoundCloud.`)
-				}
-				const regionRestriction = data.contentDetails.regionRestriction
-				if (regionRestriction) {
-					const description = regionRestriction.allowed ? 'only playable' : 'unplayable'
-					const list = regionRestriction.allowed || regionRestriction.blocked
-					const confirmed = window.confirm(`This video is ${description} in the following countries due to region restrictions:\n${list.join(', ')}.\nAdd anyway?`)
-					if (!confirmed) {
-						return
-					}
-				}
-				const id = data.id
-				const url = `https://www.youtube.com/watch?v=${id}`
-				const title = data.snippet.title.replace(TITLE_REGEX, '').trim()
-				const duration = getDurationFromISO(data.contentDetails.duration)
-				const thumbnail = data.snippet.thumbnails.medium || data.snippet.thumbnails.default
-				const image = thumbnail ? thumbnail.url : null
-				const description = data.snippet.description
-				const imageAlign = description.endsWith('\nAuto-generated by YouTube.') ? 'youtube' : undefined
-				commit('PREPEND_TO_FEED', { type: 'youtube', id, localAuthor: rootState.author, url, title, duration, image, imageAlign })
+			importYouTube.load(url, (data: any) => {
+				data.localAuthor = rootState.author
+				commit('PREPEND_TO_FEED', data)
 			})
 		}
 	},
@@ -326,7 +232,7 @@ const mutations: MutationTree<FeedState> = {
 			Vue.set(feedData, 'items', items)
 		}
 		for (const item of items) {
-			if (item.url === url || item.external_url === url) {
+			if (item.id === url) {
 				return window.alert('This song is already in your playlist!')
 			}
 		}
