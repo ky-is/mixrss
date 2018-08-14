@@ -1,5 +1,5 @@
 <template>
-<ul class="tag-list">
+<ul class="tag-list flex">
 	<li v-for="tag in tags" :key="tag">
 		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>		
 	</li>
@@ -62,15 +62,14 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 li {
-	display: inline-block;
-	margin-right: 4px;
+	@apply mr-1;
 }
 
 button {
+	@apply rounded;
 	padding: 1px 5px;
-	border-radius: 5px;
 	min-width: 28px;
 }
 </style>

@@ -2,7 +2,7 @@
 <div class="sidebar">
 	<SidebarItem :url="null" :selected="currentUrl === null" />
 	<SidebarItem v-for="url in feedList" :url="url" :selected="currentUrl === url" :key="url" />
-	<button @click="onAddFeed" class="add-feed-button theme-color">{{ addingFeed ? 'Cancel' : 'Add new feed' }}</button>
+	<button @click="onAddFeed" class="unstyled w-full theme-color font-bold h-12">{{ addingFeed ? 'Cancel' : 'Add new feed' }}</button>
 </div>
 </template>
 
@@ -41,18 +41,3 @@ export default Vue.extend({
 	},
 })
 </script>
-
-<style scoped>
-.sidebar {
-	width: 100%;
-	box-sizing: border-box;
-	overflow: hidden scroll;
-}
-
-.add-feed-button {
-	width: 100%;
-	height: 48px;
-	border: 0;
-	font-weight: 600;
-}
-</style>

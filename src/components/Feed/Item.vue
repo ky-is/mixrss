@@ -1,8 +1,8 @@
 <template>
-<li class="feed-item hover-outer">
-	<button @click="onItem" class="item-icon borderless" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
+<li class="feed-item hover-outer p-2 flex">
+	<button @click="onItem" class="item-icon borderless mr-2" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
 	<div class="song-details">
-		<div class="title">
+		<div class="title flex">
 			<div v-if="editTitle">
 				<input type="text" v-model.trim="itemTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
 				<button @click="onTitleSave" class="button-modify button-outline">Save</button>
@@ -11,7 +11,7 @@
 				<button @click="onTitleToggle" class="unstyled">{{ item.title }}</button>
 			</div>
 		</div>
-		<div class="text-small text-faint hover-inner">
+		<div class="text-sm text-faint hover-inner">
 			<div>
 				<span>{{ item._duration || item.summary }}</span>
 				<span> ・ </span>
@@ -20,12 +20,12 @@
 				<span v-if="item.author"> {{ item.author.name }} ・</span>
 				<span class="tags">
 					<span v-if="tags">
-						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag hover-parent" :key="tag">{{ tag }}<span class="tag-delete hover-child">✖︎</span></button>
+						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag hover-parent" :key="tag">{{ tag }}<span class="tag-delete hover-child ml-px">✖︎</span></button>
 					</span>
 					<button @click="onTagAdd" class="button-modify button-outline">+Tag</button>
 				</span>
 			</div>
-			<div class="description-container">
+			<div class="flex">
 				<button v-if="item.content_text" @click="onNoteEdit" class="description unstyled">{{ item.content_text }}</button>
 				<button v-else @click="onNoteEdit" class="button-modify button-outline">{{ item.content_text ? 'Edit' : '+Note' }}</button>
 			</div>
@@ -113,9 +113,7 @@ export default Vue.extend({
 
 <style scoped>
 .feed-item {
-	display: flex;
 	align-items: center;
-	padding: 8px;
 	transition: background-color 200ms;
 	border-radius: 2px;
 }
@@ -139,7 +137,6 @@ export default Vue.extend({
 	border-radius: 3px;
 	background-size: cover;
 	background-position: center;
-	margin-right: 8px;
 	flex-shrink: 0;
 	transition: box-shadow 500ms;
 }
@@ -158,7 +155,6 @@ export default Vue.extend({
 }
 
 .title {
-	display: flex;
 	align-items: baseline;
 }
 
@@ -187,19 +183,11 @@ button.button-outline, .button-tag:hover {
 	background: #fff;
 }
 
-.button-tag {
-	margin: 0;
-}
-
 .tag-delete {
 	line-height: 0;
-	margin-left: 1px;
 	font-size: 12px;
 }
 
-.description-container {
-	display: flex;
-}
 .description {
 	white-space: nowrap;
 	overflow: hidden;

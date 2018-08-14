@@ -1,5 +1,5 @@
 <template>
-<div class="play-manager">
+<div class="play-manager absolute pin-t">
 	<SoundCloudManager v-if="soundcloudUrl" :url="soundcloudUrl" :paused="paused" @playing="onPlaying" @ended="onEnded" />
 	<YouTubeManager :videoId="youtubeId" :paused="paused" @playing="onPlaying" @ended="onEnded" />
 </div>
@@ -50,9 +50,6 @@ export default Vue.extend({
 
 <style scoped>
 .play-manager {
-	position: absolute;
-	left: 0;
-	top: 0;
 	transform: translate(-200px, -400px);
 }
 </style>

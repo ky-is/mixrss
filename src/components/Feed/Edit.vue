@@ -1,5 +1,5 @@
 <template>
-<form @submit.prevent="onSubmit" class="feed-add">
+<form @submit.prevent="onSubmit" class="my-2">
 	<div v-if="showEdit">
 		<div>
 			<input type="text" v-model.trim="feedTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
@@ -21,7 +21,7 @@
 		<button v-if="songs.length" @click.prevent="onExportFeed">Download</button>
 		<a ref="downloadLink" style="display:none" :download="fileName" />
 	</div>
-	<div v-else-if="feedData">
+	<div v-else-if="feedData" class="flex">
 		<input type="url" v-model.trim="itemUrl" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
 		<button type="submit">Load</button>
 		<button @click.prevent="onToggleForm">Cancel</button>
@@ -185,16 +185,9 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.feed-add {
-	margin: 8px 0;
-}
-
-.flex-wrap {
-	flex-wrap: wrap;
-}
-
 input, button {
 	height: 44px;
+	padding: 0 12px;
 }
 
 .create-playlist input, .create-playlist button {

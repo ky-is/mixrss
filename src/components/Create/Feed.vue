@@ -4,12 +4,12 @@
 </div>
 <div v-else>
 	<h2>Load a remote feed</h2>
-	<form @submit.prevent="onEnterFeedUrl" class="load-feed">
+	<form @submit.prevent="onEnterFeedUrl" class="load-feed flex">
 		<input type="url" v-model.trim="url" placeholder="https://some.playlist/feed.json" autocomplete="off" autocorrect="off">
 		<button type="submit" class="button-load">Load</button>
 	</form>
 	<div v-if="!hasLocalFeed" class="text-center">
-		<div class="separator">~ or ~</div>
+		<div class="my-8">~ or ~</div>
 		<button @click="onCreateFeed" class="backed">Create a new feed</button>
 	</div>
 </div>
@@ -56,7 +56,6 @@ export default Vue.extend({
 
 <style scoped>
 .load-feed {
-	display: flex;
 	height: 44px;
 }
 
@@ -67,9 +66,5 @@ input {
 .button-load {
 	flex-grow: 1;
 	min-width: 64px;
-}
-
-.separator {
-	margin: 32px 0;
 }
 </style>

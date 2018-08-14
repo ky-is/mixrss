@@ -1,11 +1,11 @@
 <template>
-<li v-if="item" @click="onItem" class="sidebar-item hover-outer" :class="{ selected }">
-	<div class="item-icon" :style="{ 'background-image': `url(${item.icon})` }" />
+<li v-if="item" @click="onItem" class="sidebar-item hover-outer my-4 p-2 flex" :class="{ selected }">
+	<div class="item-icon mr-1" :style="{ 'background-image': `url(${item.icon})` }" />
 	<div>
 		<div v-if="item.title" class="title">{{ item.title }}</div>
-		<div v-else class="title text-italic">Untitled playlist</div>
-		<span class="text-faint text-small">{{ item.items ? item.items.length : 0 }} songs ・ {{ item.author.name || 'Unknown' }}</span>
-		<a :href="selected ? url : null" target="_blank" class="feed-url text-faint text-tiny hover-inner" rel="noopener">{{ shortUrl }}</a>
+		<div v-else class="title italic">Untitled playlist</div>
+		<div class="text-faint text-sm">{{ item.items ? item.items.length : 0 }} songs ・ {{ item.author.name || 'Unknown' }}</div>
+		<a :href="selected ? url : null" target="_blank" class="text-faint text-xs hover-inner" rel="noopener">{{ shortUrl }}</a>
 	</div>
 </li>
 </template>
@@ -61,11 +61,8 @@ export default Vue.extend({
 
 <style scoped>
 .sidebar-item {
-	display: flex;
 	cursor: pointer;
 	align-items: center;
-	padding: 6px;
-	margin: 16px 0;
 	transition: background-color 250ms;
 }
 .sidebar-item:hover {
@@ -82,15 +79,10 @@ export default Vue.extend({
 	border-radius: 50%;
 	background-size: cover;
 	background-position: center;
-	margin-right: 4px;
 	flex-shrink: 0;
 }
 
 .selected .hover-inner {
 	visibility: visible;
-}
-
-.feed-url {
-	display: block;
 }
 </style>

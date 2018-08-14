@@ -1,14 +1,16 @@
 <template>
-<div class="view-home">
+<div class="view-home flex">
 	<div v-if="feedData" class="sidebar-container scrolls">
 		<TheSidebar :feedList="feedList" />
 	</div>
-	<div class="feed-container scrolls">
-		<FeedCreate v-if="!feedData || addingFeed" class="feed-content" />
-		<div v-else class="feed-content">
-			<FeedEdit />
-			<FeedTags :items="feedData.items" />
-			<FeedList />
+	<div class="scrolls w-full">
+		<div class="feed-content m-auto p-2">
+			<FeedCreate v-if="!feedData || addingFeed"/>
+			<div v-else>
+				<FeedEdit />
+				<FeedTags :items="feedData.items" />
+				<FeedList />
+			</div>
 		</div>
 	</div>
 </div>
@@ -50,16 +52,14 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style scoped>
 .view-home {
-	display: flex;
 	align-items: stretch;
 	height: 100%;
 }
 
 .scrolls {
 	height: 100%;
-	box-sizing: border-box;
 	overflow-y: scroll;
 }
 
@@ -68,16 +68,7 @@ export default Vue.extend({
 	background-color: #f7f7f7;
 }
 
-.feed-container {
-	width: 100%;
-}
-
 .feed-content {
 	max-width: 600px;
-	margin: auto;
-	padding: 8px;
-}
-
-@media (max-width: 900px) {
 }
 </style>

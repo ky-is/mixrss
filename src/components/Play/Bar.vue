@@ -1,5 +1,5 @@
 <template>
-<div class="play-bar">
+<div class="play-bar flex">
 	<button @click="onPrevious" :disabled="!hasPreviousSong">⇤</button><!-- ⇤↩︎⏮ -->
 	<button @click="onPlay" :disabled="!songs.length">{{ hasPlaylist && !paused ? '◼︎' : '▶︎' }}</button><!-- ▶︎▶️◼︎⏸ -->
 	<button @click="onNext" :disabled="!hasNextSong">⇥</button><!-- ⇥↪︎⏭ -->
@@ -56,8 +56,8 @@ export default Vue.extend({
 <style scoped>
 .play-bar {
 	background: #eee;
-
-	display: flex;
+	flex-shrink: 0;
+	height: 64px;
 	align-items: stretch;
 	justify-content: center;
 }

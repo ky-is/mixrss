@@ -1,5 +1,5 @@
 <template>
-<div id="app">
+<div id="app" class="flex flex-col">
 	<HomeView />
 	<PlayBar />
 	<PlayManager />
@@ -34,23 +34,15 @@ body, #app {
 	height: inherit;
 }
 
-body {
-	margin: 0;
-}
-
 #app {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: 18px;
-
-	display: flex;
-	flex-direction: column;
 }
 
 ul {
 	list-style: none;
-	margin: 0;
 	padding: 0;
 }
 
@@ -83,41 +75,9 @@ a[href]:hover:active {
 	background: #f8a;
 }
 
-/* Home */
-
-.view-home {
-	flex-grow: 100;
-}
-
-.play-bar {
-	flex-shrink: 0;
-	height: 64px;
-}
-
-/* Text */
-
-.text-small {
-	font-size: 0.8em;
-}
-.text-tiny {
-	font-size: 0.6em;
-}
-
 .text-faint {
 	/* color: #888; */
 	opacity: 0.5;
-}
-
-.text-center {
-	text-align: center;
-}
-
-.text-italic {
-	font-style: italic;
-}
-
-.margin-auto {
-	margin: auto;
 }
 
 /* Hover */
@@ -135,16 +95,11 @@ button, input {
 	font-size: inherit;
 	border: 1px solid #ddd;
 	padding: 0;
-	outline: none;
-	box-sizing: border-box;
+	outline: none !important;
 	color: inherit;
 }
 
 button {
-	background: none;
-	box-shadow: none;
-	cursor: pointer;
-	padding: 0 12px;
 	transition: border-color, background-color 200ms;
 }
 button[disabled] {
@@ -168,8 +123,5 @@ button.backed {
 
 button.borderless, button.unstyled {
 	border: 0;
-}
-button.unstyled {
-	padding: 0;
 }
 </style>
