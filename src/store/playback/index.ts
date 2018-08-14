@@ -14,16 +14,16 @@ const state: PlaybackState = {
 //MUTATIONS
 
 const mutations: MutationTree<PlaybackState> = {
-	SET_PLAYBACK_URL (state, url) {
+	SET_PLAYBACK_URL (state, url: string | null) {
 		if (url === state.url) {
 			state.paused = !state.paused
 		} else {
 			state.url = url
-			state.paused = false
+			state.paused = url === null
 		}
 	},
 
-	TOGGLE_PAUSED (state, paused: boolean | undefined) {
+	TOGGLE_PAUSED (state, paused?: boolean) {
 		state.paused = paused !== undefined ? paused : !state.paused
 	},
 }
@@ -31,7 +31,7 @@ const mutations: MutationTree<PlaybackState> = {
 //ACTIONS
 
 const actions: ActionTree<PlaybackState, any> = {
-	PRESS_PAUSE ({ commit, dispatch, state }, paused) {
+	PRESS_PAUSE ({ commit, dispatch, state }, paused?: boolean) {
 		if (state.url === null) {
 			dispatch('PLAY_SONG_INDEX', 0)
 		} else {
@@ -39,21 +39,14 @@ const actions: ActionTree<PlaybackState, any> = {
 		}
 	},
 
-	SEEK_DIRECTION ({ dispatch, getters }, direction) {
+	SEEK_DIRECTION ({ dispatch, getters }, direction: number) {
 		const playbackIndex = getters.playbackIndex
-		if (playbackIndex !== null) {
-			dispatch('PLAY_SONG_INDEX', playbackIndex + direction)
-		}
+		dispatch('PLAY_SONG_INDEX', playbackIndex !== null ? playbackIndex + direction : null)
 	},
 
-	PLAY_SONG_INDEX ({ commit, rootGetters }, index) {
-		if (index === null) {
-			return commit('TOGGLE_PAUSED', true)
-		}
-		const song = rootGetters.songs[index]
-		if (song) {
-			commit('SET_PLAYBACK_URL', song.url || song.external_url)
-		}
+	PLAY_SONG_INDEX ({ commit, rootGetters }, index: number | null) {
+		const song = (index && rootGetters.songs[index]) || null
+		commit('SET_PLAYBACK_URL', song ? song.url || song.external_url : null)
 	},
 }
 
