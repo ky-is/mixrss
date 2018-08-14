@@ -227,7 +227,7 @@ const mutations: MutationTree<FeedState> = {
 		writeFeedData(state)
 	},
 
-	PREPEND_TO_FEED (state, { type, id, localAuthor, url, title, duration, image, imageAlign }) {
+	PREPEND_TO_FEED (state, { type, id, localAuthor, url, title, duration, image, imageAlign, embed }) {
 		const feedData = state.data
 		if (!feedData) {
 			return
@@ -247,7 +247,7 @@ const mutations: MutationTree<FeedState> = {
 		const feedItem: JSONFeedItem = {
 			id: url,
 			external_url: url,
-			content_html: type === 'youtube' ? `<iframe src="https://www.youtube.com/embed/${id}" width="100%"/>` : undefined,
+			content_html: `<iframe src="${embed}" width="100%"/>`,
 			_duration: duration,
 			summary: duration,
 			title,

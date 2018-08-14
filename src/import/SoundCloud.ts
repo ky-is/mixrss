@@ -14,8 +14,8 @@ export default {
 
   load (url: string, callback: Function, retry?: boolean) {
     const soundcloudId = soundcloudIds.next()
-    const soundcloudUrl = `https://api.soundcloud.com/resolve?url=${url}&client_id=${soundcloudId}`
-    fetchJsonp(soundcloudUrl).then((response: any) => response.json())
+    const soundcloudApi = `https://api.soundcloud.com/resolve?url=${url}&client_id=${soundcloudId}`
+    fetchJsonp(soundcloudApi).then((response: any) => response.json())
     .then((data: any) => {
       // console.log(data) //SAMPLE
       if (data.embeddable_by !== 'all') {
@@ -30,7 +30,8 @@ export default {
       }
       const duration = getDurationFromMS(data.duration)
       const image = data.artwork_url
-      callback({ type: 'soundcloud', id, url, title, duration, image })
+      const embed = `https://w.soundcloud.com/player/?url=${url}`
+      callback({ type: 'soundcloud', id, url, title, duration, image, embed })
     })
     .catch((error: any) => {
       if (!retry) {
