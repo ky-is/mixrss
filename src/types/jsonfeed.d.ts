@@ -17,6 +17,7 @@ declare interface JSONFeedItem {
 	url?: string
 	external_url?: string
 	image?: string
+	_imageAlign?: string,
 	summary?: string
 	date_published: string
 	date_modified?: string
