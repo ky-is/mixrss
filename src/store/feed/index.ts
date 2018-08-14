@@ -211,12 +211,19 @@ const mutations: MutationTree<FeedState> = {
 		}
 	},
 
-	UPDATE_FEED (state, { title, url }) {
+	UPDATE_FEED (state, { author, title, url, icon }) {
 		if (state.data === null) {
 			return
 		}
+		if (author) {
+			if (!state.data.author) {
+				state.data.author = {} as JSONFeedAuthor
+			}
+			state.data.author.name = author
+		}
 		state.data.title = title
 		state.data.feed_url = url
+		state.data.icon = icon
 		writeFeedData(state)
 	},
 

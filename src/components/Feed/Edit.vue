@@ -41,15 +41,19 @@ export default Vue.extend({
 			showEdit: false,
 
 			feedUrl: '',
-			itemUrl: null,
+			itemUrl: null as string | null,
 
 			feedTitle: null as string | null,
-			feedAuthor: null,
-			feedIcon: null,
+			feedAuthor: null as string | null,
+			feedIcon: null as string | null,
 		}
 	},
 
 	computed: {
+		isLocal (): boolean {
+			return this.feed.url === null
+		},
+	
 		feed (): any {
 			return this.$store.state.feed
 		},
@@ -69,6 +73,10 @@ export default Vue.extend({
 
 		currentFeedUrl (): string | null {
 			return (this.feedData && this.feedData.feed_url) || null
+		},
+
+		currentFeedIcon (): string | null {
+			return (this.feedData && this.feedData.icon) || null
 		},
 
 		fileName (): string {
@@ -91,11 +99,17 @@ export default Vue.extend({
 	},
 
 	watch: {
-		localAuthor: {
+		isLocal: {
 			immediate: true,
-			handler (localAuthor) {
-				this.feedAuthor = localAuthor
+			handler (isLocal) {
+				if (isLocal) {
+					this.feedAuthor = this.currentFeedAuthor || this.localAuthor
+				}
 			},
+		},
+
+		currentFeedAuthor (currentFeedAuthor) {
+			this.feedAuthor = currentFeedAuthor
 		},
 
 		currentTitle: {
@@ -110,6 +124,13 @@ export default Vue.extend({
 			immediate: true,
 			handler (currentFeedUrl) {
 				this.feedUrl = currentFeedUrl !== PLACEHOLDER_FEED_URL ? currentFeedUrl : null
+			},
+		},
+
+		currentFeedIcon: {
+			immediate: true,
+			handler (currentFeedIcon) {
+				this.feedIcon = currentFeedIcon
 			},
 		},
 	},
@@ -142,7 +163,11 @@ export default Vue.extend({
 				if (!this.feedTitle) {
 					this.feedTitle = this.currentTitle
 				}
-				this.$store.commit('UPDATE_FEED', { title: this.feedTitle || '', url: this.feedUrl })
+				const author = this.feedAuthor
+				if (author) {
+					this.$store.commit('SET_AUTHOR', author)
+				}
+				this.$store.commit('UPDATE_FEED', { author, title: this.feedTitle || '', url: this.feedUrl, icon: this.feedIcon })
 				this.onToggleEdit()
 				return
 			}
