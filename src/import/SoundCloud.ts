@@ -17,13 +17,17 @@ export default {
     const soundcloudUrl = `https://api.soundcloud.com/resolve?url=${url}&client_id=${soundcloudId}`
     fetchJsonp(soundcloudUrl).then((response: any) => response.json())
     .then((data: any) => {
-      console.log(data)
+      // console.log(data) //SAMPLE
       if (data.embeddable_by !== 'all') {
         return window.alert(`Sorry, this track is not allowed to be played externally (restricted to ${data.embeddable_by}). Please use another song, or try finding a version on YouTube.`)
       }
       const id = data.id
       const url = data.permalink_url
-      const title = data.title
+      let title = data.title
+      const user = data.user
+      if (user) {
+        title = `${user.username} - ${title}`
+      }
       const duration = getDurationFromMS(data.duration)
       const image = data.artwork_url
       callback({ type: 'soundcloud', id, url, title, duration, image })
