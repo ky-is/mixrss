@@ -5,6 +5,8 @@ import App from './App.vue'
 
 import store from '@/store'
 
+import '@/assets/styles/tailwind.css'
+
 Vue.config.productionTip = false
 
 Vue.use(VueYoutube)
