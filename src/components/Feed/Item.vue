@@ -53,8 +53,8 @@ export default Vue.extend({
 	},
 
 	computed: {
-		url (): string {
-			return this.item.url || this.item.external_url || ''
+		id (): string {
+			return this.item.id
 		},
 
 		date (): Date {
@@ -70,7 +70,7 @@ export default Vue.extend({
 
 	methods: {
 		onItem () {
-			this.$store.commit('SET_PLAYBACK_URL', this.url)
+			this.$store.commit('SET_PLAYBACK_ID', this.id)
 		},
 
 		onTitleToggle () {
@@ -104,7 +104,7 @@ export default Vue.extend({
 		onDelete () {
 			const confirmed = window.confirm(`Delete ${this.item.title} from this playlist?`)
 			if (confirmed) {
-				this.$store.dispatch('REMOVE_FEED_ITEM', { id: this.item.id, url: this.url })
+				this.$store.dispatch('REMOVE_FEED_ITEM', this.item.id)
 			}
 		},
 	},

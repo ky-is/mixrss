@@ -1,6 +1,6 @@
 <template>
 <ul class="feed-list">
-	<FeedItem v-for="item in items" :item="item" :key="item.id" :class="{ selected: playUrl === item.url || playUrl === item.external_url }" />
+	<FeedItem v-for="item in items" :item="item" :key="item.id" :class="{ selected: playId === item.id }" />
 </ul>
 </template>
 
@@ -19,8 +19,8 @@ export default Vue.extend({
 			return this.$store.getters.songs
 		},
 
-		playUrl (): string | null {
-			return this.$store.state.playback.url
+		playId (): string | null {
+			return this.$store.state.playback.id
 		},
 	},
 })

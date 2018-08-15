@@ -110,8 +110,8 @@ const actions: ActionTree<FeedState, any> = {
 		}
 	},
 
-	REMOVE_FEED_ITEM ({ commit, dispatch, rootState }, { id, url }) {
-		if (url === rootState.playback.url) {
+	REMOVE_FEED_ITEM ({ commit, dispatch, rootState }, id) {
+		if (id === rootState.playback.id) {
 			dispatch('SEEK_DIRECTION', 1)
 		}
 		commit('SONG_DELETE', id)
@@ -227,11 +227,12 @@ const mutations: MutationTree<FeedState> = {
 		writeFeedData(state)
 	},
 
-	PREPEND_TO_FEED (state, { localAuthor, url, title, duration, image, imageAlign, embed }) {
+	PREPEND_TO_FEED (state, { localAuthor, type, id, permalink, title, duration, image, imageAlign, embed }) {
 		const feedData = state.data
 		if (!feedData) {
 			return
 		}
+		const uniqueId = `${type}:${id}`
 		const authorObject = localAuthor ? feedData.author : null
 		const rawAuthor = authorObject ? authorObject.name : null
 		const items = feedData.items || []
@@ -239,14 +240,14 @@ const mutations: MutationTree<FeedState> = {
 			Vue.set(feedData, 'items', items)
 		}
 		for (const item of items) {
-			if (item.id === url) {
+			if (item.id === uniqueId) {
 				return window.alert('This song is already in your playlist!')
 			}
 		}
 		const authorName = rawAuthor && localAuthor.toLowerCase() !== rawAuthor.toLowerCase() ? localAuthor : undefined
 		const feedItem: JSONFeedItem = {
-			id: url,
-			external_url: url,
+			id: uniqueId,
+			external_url: permalink,
 			content_html: `<iframe src="${embed}" width="100%"/>`,
 			_duration: duration,
 			summary: duration,

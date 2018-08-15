@@ -21,7 +21,8 @@ export default {
 			if (data.embeddable_by !== 'all') {
 				return window.alert(`Sorry, this track is not allowed to be played externally (restricted to ${data.embeddable_by}). Please use another song, or try finding a version on YouTube.`)
 			}
-			const url = data.permalink_url
+
+			const permalink = data.permalink_url
 			let title = data.title
 			const user = data.user
 			if (user) {
@@ -29,8 +30,9 @@ export default {
 			}
 			const duration = getDurationFromMS(data.duration)
 			const image = data.artwork_url
-			const embed = `https://w.soundcloud.com/player/?url=${url}`
-			callback({ url, title, duration, image, embed })
+			const embed = `https://w.soundcloud.com/player/?url=${data.uri}`
+			const id = data.id
+			callback({ type:'sc', id, permalink, title, duration, image, embed })
 		})
 		.catch((error: any) => {
 			if (!retry) {

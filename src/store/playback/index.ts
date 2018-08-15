@@ -7,19 +7,19 @@ import { PlaybackState, RootState } from '@/types/store'
 //STATE
 
 const state: PlaybackState = {
-	url: null,
+	id: null,
 	paused: false,
 }
 
 //MUTATIONS
 
 const mutations: MutationTree<PlaybackState> = {
-	SET_PLAYBACK_URL (state, url: string | null) {
-		if (url === state.url) {
+	SET_PLAYBACK_ID (state, id: string | null) {
+		if (id === state.id) {
 			state.paused = !state.paused
 		} else {
-			state.url = url
-			state.paused = url === null
+			state.id = id
+			state.paused = id === null
 		}
 	},
 
@@ -32,7 +32,7 @@ const mutations: MutationTree<PlaybackState> = {
 
 const actions: ActionTree<PlaybackState, any> = {
 	PRESS_PAUSE ({ commit, dispatch, state }, paused?: boolean) {
-		if (state.url === null) {
+		if (paused !== true && state.id === null) {
 			dispatch('PLAY_SONG_INDEX', 0)
 		} else {
 			commit('TOGGLE_PAUSED', paused)
@@ -45,8 +45,8 @@ const actions: ActionTree<PlaybackState, any> = {
 	},
 
 	PLAY_SONG_INDEX ({ commit, rootGetters }, index: number | null) {
-		const song = (index && rootGetters.songs[index]) || null
-		commit('SET_PLAYBACK_URL', song ? song.url || song.external_url : null)
+		const song = (index !== null && rootGetters.songs[index]) || null
+		commit('SET_PLAYBACK_ID', song ? song.id : null)
 	},
 }
 
@@ -54,16 +54,12 @@ const actions: ActionTree<PlaybackState, any> = {
 
 const getters: GetterTree<PlaybackState, any> = {
 	playbackIndex (state, getters): number | null {
-		const url = state.url
-		if (url) {
+		const id = state.id
+		if (id) {
 			const songs = getters.songs
 			for (let idx = songs.length - 1; idx >= 0; idx -= 1) {
 				const song = songs[idx]
-				const songUrl = song.url || song.external_url
-				if (!songUrl) {
-					continue
-				}
-				if (songUrl === url) {
+				if (id === song.id) {
 					return idx
 				}
 			}

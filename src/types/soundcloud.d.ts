@@ -1,1 +1,2 @@
-declare module '@/helpers/soundcloud'
+declare module 'soundcloud'
+

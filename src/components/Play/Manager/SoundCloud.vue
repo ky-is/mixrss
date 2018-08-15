@@ -1,15 +1,12 @@
-<template>
-<iframe :src="playbackUrl" ref="soundcloud" width="200" height="200" frameborder="no" />
-</template>
-
 <script lang="ts">
 import Vue from 'vue'
+import SoundCloud from 'soundcloud'
 
-import SoundCloud from '@/helpers/soundcloud'
+import soundcloudIds from '@/helpers/soundcloud_ids'
 
 export default Vue.extend({
 	props: {
-		url: String,
+		id: String,
 		paused: Boolean,
 	},
 
@@ -17,35 +14,38 @@ export default Vue.extend({
 		return {
 			loading: false,
 			player: null as any,
-			disableChrome: null as boolean | null,
 		}
 	},
 
-	computed: {
-		playbackUrl (): string | null {
-			return this.disableChrome !== true ? `https://w.soundcloud.com/player/?url=${this.url}&auto_play=true&show_artwork=false&single_active=false&buying=false&sharing=false&download=false&show_playcount=false&show_user=false` : null
-		},
-	},
-
 	watch: {
-		url: {
+		id: {
 			immediate: true,
-			handler () {
+			handler (id) {
 				this.loading = true
-				if (this.disableChrome === null && window.hasOwnProperty('chrome')) {
-					const splitChrome = navigator.appVersion.split('Chrome/')[1]
-					if (splitChrome) {
-						const splitVersion = splitChrome.split('.')[0]
-						const version = parseInt(splitVersion, 10)
-						if (!isNaN(version) && version < 70) {
-							this.disableChrome = window.confirm('SoundCloud playback may not work in your current version of Chrome. You can try another browser instead, or continue instead.')
+				if (id) {
+					this.loading = true
+					SoundCloud.stream(`tracks/${id}`).then((player: any) => {
+						this.loading = false
+						if (!this.paused) {
+							player.play()
 						}
-					}
+						player.on('play-resume', this.onPlay)
+						player.on('pause', this.onPaused)
+						player.on('finish', this.onEnded)
+						this.player = player
+					})
+				} else if (this.player) {
+					this.player.kill()
+					this.loading = false
+					this.player = null
 				}
 			},
 		},
 	
 		paused (paused: boolean) {
+			if (!this.player) {
+				return
+			}
 			if (paused) {
 				this.player.pause()
 			} else {
@@ -54,32 +54,18 @@ export default Vue.extend({
 		},
 	},
 
-	mounted () {
-		const player = SoundCloud.Widget(this.$refs.soundcloud)
-		player.bind(SoundCloud.Widget.Events.READY, this.onCued)
-		player.bind(SoundCloud.Widget.Events.PLAY, this.onPlay)
-		player.bind(SoundCloud.Widget.Events.PAUSE, this.onPaused)
-		player.bind(SoundCloud.Widget.Events.FINISH, this.onEnded)
-		player.bind(SoundCloud.Widget.Events.ERROR, this.onError)
-		this.player = player
+	created () {
+		const client_id = soundcloudIds.next()
+		SoundCloud.initialize({ client_id })
 	},
 
 	methods: {
-		onCued () {
-			this.loading = false
-			this.player.setVolume(100)
-		},
-
 		onPlay () {
-			if (this.paused) {
-				this.$emit('playing', true)
-			}
+			this.$emit('playing', true)
 		},
 
 		onPaused () {
-			if (!this.paused) {
-				this.$emit('playing', false)
-			}
+			this.$emit('playing', false)
 		},
 
 		onEnded () {
@@ -89,6 +75,10 @@ export default Vue.extend({
 		onError (error: string) {
 			window.alert(error)
 		},
+	},
+
+	render () {
+		return null as any
 	},
 })
 </script>

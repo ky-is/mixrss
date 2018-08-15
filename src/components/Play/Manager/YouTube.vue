@@ -1,5 +1,5 @@
 <template>
-<youtube :video-id="videoId" :player-vars="playerVars" ref="youtube" @cued="onCued" @playing="onPaused(false)" @paused="onPaused(true)" @ended="onEnded" width="200" height="200" />
+<youtube :video-id="id" :player-vars="playerVars" ref="youtube" @cued="onCued" @playing="onPaused(false)" @paused="onPaused(true)" @ended="onEnded" width="200" height="200" />
 </template>
 
 <script lang="ts">
@@ -7,7 +7,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
 	props: {
-		videoId: String,
+		id: String,
 		paused: Boolean,
 	},
 
@@ -21,12 +21,12 @@ export default Vue.extend({
 	},
 
 	watch: {
-		videoId () {
+		id () {
 			this.loading = true
 		},
 	
 		paused (paused: boolean) {
-			if (!this.videoId) {
+			if (!this.id) {
 				return
 			}
 			const player = (this.$refs.youtube as any).player
@@ -40,7 +40,7 @@ export default Vue.extend({
 
 	methods: {
 		onCued (player: any) {
-			if (!this.videoId) {
+			if (!this.id) {
 				return
 			}
 			this.loading = false
@@ -52,7 +52,7 @@ export default Vue.extend({
 		},
 
 		onPaused (paused: boolean) {
-			if (!this.videoId || (paused && this.loading)) {
+			if (!this.id || (paused && this.loading)) {
 				return
 			}
 			this.$emit('playing', !paused)

@@ -1,7 +1,7 @@
 <template>
 <div class="play-bar flex">
 	<button @click="onPrevious" :disabled="!hasPreviousSong">⇤</button><!-- ⇤↩︎⏮ -->
-	<button @click="onPlay" :disabled="!songs.length">{{ hasPlaylist && !paused ? '◼︎' : '▶︎' }}</button><!-- ▶︎▶️◼︎⏸ -->
+	<button @click="onPlay" :disabled="!songs.length">{{ hasSong && !paused ? '◼︎' : '▶︎' }}</button><!-- ▶︎▶️◼︎⏸ -->
 	<button @click="onNext" :disabled="!hasNextSong">⇥</button><!-- ⇥↪︎⏭ -->
 </div>
 </template>
@@ -11,12 +11,12 @@ import Vue from 'vue'
 
 export default Vue.extend({
 	computed: {
-		playUrl (): string | null {
-			return this.$store.state.playback.url
+		playId (): string | null {
+			return this.$store.state.playback.id
 		},
 
-		hasPlaylist (): boolean {
-			return this.playUrl !== null
+		hasSong (): boolean {
+			return this.playId !== null
 		},
 
 		playbackIndex (): number | null {

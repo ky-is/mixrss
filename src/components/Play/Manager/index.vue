@@ -1,7 +1,7 @@
 <template>
 <div class="play-manager absolute pin-t">
-	<SoundCloudManager v-if="soundcloudUrl" :url="soundcloudUrl" :paused="paused" @playing="onPlaying" @ended="onEnded" />
-	<YouTubeManager :videoId="youtubeId" :paused="paused" @playing="onPlaying" @ended="onEnded" />
+	<SoundCloudManager :id="soundcloudId" :paused="paused" @playing="onPlaying" @ended="onEnded" />
+	<YouTubeManager :id="youtubeId" :paused="paused" @playing="onPlaying" @ended="onEnded" />
 </div>
 </template>
 
@@ -22,17 +22,24 @@ export default Vue.extend({
 			return this.$store.state.playback.paused
 		},
 
-		playUrl (): string | null {
-			return this.$store.state.playback.url
+		id (): string | null {
+			return this.$store.state.playback.id
+		},
+		splitId (): string[] {
+			return this.id ? this.id.split(':') : []
+		},
+		playType (): string | null {
+			return this.splitId[0]
+		},
+		playId (): string | null {
+			return this.splitId[1]
 		},
 
 		youtubeId (): string | null {
-			return this.playUrl ? this.$youtube.getIdFromUrl(this.playUrl) : null
+			return this.playType === 'yt' ? this.playId : null
 		},
-
-		soundcloudUrl (): string | null {
-			const url = this.playUrl
-			return url && url.toLowerCase().indexOf('soundcloud.com') !== -1 ? url : null
+		soundcloudId (): string | null {
+			return this.playType === 'sc' ? this.playId : null
 		},
 	},
 
