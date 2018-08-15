@@ -5,7 +5,7 @@
 		<div class="title">
 			<div v-if="editTitle" class="flex">
 				<input type="text" v-model.trim="itemTitle" class="flex-grow mr-1" placeholder="Playlist title" autocomplete="off" autocorrect="on">
-				<button @click="onTitleSave" class="button-modify button-outline">Save</button>
+				<button @click="onTitleSave" class="button-modify button-outline">{{ itemTitle === item.title ? 'Cancel' : 'Save' }}</button>
 			</div>
 			<div v-else>
 				<button @click="onTitleToggle" class="unstyled text-left">{{ item.title }}</button>
