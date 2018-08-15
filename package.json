@@ -22,7 +22,6 @@
 	"devDependencies": {
 		"@fullhuman/postcss-purgecss": "^1.0.1",
 		"@ky-is/vue-cli-plugin-tabs": "^1.1.0",
-		"@ky-is/vue-cli-plugin-tailwind": "^0.1.0",
 		"@ky-is/vue-cli-plugin-tailwind": "^1.1.0",
 		"@vue/cli-plugin-babel": "^3.0.0",
 		"@vue/cli-plugin-eslint": "^3.0.0",

@@ -1,5 +1,5 @@
 <template>
-<form @submit.prevent="onSubmit" class="my-2">
+<form @submit.prevent="onSubmit" class="create-playlist my-2">
 	<div v-if="showEdit">
 		<div>
 			<input type="text" v-model.trim="feedTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
@@ -55,7 +55,7 @@ export default Vue.extend({
 		isLocal (): boolean {
 			return this.feed.url === null
 		},
-	
+
 		feed (): any {
 			return store.state.feed
 		},
