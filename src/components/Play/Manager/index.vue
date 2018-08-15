@@ -8,6 +8,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import store from '@/store'
+
 import SoundCloudManager from '@/components/Play/Manager/SoundCloud.vue'
 import YouTubeManager from '@/components/Play/Manager/YouTube.vue'
 
@@ -19,11 +21,11 @@ export default Vue.extend({
 
 	computed: {
 		paused (): boolean {
-			return this.$store.state.playback.paused
+			return store.state.playback.paused
 		},
 
 		id (): string | null {
-			return this.$store.state.playback.id
+			return store.state.playback.id
 		},
 		splitId (): string[] {
 			return this.id ? this.id.split(':') : []
@@ -45,11 +47,11 @@ export default Vue.extend({
 
 	methods: {
 		onPlaying (playing: boolean) {
-			this.$store.dispatch('PRESS_PAUSE', !playing)
+			store.dispatch('PRESS_PAUSE', !playing)
 		},
 
 		onEnded () {
-			this.$store.dispatch('SEEK_DIRECTION', 1)
+			store.dispatch('SEEK_DIRECTION', 1)
 		},
 	},
 })

@@ -9,6 +9,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import store from '@/store'
+
 import SidebarItem from '@/components/Sidebar/Item.vue'
 
 export default Vue.extend({
@@ -22,11 +24,11 @@ export default Vue.extend({
 
 	computed: {
 		addingFeed (): boolean {
-			return this.$store.state.local.addingFeed
+			return store.state.local.addingFeed
 		},
 
 		feedUrl (): string | null {
-			return this.$store.state.feed.url
+			return store.state.feed.url
 		},
 
 		currentUrl () {
@@ -36,7 +38,7 @@ export default Vue.extend({
 
 	methods: {
 		onAddFeed () {
-			this.$store.commit('TOGGLE_ADD_FEED')
+			store.commit('TOGGLE_ADD_FEED')
 		},
 	},
 })

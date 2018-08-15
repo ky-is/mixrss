@@ -7,6 +7,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import store from '@/store'
+
 import FeedItem from '@/components/Feed/Item.vue'
 
 export default Vue.extend({
@@ -16,11 +18,11 @@ export default Vue.extend({
 
 	computed: {
 		items (): JSONFeedItem[] {
-			return this.$store.getters.songs
+			return store.getters.songs
 		},
 
 		playId (): string | null {
-			return this.$store.state.playback.id
+			return store.state.playback.id
 		},
 	},
 })

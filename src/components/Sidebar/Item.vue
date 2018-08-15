@@ -13,6 +13,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import store from '@/store'
+
 export default Vue.extend({
 	props: {
 		url: String,
@@ -21,7 +23,7 @@ export default Vue.extend({
 
 	computed: {
 		item (): JSONFeedItem {
-			return this.selected ? this.$store.state.feed.data : this.$store.getters.feedForUrl(this.url)
+			return this.selected ? store.state.feed.data : store.getters.feedForUrl(this.url)
 		},
 
 		shortUrl (): string {
@@ -53,7 +55,7 @@ export default Vue.extend({
 
 	methods: {
 		onItem () {
-			this.$store.dispatch('SET_FEED_BY_URL', this.url)
+			store.dispatch('SET_FEED_BY_URL', this.url)
 		},
 	},
 })

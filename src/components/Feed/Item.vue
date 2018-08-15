@@ -40,6 +40,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import store from '@/store'
+
 export default Vue.extend({
 	props: {
 		item: Object as () => JSONFeedItem, //TODO https://github.com/vuejs/vue/pull/6856
@@ -70,7 +72,7 @@ export default Vue.extend({
 
 	methods: {
 		onItem () {
-			this.$store.commit('SET_PLAYBACK_ID', this.id)
+			store.commit('SET_PLAYBACK_ID', this.id)
 		},
 
 		onTitleToggle () {
@@ -79,32 +81,34 @@ export default Vue.extend({
 		},
 		onTitleSave () {
 			if (this.itemTitle !== this.item.title) {
-				this.$store.commit('SONG_TITLE', { item: this.item, title: this.itemTitle })
+				store.commit('SONG_TITLE', { item: this.item, title: this.itemTitle })
 			}
 			this.onTitleToggle()
 		},
 
 		onTag (tag: string) {
-			this.$store.commit('SONG_TAG', { item: this.item, tag, add: false })
+			store.commit('SONG_TAG', { item: this.item, tag, add: false })
 		},
 		onTagAdd () {
 			const tag = window.prompt('Please enter a tag this song belongs to:')
 			if (tag) {
-				this.$store.commit('SONG_TAG', { item: this.item, tag, add: true })
+				store.commit('SONG_TAG', { item: this.item, tag, add: true })
 			}
 		},
 
 		onNoteEdit () {
 			const description = window.prompt('Enter a description to show to listeners of this song:', this.item.content_text)
 			if (description !== null) {
-				this.$store.commit('SONG_DESCRIPTION', { item: this.item, description })
+				store.commit('SONG_DESCRIPTION', { item: this.item, description })
 			}
 		},
 
 		onDelete () {
-			const confirmed = window.confirm(`Delete ${this.item.title} from this playlist?`)
+			const feedData = store.state.feed.data
+			const feedName = (feedData && feedData.title) || 'this playlist'
+			const confirmed = window.confirm(`Delete ${this.item.title} from ${feedName}?`)
 			if (confirmed) {
-				this.$store.dispatch('REMOVE_FEED_ITEM', this.item.id)
+				store.dispatch('REMOVE_FEED_ITEM', this.item.id)
 			}
 		},
 	},

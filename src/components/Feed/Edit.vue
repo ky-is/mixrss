@@ -32,6 +32,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import store from '@/store'
+
 import { PLACEHOLDER_FEED_URL } from '@/helpers/constants'
 
 export default Vue.extend({
@@ -55,11 +57,11 @@ export default Vue.extend({
 		},
 	
 		feed (): any {
-			return this.$store.state.feed
+			return store.state.feed
 		},
 
 		songs (): JSONFeedItem[] {
-			return this.$store.getters.songs
+			return store.getters.songs
 		},
 
 		feedData (): JSONFeed {
@@ -89,8 +91,8 @@ export default Vue.extend({
 			return 'feed.json'
 		},
 
-		localAuthor (): string {
-			return this.$store.state.local.author
+		localAuthor (): string | null {
+			return store.state.local.author
 		},
 
 		currentTitle (): string | null {
@@ -165,20 +167,20 @@ export default Vue.extend({
 				}
 				const author = this.feedAuthor
 				if (author) {
-					this.$store.commit('SET_AUTHOR', author)
+					store.commit('SET_AUTHOR', author)
 				}
-				this.$store.commit('UPDATE_FEED', { author, title: this.feedTitle || '', url: this.feedUrl, icon: this.feedIcon })
+				store.commit('UPDATE_FEED', { author, title: this.feedTitle || '', url: this.feedUrl, icon: this.feedIcon })
 				this.onToggleEdit()
 				return
 			}
 			if (!this.itemUrl) {
 				return window.alert('Please enter a Youtube link to the song.')
 			}
-			this.$store.dispatch('ADD_FEED_ITEM', this.itemUrl)
+			store.dispatch('ADD_FEED_ITEM', this.itemUrl)
 		},
 
 		onDelete () {
-			this.$store.dispatch('DELETE_FEED', this.feed.url)
+			store.dispatch('DELETE_FEED', this.feed.url)
 		},
 	},
 })

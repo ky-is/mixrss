@@ -20,6 +20,10 @@ export default Vue.extend({
 		PlayBar,
 		PlayManager,
 	},
+
+	beforeCreate () {
+		this.$set(this, '$store', undefined)
+	},
 })
 </script>
 

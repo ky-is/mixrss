@@ -18,6 +18,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import store from '@/store'
+
 export default Vue.extend({
 	data () {
 		return {
@@ -27,20 +29,20 @@ export default Vue.extend({
 
 	computed: {
 		loading (): boolean {
-			return this.$store.state.feed.loading > 0
+			return store.state.feed.loading > 0
 		},
 
 		hasLocalFeed (): boolean {
-			const feed = this.$store.state.feed.url ? this.$store.getters.feedForUrl(null) : this.$store.state.feed.data
+			const feed = store.state.feed.url ? store.getters.feedForUrl(null) : store.state.feed.data
 			return feed !== null
 		},
 	},
 
 	methods: {
 		onEnterFeedUrl () {
-			this.$store.dispatch('LOAD_FEED_URL', { url: this.url, adding: true }).then(loadedUrl => {
+			store.dispatch('LOAD_FEED_URL', { url: this.url, adding: true }).then(loadedUrl => {
 				if (loadedUrl === this.url) {
-					this.$store.commit('TOGGLE_ADD_FEED', false)
+					store.commit('TOGGLE_ADD_FEED', false)
 				}
 			}, error => {
 				window.alert('A valid feed could not be found at this URL, please try again. ' + error)
@@ -48,7 +50,7 @@ export default Vue.extend({
 		},
 
 		onCreateFeed () {
-			this.$store.dispatch('CREATE_LOCAL_FEED')
+			store.dispatch('CREATE_LOCAL_FEED')
 		},
 	},
 })

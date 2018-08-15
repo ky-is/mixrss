@@ -9,10 +9,12 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import store from '@/store'
+
 export default Vue.extend({
 	computed: {
 		playId (): string | null {
-			return this.$store.state.playback.id
+			return store.state.playback.id
 		},
 
 		hasSong (): boolean {
@@ -20,7 +22,7 @@ export default Vue.extend({
 		},
 
 		playbackIndex (): number | null {
-			return this.$store.getters.playbackIndex
+			return store.getters.playbackIndex
 		},
 		hasPreviousSong (): boolean {
 			return this.playbackIndex !== null && this.playbackIndex > 0
@@ -30,24 +32,24 @@ export default Vue.extend({
 		},
 
 		songs (): JSONFeedItem[] {
-			return this.$store.getters.songs
+			return store.getters.songs
 		},
 
 		paused (): boolean {
-			return this.$store.state.playback.paused
+			return store.state.playback.paused
 		},
 	},
 
 	methods: {
 		onPrevious () {
-			this.$store.dispatch('SEEK_DIRECTION', -1)
+			store.dispatch('SEEK_DIRECTION', -1)
 		},
 		onNext () {
-			this.$store.dispatch('SEEK_DIRECTION', 1)
+			store.dispatch('SEEK_DIRECTION', 1)
 		},
 
 		onPlay () {
-			this.$store.dispatch('PRESS_PAUSE')
+			store.dispatch('PRESS_PAUSE')
 		},
 	},
 })

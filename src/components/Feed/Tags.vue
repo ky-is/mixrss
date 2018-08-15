@@ -11,6 +11,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import store from '@/store'
+
 export default Vue.extend({
 	props: {
 		items: Array as () => JSONFeedItem[], //TODO https://github.com/vuejs/vue/pull/6856
@@ -35,7 +37,7 @@ export default Vue.extend({
 		},
 
 		selectedTagIds (): string[] {
-			return this.$store.state.feed.selectedTagIds
+			return store.state.feed.selectedTagIds
 		},
 	},
 
@@ -44,7 +46,7 @@ export default Vue.extend({
 			const tagIds = tags.map(tag => tag.toLowerCase())
 			for (const selectedTagId of this.selectedTagIds) {
 				if (selectedTagId !== '?' && tagIds.indexOf(selectedTagId) === -1) {
-					this.$store.commit('TOGGLE_TAG_ID', selectedTagId)
+					store.commit('TOGGLE_TAG_ID', selectedTagId)
 				}
 			}
 		},
@@ -52,11 +54,11 @@ export default Vue.extend({
 
 	methods: {
 		onTag (tag: string) {
-			this.$store.commit('TOGGLE_TAG_ID', tag.toLowerCase())
+			store.commit('TOGGLE_TAG_ID', tag.toLowerCase())
 		},
 
 		onClearTags () {
-			this.$store.commit('CLEAR_TAGS')
+			store.commit('CLEAR_TAGS')
 		},
 	},
 })

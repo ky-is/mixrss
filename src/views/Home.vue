@@ -19,6 +19,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import store from '@/store'
+
 import FeedCreate from '@/components/Create/Feed.vue'
 
 import FeedEdit from '@/components/Feed/Edit.vue'
@@ -38,15 +40,15 @@ export default Vue.extend({
 
 	computed: {
 		feedList (): string[] {
-			return this.$store.state.feed.list
+			return store.state.feed.list
 		},
 
-		feedData (): JSONFeed {
-			return this.$store.state.feed.data
+		feedData (): JSONFeed | null {
+			return store.state.feed.data
 		},
 
 		addingFeed (): boolean {
-			return this.$store.state.local.addingFeed
+			return store.state.local.addingFeed
 		},
 	},
 })
