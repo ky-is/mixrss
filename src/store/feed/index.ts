@@ -15,6 +15,9 @@ import { FeedState } from '@/types/store'
 
 //LOCAL
 
+const jsonpUrls = [ 'http://jsonpwrapper.com/?urls%5B%5D', 'https://json2jsonp.com/?url' ]
+let jsonpUrl = jsonpUrls.pop()
+
 const currentFeed: string | null = storage.get('CURRENT_FEED_URL')
 
 function feedKey (url: string | null): string {
@@ -77,9 +80,8 @@ const actions: ActionTree<FeedState, any> = {
 	LOAD_FEED_URL ({ commit, dispatch }, { url, adding }) {
 		return new Promise((resolve, reject) => {
 			commit('FEED_LOADING', 1)
-			// const jsonpwrapper = `http://jsonpwrapper.com/?urls%5B%5D=${encodeURIComponent(url)}`
-			const json2jsonp = `https://json2jsonp.com/?url=${encodeURIComponent(url)}`
-			fetchJsonp(json2jsonp).then((response: any) => response.json())
+			const jsonp = `${jsonpUrl}=${encodeURIComponent(url)}`
+			fetchJsonp(jsonp).then((response: any) => response.json())
 			.then((data: JSONFeed) => {
 				if (adding || url === state.url) {
 					dispatch('SET_FEED', { url, data })
@@ -88,6 +90,10 @@ const actions: ActionTree<FeedState, any> = {
 			})
 			.catch((error: any) => {
 				console.error(error)
+				if (jsonpUrls.length) {
+					jsonpUrl = jsonpUrls.pop()
+					return dispatch('LOAD_FEED_URL', { url, adding })
+				}
 				reject(error)
 			})
 			.finally(() => {
