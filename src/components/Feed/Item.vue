@@ -2,13 +2,13 @@
 <li class="feed-item hover-outer p-2 flex">
 	<button @click="onItem" class="item-icon borderless mr-2" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
 	<div class="song-details">
-		<div class="title flex">
-			<div v-if="editTitle">
-				<input type="text" v-model.trim="itemTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
+		<div class="title">
+			<div v-if="editTitle" class="flex">
+				<input type="text" v-model.trim="itemTitle" class="flex-grow mr-1" placeholder="Playlist title" autocomplete="off" autocorrect="on">
 				<button @click="onTitleSave" class="button-modify button-outline">Save</button>
 			</div>
 			<div v-else>
-				<button @click="onTitleToggle" class="unstyled">{{ item.title }}</button>
+				<button @click="onTitleToggle" class="unstyled text-left">{{ item.title }}</button>
 			</div>
 		</div>
 		<div class="text-sm text-faint hover-inner">
