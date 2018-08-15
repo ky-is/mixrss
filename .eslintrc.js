@@ -16,6 +16,7 @@ module.exports = {
 	rules: {
 		'comma-dangle': [ 'error', 'always-multiline' ],
 		'curly': 'error',
+		'indent': [ 'error', 'tab' ],
 		'no-console': 0,
 		'no-multiple-empty-lines': [ 'error', {
 			max: 1,
