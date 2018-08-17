@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-//eslint-disable-next-line no-unused-vars
 import { RootState } from '@/types/store'
 
 import feed from './feed'

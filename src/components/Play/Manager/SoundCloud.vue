@@ -23,18 +23,19 @@ export default Vue.extend({
 			handler (id) {
 				if (id) {
 					this.loading = true
-					SoundCloud.stream(`tracks/${id}`).then((player: any) => {
-						this.loading = false
-						if (this.id === id) {
-							if (!this.paused) {
-								player.play()
+					SoundCloud.stream(`tracks/${id}`)
+						.then((player: any) => {
+							this.loading = false
+							if (this.id === id) {
+								if (!this.paused) {
+									player.play()
+								}
+								player.on('play-resume', this.onPlay)
+								player.on('pause', this.onPaused)
+								player.on('finish', this.onEnded)
+								this.player = player
 							}
-							player.on('play-resume', this.onPlay)
-							player.on('pause', this.onPaused)
-							player.on('finish', this.onEnded)
-							this.player = player
-						}
-					})
+						})
 				} else if (this.player) {
 					this.player.kill()
 					this.player = null

@@ -1,8 +1,7 @@
-//eslint-disable-next-line
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
 
 import storage from '@/helpers/storage'
-//eslint-disable-next-line no-unused-vars
+
 import { LocalState } from '@/types/store'
 
 //STATE

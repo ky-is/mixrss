@@ -6,6 +6,7 @@
 		"importHelpers": true,
 		"moduleResolution": "node",
 		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
 		"sourceMap": true,
 		"baseUrl": ".",
 		"types": [
@@ -17,7 +18,7 @@
 			]
 		},
 		"lib": [
-			"es2015",
+			"esnext",
 			"dom",
 			"dom.iterable",
 			"scripthost"

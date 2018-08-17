@@ -1,5 +1,4 @@
 import Vue from 'vue'
-//eslint-disable-next-line no-unused-vars
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
 
 import fetchJsonp from 'fetch-jsonp'
@@ -10,7 +9,6 @@ import storage from '@/helpers/storage'
 import importSoundCloud from '@/import/SoundCloud'
 import importYouTube from '@/import/YouTube'
 
-//eslint-disable-next-line no-unused-vars
 import { FeedState } from '@/types/store'
 
 //LOCAL
@@ -82,23 +80,23 @@ const actions: ActionTree<FeedState, any> = {
 			commit('FEED_LOADING', 1)
 			const jsonp = `${jsonpUrl}=${encodeURIComponent(url)}`
 			fetchJsonp(jsonp).then((response: any) => response.json())
-			.then((data: JSONFeed) => {
-				if (adding || url === state.url) {
-					dispatch('SET_FEED', { url, data })
-				}
-				resolve(url)
-			})
-			.catch((error: any) => {
-				console.error(error)
-				if (jsonpUrls.length) {
-					jsonpUrl = jsonpUrls.pop()
-					return dispatch('LOAD_FEED_URL', { url, adding })
-				}
-				reject(error)
-			})
-			.finally(() => {
-				commit('FEED_LOADING', -1)
-			})
+				.then((data: JSONFeed) => {
+					if (adding || url === state.url) {
+						dispatch('SET_FEED', { url, data })
+					}
+					resolve(url)
+				})
+				.catch((error: any) => {
+					console.error(error)
+					if (jsonpUrls.length) {
+						jsonpUrl = jsonpUrls.pop()
+						return dispatch('LOAD_FEED_URL', { url, adding })
+					}
+					reject(error)
+				})
+				.finally(() => {
+					commit('FEED_LOADING', -1)
+				})
 		})
 	},
 

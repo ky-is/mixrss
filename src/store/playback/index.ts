@@ -1,7 +1,5 @@
-//eslint-disable-next-line no-unused-vars
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
 
-//eslint-disable-next-line no-unused-vars
 import { PlaybackState, RootState } from '@/types/store'
 
 //STATE
