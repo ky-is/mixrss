@@ -6,4 +6,10 @@ module.exports = {
 		open: true,
 		port: 8070,
 	},
+
+	configureWebpack: {
+		externals: {
+			soundcloud: 'SC',
+		},
+	},
 }
