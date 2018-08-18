@@ -30,13 +30,8 @@ export default Vue.extend({
 <style lang="postcss">
 @import 'assets/styles/tailwind.postcss';
 
-html {
+html, body, #app {
 	@apply wh-full;
-}
-
-body, #app {
-	width: inherit;
-	height: inherit;
 }
 
 #app {
@@ -47,11 +42,15 @@ ul {
 	@apply list-reset;
 }
 
+.animates, a, button {
+	transition-duration: 250ms;
+	transition-property: background-color border-color box-shadow color;
+}
+
 /* Links */
 
 a {
 	@apply no-underline;
-	transition: 250ms color;
 }
 a[href] {
 	@apply text-pink-dark;
@@ -101,9 +100,6 @@ button, input {
 	color: inherit;
 }
 
-button {
-	transition: border-color, background-color 200ms;
-}
 button[disabled] {
 	opacity: 0.5;
 	cursor: default;

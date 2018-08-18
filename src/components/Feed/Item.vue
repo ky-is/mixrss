@@ -1,6 +1,6 @@
 <template>
-<li class="feed-item hover-outer p-2 rounded-sm flex items-center">
-	<button @click="onItem" class="item-icon bg-image borderless" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
+<li class="feed-item hover-outer p-2 rounded-sm animates flex items-center">
+	<button @click="onItem" class="item-icon bg-image borderless animates" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
 	<div class="song-details flex-grow">
 		<div class="items-baseline">
 			<div v-if="editTitle" class="flex">
@@ -117,14 +117,12 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .feed-item {
-	transition: background-color 200ms;
 	&:not(.selected):hover {
 		@apply bg-grey-lightest;
 		&:active {
 			@apply bg-grey-light;
 		}
 	}
-
 	&.selected {
 		@apply bg-pink-lightest;
 	}
@@ -134,15 +132,14 @@ export default Vue.extend({
 
 .item-icon {
 	@apply mr-2 wh-16 rounded cursor-pointer;
-	transition: box-shadow 500ms;
 	box-shadow: 0 1px 3px #bbb;
+	&.youtube {
+		background-size: 262%;
+		background-position: -9.5px -9.5px;
+	}
 }
 .selected .item-icon {
 	box-shadow: 0 1px 3px #777;
-}
-.item-icon.youtube {
-	background-size: 262%;
-	background-position: -9.5px -9.5px;
 }
 
 /* SONG DETAILS */

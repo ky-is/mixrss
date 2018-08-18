@@ -1,5 +1,5 @@
 <template>
-<li v-if="item" @click="onItem" class="sidebar-item hover-outer my-4 p-2 cursor-pointer flex items-center" :class="{ selected }">
+<li v-if="item" @click="onItem" class="sidebar-item hover-outer my-4 p-2 cursor-pointer animates flex items-center" :class="{ selected }">
 	<div class="bg-image wh-8 mr-1 rounded-full" :style="{ 'background-image': `url(${item.icon})` }" />
 	<div>
 		<div v-if="item.title" class="title">{{ item.title }}</div>
@@ -63,7 +63,6 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .sidebar-item {
-	transition: background-color 250ms;
 	&:hover {
 		@apply bg-pink-lightest;
 	}
