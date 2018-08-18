@@ -12,6 +12,10 @@ function getDurationFromMS (duration: number) {
 
 export default {
 
+	isValid (url: string): boolean {
+		return url.toLowerCase().includes('soundcloud.com')
+	},
+
 	load (url: string, callback: Function, retry?: boolean) {
 		const soundcloudId = soundcloudIds.next()
 		const soundcloudApi = `https://api.soundcloud.com/resolve?url=${url}&client_id=${soundcloudId}`

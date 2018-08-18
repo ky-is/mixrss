@@ -44,9 +44,14 @@ const state: FeedState = {
 //ACTIONS
 
 const actions: ActionTree<FeedState, any> = {
-	SET_FEED ({ commit }, urlAndData) {
+	SET_FEED ({ commit, dispatch, rootState }, urlAndData) {
 		commit('SET_CURRENT_FEED', urlAndData)
 		commit('WRITE_CURRENT_FEED', urlAndData)
+
+		const pendingPlayUrl = rootState.playback.pendingUrl
+		if (pendingPlayUrl) {
+			dispatch('QUEUE_PLAY_URL', pendingPlayUrl)
+		}
 	},
 
 	SET_FEED_BY_URL ({ state, commit, dispatch }, url) {
@@ -101,16 +106,19 @@ const actions: ActionTree<FeedState, any> = {
 	},
 
 	ADD_FEED_ITEM ({ commit, rootState }, url) {
-		if (url.toLowerCase().indexOf('soundcloud.com') !== -1) {
+		if (importSoundCloud.isValid(url)) {
 			importSoundCloud.load(url, (data: any) => {
 				data.localAuthor = rootState.author
 				commit('PREPEND_TO_FEED', data)
 			})
 		} else {
-			importYouTube.load(url, (data: any) => {
-				data.localAuthor = rootState.author
-				commit('PREPEND_TO_FEED', data)
-			})
+			const youtubeId = importYouTube.getIdFrom(url)
+			if (youtubeId) {
+				importYouTube.load(youtubeId, (data: any) => {
+					data.localAuthor = rootState.author
+					commit('PREPEND_TO_FEED', data)
+				})
+			}
 		}
 	},
 

@@ -15,6 +15,7 @@ export interface LocalState {
 export interface PlaybackState {
 	id: string | null
 	paused: boolean
+	pendingUrl: string | null
 }
 
 export interface RootState {

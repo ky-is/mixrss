@@ -2,11 +2,15 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 
 import { PlaybackState, RootState } from '@/types/store'
 
+import importSoundCloud from '@/import/SoundCloud'
+import importYouTube from '@/import/YouTube'
+
 //STATE
 
 const state: PlaybackState = {
 	id: null,
 	paused: false,
+	pendingUrl: null,
 }
 
 //MUTATIONS
@@ -23,6 +27,10 @@ const mutations: MutationTree<PlaybackState> = {
 
 	TOGGLE_PAUSED (state, paused?: boolean) {
 		state.paused = paused !== undefined ? paused : !state.paused
+	},
+
+	SET_PENDING_URL (state, url: string | null) {
+		state.pendingUrl = url
 	},
 }
 
@@ -45,6 +53,30 @@ const actions: ActionTree<PlaybackState, any> = {
 	PLAY_SONG_INDEX ({ commit, rootGetters }, index: number | null) {
 		const song = (index !== null && rootGetters.songs[index]) || null
 		commit('SET_PLAYBACK_ID', song ? song.id : null)
+	},
+
+	QUEUE_PLAY_URL ({ commit, dispatch, getters }, url) {
+		const songs = getters.songs
+		const loadedSongs = !!songs.length
+		commit('SET_PENDING_URL', loadedSongs ? null : url)
+	
+		if (loadedSongs) {
+			let id = null
+			if (!importSoundCloud.isValid(url)) {
+				const youtubeId = importYouTube.getIdFrom(url)
+				if (youtubeId) {
+					id = `yt:${youtubeId}`
+				}
+			}
+			for (let index = songs.length - 1; index >= 0; index -= 1) {
+				const song = songs[index]
+				if (song.external_url.includes(url) || (id && song.id === id)) {
+					dispatch('PLAY_SONG_INDEX', index)
+					commit('TOGGLE_PAUSED', true)
+					break
+				}
+			}
+		}
 	},
 }
 

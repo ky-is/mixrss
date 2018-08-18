@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueYoutube from 'vue-youtube'
+import querystring from 'querystring'
 
 import App from './App.vue'
 
@@ -14,14 +15,23 @@ new Vue({
 	store,
 }).$mount('#app')
 
-const query = window.location.search
-if (query) {
-	const split = query.split('feeds=')
-	const feedUrls = split[split.length - 1].split(',')
-	if (feedUrls.length) {
-		for (const url of feedUrls) {
-			store.dispatch('LOAD_FEED_URL', { url, adding: true })
+const queryString = window.location.search
+if (queryString) {
+	const queryObject = querystring.parse(queryString.substring(1))
+	const feeds = queryObject.feeds as string | undefined
+	if (feeds) {
+		const feedUrls = feeds.split(',')
+		if (feedUrls.length) {
+			for (const url of feedUrls) {
+				store.dispatch('LOAD_FEED_URL', { url, adding: true })
+			}
 		}
+	}
+	const play = queryObject.play as string | undefined
+	if (play) {
+		Vue.nextTick(() => {
+			store.dispatch('QUEUE_PLAY_URL', play)
+		})
 	}
 	window.history.replaceState(null, undefined, window.location.pathname)
 }

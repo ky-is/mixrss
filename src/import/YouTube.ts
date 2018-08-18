@@ -30,12 +30,12 @@ function getDurationFromISO (duration: string) {
 
 export default {
 
-	load (url: string, callback: Function) {
-		const youtubeId = url.length === 11 ? url : Vue.prototype.$youtube.getIdFromUrl(url)
-		if (!youtubeId) {
-			return
-		}
-		const youtubeUrl =`https://www.googleapis.com/youtube/v3/videos?id=${youtubeId}&key=${YOUTUBE_API}&part=snippet,contentDetails,status`
+	getIdFrom (url: string): string | null {
+		return url.length === 11 ? url : Vue.prototype.$youtube.getIdFromUrl(url)
+	},
+
+	load (id: string, callback: Function) {
+		const youtubeUrl =`https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${YOUTUBE_API}&part=snippet,contentDetails,status`
 		fetchJsonp(youtubeUrl).then((response: any) => response.json())
 			.then((data: any) => {
 				data = data.items[0]
@@ -52,7 +52,7 @@ export default {
 						return
 					}
 				}
-				const id = data.id
+				id = data.id
 				const permalink = `https://www.youtube.com/watch?v=${id}`
 				let title = data.snippet.title.replace(TITLE_REGEX, '').trim()
 				const duration = getDurationFromISO(data.contentDetails.duration)
