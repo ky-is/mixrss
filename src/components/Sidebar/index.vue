@@ -1,8 +1,8 @@
 <template>
-<div class="sidebar">
+<div>
 	<SidebarItem :url="null" :selected="currentUrl === null" />
 	<SidebarItem v-for="url in feedList" :url="url" :selected="currentUrl === url" :key="url" />
-	<button @click="onAddFeed" class="unstyled w-full theme-color font-bold h-12">{{ addingFeed ? 'Cancel' : 'Add new feed' }}</button>
+	<button @click="onAddFeed" class="unstyled w-full text-pink-light font-bold h-12">{{ addingFeed ? 'Cancel' : 'Add new feed' }}</button>
 </div>
 </template>
 

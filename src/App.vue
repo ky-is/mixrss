@@ -42,11 +42,6 @@ ul {
 	@apply list-reset;
 }
 
-.animates, a, button {
-	transition-duration: 250ms;
-	transition-property: background-color border-color box-shadow color;
-}
-
 /* Links */
 
 a {
@@ -68,58 +63,41 @@ a[href]:hover:active {
 	@apply bg-pink-lighter;
 }
 
-.theme-color {
-	@apply text-pink-light;
-}
-
 .backed, button.selected {
 	@apply bg-pink-light;
 }
 
-.text-faint {
-	/* color: #888; */
-	opacity: 0.5;
-}
-
 /* Hover */
 
-.hover-inner, .hover-child {
-	visibility: hidden;
+.hover-outer .hover-inner {
+	@apply invisible;
 }
-.hover-outer:hover .hover-inner, .hover-parent:hover .hover-child {
-	visibility: visible;
+.hover-outer:hover .hover-inner, .selected .hover-inner {
+	@apply visible;
 }
 
 /* Form */
 
 button, input {
-	font-size: inherit;
-	border: 1px solid #ddd;
-	padding: 0;
+	@apply border border-grey-light;
 	outline: none !important;
 	color: inherit;
 }
 
 button[disabled] {
-	opacity: 0.5;
-	cursor: default;
+	@apply opacity-50 cursor-default;
 }
 
 input {
-	padding: 0 4px;
+	@apply px-2;
 }
 
 button.backed {
-	border-radius: 5px;
-	border: 0;
-	height: 48px;
+	@apply border-none rounded-lg h-12 text-white font-semibold text-2xl;
 	min-width: 224px;
-	color: #fff;
-	font-weight: 600;
-	font-size: 24px;
 }
 
 button.borderless, button.unstyled {
-	border: 0;
+	@apply border-none;
 }
 </style>

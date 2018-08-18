@@ -1,5 +1,5 @@
 <template>
-<div class="view-home flex h-full">
+<div class="flex h-full">
 	<div v-if="feedData" class="sidebar-container scrolls">
 		<TheSidebar :feedList="feedList" />
 	</div>

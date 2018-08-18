@@ -1,6 +1,6 @@
 <template>
-<li class="feed-item hover-outer p-2 rounded-sm animates flex items-center">
-	<button @click="onItem" class="item-icon bg-image borderless animates" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
+<li class="feed-item hover-outer animate">
+	<button @click="onItem" class="item-icon bg-image borderless animate" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
 	<div class="song-details flex-grow">
 		<div class="items-baseline">
 			<div v-if="editTitle" class="flex">
@@ -11,7 +11,7 @@
 				<button @click="onTitleToggle" class="unstyled text-left">{{ item.title }}</button>
 			</div>
 		</div>
-		<div class="text-sm text-faint hover-inner">
+		<div class="text-sm text-grey-darker hover-inner">
 			<div>
 				<span>{{ item._duration || item.summary }}</span>
 				<span> ・ </span>
@@ -20,8 +20,8 @@
 				<span v-if="item.author"> {{ item.author.name }} ・</span>
 				<span class="tags">
 					<span v-if="tags">
-						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag hover-parent" :key="tag">
-							{{ tag }}<span class="hover-child ml-px pl-px leading-none text-xs">✖︎</span>
+						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag group" :key="tag">
+							{{ tag }}<span class="ml-px pl-px leading-none text-xs group-hover:visible">✖︎</span>
 						</button>
 					</span>
 					<button @click="onTagAdd" class="button-modify button-outline">+Tag</button>
@@ -119,6 +119,7 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .feed-item {
+	@apply p-2 rounded-sm flex items-center;
 	&:not(.selected):hover {
 		@apply bg-grey-lightest;
 		&:active {

@@ -1,5 +1,5 @@
 <template>
-<div class="play-manager absolute pin-t">
+<div id="play-manager" class="absolute pin-t">
 	<SoundCloudManager :id="soundcloudId" :paused="paused" @playing="onPlaying" @ended="onEnded" />
 	<YouTubeManager :id="youtubeId" :paused="paused" @playing="onPlaying" @ended="onEnded" />
 </div>
@@ -58,7 +58,7 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.play-manager {
+#play-manager {
 	transform: translate(-200px, -200px);
 }
 </style>

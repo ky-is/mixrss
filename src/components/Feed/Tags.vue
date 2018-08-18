@@ -1,5 +1,5 @@
 <template>
-<ul class="tag-list flex">
+<ul class="flex">
 	<li v-for="tag in tags" :key="tag">
 		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>
 	</li>
@@ -72,8 +72,7 @@ li {
 }
 
 button {
-	@apply rounded;
-	padding: 1px 5px;
+	@apply rounded px-1 py-px;
 	min-width: 28px;
 }
 </style>
