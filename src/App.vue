@@ -31,8 +31,7 @@ export default Vue.extend({
 @import 'assets/styles/tailwind.postcss';
 
 html {
-	width: 100%;
-	height: 100%;
+	@apply wh-full;
 }
 
 body, #app {
@@ -41,44 +40,41 @@ body, #app {
 }
 
 #app {
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	font-size: 18px;
+	@apply antialiased text-lg font-sans;
 }
 
 ul {
-	list-style: none;
-	padding: 0;
+	@apply list-reset;
 }
 
 /* Links */
 
 a {
-	text-decoration: none;
+	@apply no-underline;
+	transition: 250ms color;
 }
 a[href] {
-	color: #f24;
+	@apply text-pink-dark;
 }
 a[href]:hover {
-	opacity: 0.67;
+	@apply text-pink-darker;
 }
 a[href]:hover:active {
-	opacity: 0.5;
+	@apply text-pink-darkest;
 }
 
 /* Theme colors */
 
 ::selection {
-	background: #fde;
+	@apply bg-pink-lighter;
 }
 
 .theme-color {
-	color: #f8a;
+	@apply text-pink-light;
 }
 
 .backed, button.selected {
-	background: #f8a;
+	@apply bg-pink-light;
 }
 
 .text-faint {

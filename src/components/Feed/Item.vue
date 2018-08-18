@@ -1,8 +1,8 @@
 <template>
-<li class="feed-item hover-outer p-2 flex">
-	<button @click="onItem" class="item-icon borderless mr-2" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
-	<div class="song-details">
-		<div class="title">
+<li class="feed-item hover-outer p-2 rounded-sm flex items-center">
+	<button @click="onItem" class="item-icon bg-image borderless" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
+	<div class="song-details flex-grow">
+		<div class="items-baseline">
 			<div v-if="editTitle" class="flex">
 				<input type="text" v-model.trim="itemTitle" class="flex-grow mr-1" placeholder="Playlist title" autocomplete="off" autocorrect="on">
 				<button @click="onTitleSave" class="button-modify button-outline">{{ itemTitle === item.title ? 'Cancel' : 'Save' }}</button>
@@ -20,19 +20,19 @@
 				<span v-if="item.author"> {{ item.author.name }} ・</span>
 				<span class="tags">
 					<span v-if="tags">
-						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag hover-parent" :key="tag">{{ tag }}<span class="tag-delete hover-child ml-px">✖︎</span></button>
+						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag hover-parent" :key="tag">{{ tag }}<span class="hover-child ml-px pl-px leading-none text-xs">✖︎</span></button>
 					</span>
 					<button @click="onTagAdd" class="button-modify button-outline">+Tag</button>
 				</span>
 			</div>
 			<div class="flex">
-				<button v-if="item.content_text" @click="onNoteEdit" class="description unstyled">{{ item.content_text }}</button>
+				<button v-if="item.content_text" @click="onNoteEdit" class="unstyled truncate">{{ item.content_text }}</button>
 				<button v-else @click="onNoteEdit" class="button-modify button-outline">{{ item.content_text ? 'Edit' : '+Note' }}</button>
 			</div>
 		</div>
 	</div>
 	<div class="hover-inner">
-		<button @click="onDelete" class="button-delete unstyled">✕</button>
+		<button @click="onDelete" class="button-delete unstyled wh-12 font-black text-red">✕</button>
 	</div>
 </li>
 </template>
@@ -115,34 +115,30 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .feed-item {
-	align-items: center;
 	transition: background-color 200ms;
-	border-radius: 2px;
-}
+	&:not(.selected):hover {
+		@apply bg-grey-lightest;
+		&:active {
+			@apply bg-grey-light;
+		}
+	}
 
-.feed-item:hover {
-	background-color: #eee;
-}
-.feed-item:hover:active {
-	background-color: #ddd;
-}
-
-.feed-item.selected {
-	background: #ffeef8 !important;
+	&.selected {
+		@apply bg-pink-lightest;
+	}
 }
 
 /* ALBUM ART */
 
 .item-icon {
-	width: 64px;
-	height: 64px;
-	border-radius: 3px;
-	background-size: cover;
-	background-position: center;
-	flex-shrink: 0;
+	@apply mr-2 wh-16 rounded cursor-pointer;
 	transition: box-shadow 500ms;
+	box-shadow: 0 1px 3px #bbb;
+}
+.selected .item-icon {
+	box-shadow: 0 1px 3px #777;
 }
 .item-icon.youtube {
 	background-size: 262%;
@@ -151,59 +147,18 @@ export default Vue.extend({
 
 /* SONG DETAILS */
 
-.song-details {
-	flex-grow: 1;
-}
 .selected .song-details .hover-inner {
-	visibility: visible;
-}
-
-.title {
-	align-items: baseline;
-}
-
-.item-icon {
-	box-shadow: 0 1px 2px #bbb;
-}
-.selected .item-icon {
-	box-shadow: 0 1px 2px #666;
-}
-.item-icon:hover {
-	cursor: pointer;
+	@apply visible;
 }
 
 .button-modify {
-	border-radius: 6px;
-	padding: 0 4px;
-	padding-bottom: 1px;
-	margin-right: 4px;
-	border-color: transparent;
+	@apply mr-1 px-1 pb-px rounded border-transparent;
+	&:hover {
+		@apply bg-white;
+	}
 }
 
 button.button-outline, .button-tag:hover {
-	border-color: #777;
-}
-.button-modify:hover {
-	background: #fff;
-}
-
-.tag-delete {
-	line-height: 0;
-	font-size: 12px;
-}
-
-.description {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-/* MANAGE */
-
-.button-delete {
-	width: 48px;
-	height: 48px;
-	color: #f33;
-	font-weight: 900;
+	@apply border-grey-darker;
 }
 </style>

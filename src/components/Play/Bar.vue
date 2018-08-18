@@ -1,5 +1,5 @@
 <template>
-<div class="play-bar flex">
+<div class="play-bar h-16 bg-grey-lighter flex flex-no-shrink items-stretch justify-center">
 	<button @click="onPrevious" :disabled="!hasPreviousSong">⇤</button><!-- ⇤↩︎⏮ -->
 	<button @click="onPlay" :disabled="!songs.length">{{ hasSong && !paused ? '◼︎' : '▶︎' }}</button><!-- ▶︎▶️◼︎⏸ -->
 	<button @click="onNext" :disabled="!hasNextSong">⇥</button><!-- ⇥↪︎⏭ -->
@@ -55,20 +55,8 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
-.play-bar {
-	background: #eee;
-	flex-shrink: 0;
-	height: 64px;
-	align-items: stretch;
-	justify-content: center;
-}
-
+<style lang="postcss" scoped>
 button {
-	background: none;
-	border: none;
-	font-size: 32px;
-	color: #f59;
-	width: 80px;
+	@apply w-24 border-none text-4xl text-pink;
 }
 </style>

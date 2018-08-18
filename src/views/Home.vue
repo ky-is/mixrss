@@ -1,5 +1,5 @@
 <template>
-<div class="view-home flex">
+<div class="view-home flex h-full">
 	<div v-if="feedData" class="sidebar-container scrolls">
 		<TheSidebar :feedList="feedList" />
 	</div>
@@ -54,20 +54,14 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
-.view-home {
-	align-items: stretch;
-	height: 100%;
-}
-
+<style lang="postcss" scoped>
 .scrolls {
-	height: 100%;
-	overflow-y: scroll;
+	@apply h-full overflow-y-scroll;
 }
 
 .sidebar-container {
 	width: 288px;
-	background-color: #f7f7f7;
+	@apply bg-grey-lightest;
 }
 
 .feed-content {

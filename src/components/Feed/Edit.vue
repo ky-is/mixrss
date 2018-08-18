@@ -186,13 +186,8 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 input, button {
-	height: 44px;
-	padding: 0 12px;
-}
-
-.create-playlist input, .create-playlist button {
-	width: 50%;
+	@apply h-10 px-2 w-1/2;
 }
 </style>

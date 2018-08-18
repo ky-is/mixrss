@@ -57,7 +57,7 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .play-manager {
 	transform: translate(-200px, -200px);
 }

@@ -1,6 +1,6 @@
 <template>
-<li v-if="item" @click="onItem" class="sidebar-item hover-outer my-4 p-2 flex" :class="{ selected }">
-	<div class="item-icon mr-1" :style="{ 'background-image': `url(${item.icon})` }" />
+<li v-if="item" @click="onItem" class="sidebar-item hover-outer my-4 p-2 cursor-pointer flex items-center" :class="{ selected }">
+	<div class="bg-image wh-8 mr-1 rounded-full" :style="{ 'background-image': `url(${item.icon})` }" />
 	<div>
 		<div v-if="item.title" class="title">{{ item.title }}</div>
 		<div v-else class="title italic">Untitled playlist</div>
@@ -61,27 +61,15 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .sidebar-item {
-	cursor: pointer;
-	align-items: center;
 	transition: background-color 250ms;
-}
-.sidebar-item:hover {
-	background-color: #fff1f5;
-}
-.sidebar-item.selected {
-	cursor: default;
-	background-color: #fff;
-}
-
-.item-icon {
-	width: 32px;
-	height: 32px;
-	border-radius: 50%;
-	background-size: cover;
-	background-position: center;
-	flex-shrink: 0;
+	&:hover {
+		@apply bg-pink-lightest;
+	}
+	&.selected {
+		@apply bg-white cursor-default;
+	}
 }
 
 .selected .hover-inner {
