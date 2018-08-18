@@ -42,7 +42,7 @@ export default Vue.extend({
 				}
 			},
 		},
-	
+
 		paused (paused: boolean) {
 			if (!this.player) {
 				return

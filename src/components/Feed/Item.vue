@@ -20,7 +20,9 @@
 				<span v-if="item.author"> {{ item.author.name }} ・</span>
 				<span class="tags">
 					<span v-if="tags">
-						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag hover-parent" :key="tag">{{ tag }}<span class="hover-child ml-px pl-px leading-none text-xs">✖︎</span></button>
+						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag hover-parent" :key="tag">
+							{{ tag }}<span class="hover-child ml-px pl-px leading-none text-xs">✖︎</span>
+						</button>
 					</span>
 					<button @click="onTagAdd" class="button-modify button-outline">+Tag</button>
 				</span>

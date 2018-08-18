@@ -1,9 +1,11 @@
 <template>
 <ul class="tag-list flex">
 	<li v-for="tag in tags" :key="tag">
-		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>		
+		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>
 	</li>
-	<li v-if="tags.length"><button @click="onTag('?')" :class="{ selected: selectedTagIds.indexOf('?') !== -1 }">?</button></li>
+	<li v-if="tags.length">
+		<button @click="onTag('?')" :class="{ selected: selectedTagIds.indexOf('?') !== -1 }">?</button>
+	</li>
 	<button v-if="selectedTagIds.length" @click="onClearTags">✕</button>
 </ul>
 </template>

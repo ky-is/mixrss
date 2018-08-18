@@ -5,7 +5,7 @@
 	</div>
 	<div class="scrolls w-full">
 		<div class="feed-content m-auto p-2">
-			<FeedCreate v-if="!feedData || addingFeed"/>
+			<FeedCreate v-if="!feedData || addingFeed" />
 			<div v-else>
 				<FeedEdit />
 				<FeedTags :items="feedData.items" />

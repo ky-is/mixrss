@@ -1,6 +1,6 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
 
-import { PlaybackState, RootState } from '@/types/store'
+import { PlaybackState } from '@/types/store'
 
 import importSoundCloud from '@/import/SoundCloud'
 import importYouTube from '@/import/YouTube'
@@ -59,7 +59,7 @@ const actions: ActionTree<PlaybackState, any> = {
 		const songs = getters.songs
 		const loadedSongs = !!songs.length
 		commit('SET_PENDING_URL', loadedSongs ? null : url)
-	
+
 		if (loadedSongs) {
 			let id = null
 			if (!importSoundCloud.isValid(url)) {
