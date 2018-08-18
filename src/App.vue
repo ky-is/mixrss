@@ -27,7 +27,9 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style lang="postcss">
+@import 'assets/styles/tailwind.postcss';
+
 html {
 	width: 100%;
 	height: 100%;
