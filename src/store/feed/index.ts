@@ -253,7 +253,7 @@ const mutations: MutationTree<FeedState> = {
 		}
 		for (const item of items) {
 			if (item.id === uniqueId) {
-				return window.alert('This song is already in your playlist!')
+				return window.alert('This song is already in your mix!')
 			}
 		}
 		const authorName = rawAuthor && localAuthor.toLowerCase() !== rawAuthor.toLowerCase() ? localAuthor : undefined

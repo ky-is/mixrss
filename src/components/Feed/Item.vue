@@ -4,7 +4,7 @@
 	<div class="song-details flex-grow">
 		<div class="items-baseline">
 			<div v-if="editTitle" class="flex">
-				<input type="text" v-model.trim="itemTitle" class="flex-grow mr-1" placeholder="Playlist title" autocomplete="off" autocorrect="on">
+				<input type="text" v-model.trim="itemTitle" class="flex-grow mr-1" placeholder="Mix title" autocomplete="off" autocorrect="on">
 				<button @click="onTitleSave" class="button-modify button-outline">{{ itemTitle === item.title ? 'Cancel' : 'Save' }}</button>
 			</div>
 			<div v-else>
@@ -107,7 +107,7 @@ export default Vue.extend({
 
 		onDelete () {
 			const feedData = store.state.feed.data
-			const feedName = (feedData && feedData.title) || 'this playlist'
+			const feedName = (feedData && feedData.title) || 'this mix'
 			const confirmed = window.confirm(`Delete ${this.item.title} from ${feedName}?`)
 			if (confirmed) {
 				store.dispatch('REMOVE_FEED_ITEM', this.item.id)

@@ -2,9 +2,9 @@
 <form @submit.prevent="onSubmit" class="my-2">
 	<div v-if="showEdit">
 		<div class="halves">
-			<input type="text" v-model.trim="feedTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
+			<input type="text" v-model.trim="feedTitle" placeholder="Mix title" autocomplete="off" autocorrect="on">
 			<input type="text" v-model.trim="feedAuthor" placeholder="Your name" autocomplete="off" autocorrect="off">
-			<input type="url" v-model.trim="feedIcon" placeholder="URL to playlist icon (optional)" autocomplete="off" autocorrect="off">
+			<input type="url" v-model.trim="feedIcon" placeholder="Icon URL (optional)" autocomplete="off" autocorrect="off">
 			<input type="url" v-model.trim="feedUrl" placeholder="URL where you'll host this feed." autocomplete="off" autocorrect="off">
 		</div>
 		<div class="line">
