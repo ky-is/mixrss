@@ -1,30 +1,27 @@
 <template>
 <form @submit.prevent="onSubmit" class="my-2">
 	<div v-if="showEdit">
-		<div>
+		<div class="halves">
 			<input type="text" v-model.trim="feedTitle" placeholder="Playlist title" autocomplete="off" autocorrect="on">
 			<input type="text" v-model.trim="feedAuthor" placeholder="Your name" autocomplete="off" autocorrect="off">
-		</div>
-		<div>
 			<input type="url" v-model.trim="feedIcon" placeholder="URL to playlist icon (optional)" autocomplete="off" autocorrect="off">
 			<input type="url" v-model.trim="feedUrl" placeholder="URL where you'll host this feed." autocomplete="off" autocorrect="off">
 		</div>
-		<div>
+		<div class="line">
 			<button type="submit">Save</button>
 			<button @click.prevent="onToggleEdit">Cancel</button>
 			<button @click.prevent="onDelete">Delete</button>
 		</div>
 	</div>
-	<div v-else-if="!showForm">
+	<div v-else-if="!showForm" class="halves">
 		<button @click.prevent="onToggleForm">Add new entry...</button>
 		<button @click.prevent="onToggleEdit">Edit metadata</button>
 		<button v-if="songs.length" @click.prevent="onExportFeed">Download</button>
 		<a ref="downloadLink" style="display:none" :download="fileName" />
 	</div>
-	<div v-else-if="feedData" class="flex">
-		<input type="url" v-model.trim="itemUrl" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
-		<button type="submit">Load</button>
-		<button @click.prevent="onToggleForm">Cancel</button>
+	<div v-else-if="feedData" class="line">
+		<input type="url" v-model.trim="itemUrl" class="flex-grow-all" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
+		<button type="submit" class="flex-no-grow">{{ itemUrl ? 'Load' : 'Cancel' }}</button>
 	</div>
 </form>
 </template>
@@ -171,16 +168,20 @@ export default Vue.extend({
 				}
 				store.commit('UPDATE_FEED', { author, title: this.feedTitle || '', url: this.feedUrl, icon: this.feedIcon })
 				this.onToggleEdit()
-				return
+			} else {
+				if (this.itemUrl) {
+					store.dispatch('ADD_FEED_ITEM', this.itemUrl)
+				} else {
+					this.onToggleForm()
+				}
 			}
-			if (!this.itemUrl) {
-				return window.alert('Please enter a Youtube link to the song.')
-			}
-			store.dispatch('ADD_FEED_ITEM', this.itemUrl)
 		},
 
 		onDelete () {
-			store.dispatch('DELETE_FEED', this.feed.url)
+			const confirmed = window.confirm(`Are you sure you want to remove this playlist ${this.isLocal ? 'permanently' : 'locally'}?`)
+			if (confirmed) {
+				store.dispatch('DELETE_FEED', this.feed.url)
+			}
 		},
 	},
 })
@@ -188,6 +189,20 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 input, button {
-	@apply h-10 px-2 w-1/2;
+	@apply h-10 px-2;
+	min-width: 64px;
+}
+
+.halves {
+	& input, & button {
+		@apply w-1/2;
+	}
+}
+
+.line {
+	@apply flex;
+	& input, & button {
+		@apply flex-grow;
+	}
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-<div id="app" class="flex flex-col">
+<div id="app" class="antialiased text-lg font-sans  flex flex-col">
 	<HomeView />
 	<PlayBar />
 	<PlayManager />
@@ -32,10 +32,6 @@ export default Vue.extend({
 
 html, body, #app {
 	@apply wh-full;
-}
-
-#app {
-	@apply antialiased text-lg font-sans;
 }
 
 ul {
