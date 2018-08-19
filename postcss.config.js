@@ -6,11 +6,10 @@ class TailwindExtractor {
 	}
 }
 
-const extensionsWithCSS = [ 'vue', 'css', 'less', 'postcss', 'sass', 'scss', 'styl' ]
+const extensionsWithCSS = [ 'vue', 'css', 'less', 'pcss', 'postcss', 'sass', 'scss', 'styl' ]
 
 module.exports = {
 	plugins: [
-		require('postcss-import')(),
 		require('postcss-preset-env')({ stage: 0 }),
 		require('tailwindcss')('./tailwind.config.js'),
 		isHotReloaded ? null : require('@fullhuman/postcss-purgecss')({
