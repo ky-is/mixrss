@@ -33,6 +33,9 @@ import store from '@/store'
 
 import { PLACEHOLDER_FEED_URL } from '@/helpers/constants'
 
+import { JSONFeed, JSONFeedItem } from '@/types/jsonfeed'
+import { FeedState } from '@/types/store'
+
 export default Vue.extend({
 	data () {
 		return {
@@ -53,7 +56,7 @@ export default Vue.extend({
 			return this.feed.url === null
 		},
 
-		feed (): any {
+		feed (): FeedState {
 			return store.state.feed
 		},
 
@@ -62,7 +65,7 @@ export default Vue.extend({
 		},
 
 		feedData (): JSONFeed {
-			return this.feed.data
+			return this.feed.data!
 		},
 
 		currentFeedAuthor (): string | null {

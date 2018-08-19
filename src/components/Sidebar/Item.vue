@@ -15,6 +15,8 @@ import Vue from 'vue'
 
 import store from '@/store'
 
+import { JSONFeedItem } from '@/types/jsonfeed'
+
 export default Vue.extend({
 	props: {
 		url: String,

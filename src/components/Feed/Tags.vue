@@ -15,6 +15,8 @@ import Vue from 'vue'
 
 import store from '@/store'
 
+import { JSONFeedItem } from '@/types/jsonfeed'
+
 export default Vue.extend({
 	props: {
 		items: Array as () => JSONFeedItem[], //TODO https://github.com/vuejs/vue/pull/6856

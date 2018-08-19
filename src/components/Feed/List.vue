@@ -11,6 +11,8 @@ import store from '@/store'
 
 import FeedItem from '@/components/Feed/Item.vue'
 
+import { JSONFeedItem } from '@/types/jsonfeed'
+
 export default Vue.extend({
 	components: {
 		FeedItem,

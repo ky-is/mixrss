@@ -1,3 +1,5 @@
+import { JSONFeed } from '@/types/jsonfeed'
+
 export interface FeedState {
 	list: string[]
 	url: string | null

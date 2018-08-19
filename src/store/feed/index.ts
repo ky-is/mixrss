@@ -9,6 +9,7 @@ import storage from '@/helpers/storage'
 import importSoundCloud from '@/import/SoundCloud'
 import importYouTube from '@/import/YouTube'
 
+import { JSONFeed, JSONFeedAuthor, JSONFeedItem } from '@/types/jsonfeed'
 import { FeedState } from '@/types/store'
 
 //LOCAL
@@ -36,7 +37,7 @@ const state: FeedState = {
 	list: storage.getJSON('FEED_LIST') || [],
 	url: currentFeed,
 	data: getLocalFeed(currentFeed),
-	modified: storage.getBool('CURRENT_FEED_MODIFIED', false),
+	modified: storage.getBool('CURRENT_FEED_MODIFIED', false)!,
 	selectedTagIds: [],
 	loading: 0,
 }

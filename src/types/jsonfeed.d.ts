@@ -1,4 +1,4 @@
-declare interface JSONFeed {
+export interface JSONFeed {
 	version: string
 	feed_url?: string
 	title: string
@@ -7,7 +7,7 @@ declare interface JSONFeed {
 	items?: JSONFeedItem[]
 }
 
-declare interface JSONFeedItem {
+export interface JSONFeedItem {
 	id: string
 	title?: string
 	author?: JSONFeedAuthor
@@ -24,6 +24,6 @@ declare interface JSONFeedItem {
 	tags?: string[]
 }
 
-declare interface JSONFeedAuthor {
+export interface JSONFeedAuthor {
 	name: string
 }

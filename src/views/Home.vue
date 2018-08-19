@@ -29,6 +29,8 @@ import FeedTags from '@/components/Feed/Tags.vue'
 
 import TheSidebar from '@/components/Sidebar/index.vue'
 
+import { JSONFeed } from '@/types/jsonfeed'
+
 export default Vue.extend({
 	components: {
 		FeedCreate,

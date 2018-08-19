@@ -11,6 +11,7 @@ import Vue from 'vue'
 
 import store from '@/store'
 
+import { JSONFeed } from '@/types/jsonfeed'
 import { FeedState } from '@/types/store'
 
 export default Vue.extend({

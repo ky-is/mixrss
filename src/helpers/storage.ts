@@ -18,7 +18,7 @@ let storage: Storage
 
 export default {
 
-	get (key: string, defaultValue: any = null) {
+	get (key: string, defaultValue: string | null = null) {
 		if (storage) {
 			const value = storage.getItem(key)
 			if (value !== undefined && value !== 'null') {
@@ -29,7 +29,8 @@ export default {
 	},
 
 	getBool (key: string, defaultValue: boolean | null = null) {
-		return this.get(key, defaultValue) == 'true'
+		const boolString = this.get(key)
+		return boolString !== null ? boolString === 'true' : defaultValue
 	},
 
 	set (key: string, value: any) {
