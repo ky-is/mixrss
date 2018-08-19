@@ -55,6 +55,7 @@ export default Vue.extend({
 
 	methods: {
 		onItem () {
+			store.commit('TOGGLE_SIDEBAR', false)
 			store.dispatch('SET_FEED_BY_URL', this.url)
 		},
 	},

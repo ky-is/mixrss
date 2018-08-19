@@ -1,6 +1,6 @@
 <template>
 <div class="flex h-full">
-	<div v-if="feedData" class="sidebar-container scrolls">
+	<div v-if="feedData" class="sidebar-container absolute pin-t z-10 sm:static scrolls animate" :class="{ showsSidebar }">
 		<TheSidebar :feedList="feedList" />
 	</div>
 	<div class="scrolls w-full">
@@ -39,6 +39,10 @@ export default Vue.extend({
 	},
 
 	computed: {
+		showsSidebar (): boolean {
+			return store.getters.showsSidebar
+		},
+
 		feedList (): string[] {
 			return store.state.feed.list
 		},
@@ -60,8 +64,13 @@ export default Vue.extend({
 }
 
 .sidebar-container {
-	width: 288px;
 	@apply bg-grey-lightest;
+	width: 288px;
+	left: -288px;
+	transition-property: left;
+	&.showsSidebar {
+		left: 0;
+	}
 }
 
 .feed-content {

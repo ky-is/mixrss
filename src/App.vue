@@ -1,5 +1,6 @@
 <template>
 <div id="app" class="antialiased text-lg font-sans  flex flex-col">
+	<NavBar />
 	<HomeView />
 	<PlayBar />
 	<PlayManager />
@@ -11,12 +12,14 @@ import Vue from 'vue'
 
 import HomeView from '@/views/Home.vue'
 
+import NavBar from '@/components/Nav.vue'
 import PlayBar from '@/components/Play/Bar.vue'
 import PlayManager from '@/components/Play/Manager/index.vue'
 
 export default Vue.extend({
 	components: {
 		HomeView,
+		NavBar,
 		PlayBar,
 		PlayManager,
 	},

@@ -10,18 +10,23 @@ const state: LocalState = {
 	author: storage.get('AUTHOR'),
 
 	addingFeed: false,
+	toggleSidebar: false,
 }
 
 //MUTATIONS
 
 const mutations: MutationTree<LocalState> = {
-	SET_AUTHOR (state, author) {
+	SET_AUTHOR (state, author: string) {
 		state.author = author
 		storage.set('AUTHOR', author)
 	},
 
-	TOGGLE_ADD_FEED (state, show) {
+	TOGGLE_ADD_FEED (state, show?: boolean) {
 		state.addingFeed = show === undefined ? !state.addingFeed : show
+	},
+
+	TOGGLE_SIDEBAR (state, show?: boolean) {
+		state.toggleSidebar = show === undefined ? !state.toggleSidebar : show
 	},
 }
 
@@ -33,6 +38,9 @@ const actions: ActionTree<LocalState, any> = {
 //GETTERS
 
 const getters: GetterTree<LocalState, any> = {
+	showsSidebar (state, getters, rootState) {
+		return state.toggleSidebar && rootState.feed.data !== null
+	},
 }
 
 //EXPORT

@@ -10,6 +10,7 @@ export interface FeedState {
 export interface LocalState {
 	author: string | null
 	addingFeed: boolean
+	toggleSidebar: boolean
 }
 
 export interface PlaybackState {
