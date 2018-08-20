@@ -1,5 +1,6 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
 
+import { JSONFeedItem } from '@/types/jsonfeed'
 import { PlaybackState } from '@/types/store'
 
 import importSoundCloud from '@/import/SoundCloud'
@@ -56,7 +57,7 @@ const actions: ActionTree<PlaybackState, any> = {
 	},
 
 	QUEUE_PLAY_URL ({ commit, dispatch, getters }, url) {
-		const songs = getters.songs
+		const songs = getters.songs as JSONFeedItem[]
 		const loadedSongs = !!songs.length
 		commit('SET_PENDING_URL', loadedSongs ? null : url)
 
@@ -70,7 +71,8 @@ const actions: ActionTree<PlaybackState, any> = {
 			}
 			for (let index = songs.length - 1; index >= 0; index -= 1) {
 				const song = songs[index]
-				if (song.external_url.includes(url) || (id && song.id === id)) {
+				const externalUrl = song.external_url //TODO ?.
+				if ((externalUrl && externalUrl.includes(url)) || (id && song.id === id)) {
 					dispatch('PLAY_SONG_INDEX', index)
 					commit('TOGGLE_PAUSED', true)
 					break
