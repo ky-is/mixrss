@@ -1,6 +1,6 @@
 <template>
 <li class="feed-item hover-outer animate">
-	<button @click="onItem" class="item-icon bg-image borderless animate" :class="{ youtube: item._imageAlign === 'youtube' }" :style="{ 'background-image': `url(${item.image})` }" />
+	<button @click="onItem" class="item-icon bg-image borderless animate" :class="{ youtubeAlign }" :style="{ 'background-image': `url(${item.image})`, 'background-position': imageAlign }" />
 	<div class="song-details flex-grow">
 		<div class="items-baseline">
 			<div v-if="editTitle" class="flex">
@@ -72,6 +72,14 @@ export default Vue.extend({
 			const tags = this.item.tags
 			return tags && tags.length ? tags : null
 		},
+
+		imageAlign (): string | undefined {
+			console.log(this.id, this.item._imageAlign)
+			return this.item._imageAlign
+		},
+		youtubeAlign (): boolean {
+			return this.imageAlign === 'youtube'
+		},
 	},
 
 	methods: {
@@ -138,7 +146,7 @@ export default Vue.extend({
 .item-icon {
 	@apply mr-2 wh-16 rounded cursor-pointer;
 	box-shadow: 0 1px 3px #bbb;
-	&.youtube {
+	&.youtubeAlign {
 		background-size: 262%;
 		background-position: -9.5px -9.5px;
 	}
