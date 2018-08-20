@@ -66,7 +66,7 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .sidebar-item {
-	@apply my-4 p-2 cursor-pointer flex items-center;
+	@apply my-4 p-2 cursor-pointer  flex items-center;
 	&:hover {
 		@apply bg-pink-lightest;
 	}

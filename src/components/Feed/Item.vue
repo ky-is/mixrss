@@ -1,7 +1,7 @@
 <template>
 <li class="feed-item outer-group animate">
 	<button @click="onItem" class="item-icon bg-image borderless animate" :class="{ youtubeAlign }" :style="{ 'background-image': `url(${item.image})`, 'background-position': imageAlign }" />
-	<div class="song-details flex-grow">
+	<div class="song-details  flex-grow">
 		<div class="items-baseline">
 			<div v-if="editTitle" class="flex">
 				<input type="text" v-model.trim="itemTitle" class="flex-grow mr-1" placeholder="Mix title" autocomplete="off" autocorrect="on">
@@ -128,7 +128,7 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .feed-item {
-	@apply p-2 rounded-sm flex items-center;
+	@apply p-2 rounded-sm  flex items-center;
 	&:not(.selected):hover {
 		@apply bg-grey-lightest;
 		&:active {
