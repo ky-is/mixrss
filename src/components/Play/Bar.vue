@@ -74,7 +74,7 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 button {
-	@apply w-24 border-none text-4xl text-pink;
+	@apply w-24 border-none text-4xl text-pink overflow-hidden;
 }
 
 .seek-previous, .seek-next {

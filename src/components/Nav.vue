@@ -1,5 +1,5 @@
 <template>
-<nav class="h-12 bg-grey-lighter sm:hidden border-b  flex items-stretch justify-between">
+<nav class="sm:hidden h-12 bg-grey-lighter border-b  flex items-stretch justify-between">
 	<button @click="onToggleSidebar" class="side-item borderless text-xl">♬</button>
 	<div class="m-auto">{{ title }}</div>
 	<div class="side-item"><!--  --></div>

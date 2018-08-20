@@ -1,6 +1,6 @@
 <template>
 <div class="flex h-full">
-	<div v-if="feedData" class="sidebar-container absolute z-20 sm:static scrolls animate" :class="{ showsSidebar }">
+	<div v-if="feedData" class="sidebar-container scrolls animate" :class="{ showsSidebar }">
 		<TheSidebar :feedList="feedList" />
 	</div>
 	<div class="scrolls w-full">
@@ -72,6 +72,10 @@ export default Vue.extend({
 	transition-property: left;
 	&.showsSidebar {
 		left: 0;
+	}
+	@media (width < 576px) {
+		@apply absolute z-20;
+		max-height: calc(100% - 64px - 42px);
 	}
 }
 
