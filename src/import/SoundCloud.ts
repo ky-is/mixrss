@@ -42,6 +42,7 @@ export default {
 				if (!retry) {
 					this.load(url, callback, true)
 				} else {
+					callback()
 					console.error(error)
 					window.alert('Unable to load from SoundCloud. Please check your URL and try again.')
 				}

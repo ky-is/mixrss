@@ -107,20 +107,30 @@ const actions: ActionTree<FeedState, any> = {
 	},
 
 	ADD_FEED_ITEM ({ commit, rootState }, url) {
-		if (importSoundCloud.isValid(url)) {
-			importSoundCloud.load(url, (data: any) => {
-				data.localAuthor = rootState.author
-				commit('PREPEND_TO_FEED', data)
-			})
-		} else {
-			const youtubeId = importYouTube.getIdFrom(url)
-			if (youtubeId) {
-				importYouTube.load(youtubeId, (data: any) => {
+		return new Promise((resolve, reject) => {
+			if (importSoundCloud.isValid(url)) {
+				importSoundCloud.load(url, (data: any) => {
+					if (!data) {
+						return reject()
+					}
 					data.localAuthor = rootState.author
 					commit('PREPEND_TO_FEED', data)
+					resolve()
 				})
+			} else {
+				const youtubeId = importYouTube.getIdFrom(url)
+				if (youtubeId) {
+					importYouTube.load(youtubeId, (data: any) => {
+						if (!data) {
+							return reject()
+						}
+						data.localAuthor = rootState.author
+						commit('PREPEND_TO_FEED', data)
+						resolve()
+					})
+				}
 			}
-		}
+		})
 	},
 
 	REMOVE_FEED_ITEM ({ commit, dispatch, rootState }, id) {

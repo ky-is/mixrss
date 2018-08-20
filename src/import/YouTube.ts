@@ -72,6 +72,7 @@ export default {
 				callback({ type: 'yt', id, permalink, title, duration, image, imageAlign, embed })
 			})
 			.catch((error: any) => {
+				callback()
 				console.error(error)
 				window.alert('Unable to load from SoundCloud. Please check your URL and try again.')
 			})

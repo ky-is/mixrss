@@ -172,8 +172,16 @@ export default Vue.extend({
 				store.commit('UPDATE_FEED', { author, title: this.feedTitle || '', url: this.feedUrl, icon: this.feedIcon })
 				this.onToggleEdit()
 			} else {
-				if (this.itemUrl) {
-					store.dispatch('ADD_FEED_ITEM', this.itemUrl)
+				const submitUrl = this.itemUrl
+				if (submitUrl) {
+					store.dispatch('ADD_FEED_ITEM', submitUrl).then(() => {
+						if (submitUrl === this.itemUrl) {
+							this.itemUrl = null
+							this.onToggleForm()
+						}
+					}, error => {
+						console.log('ADD_FEED_ITEM', error)
+					})
 				} else {
 					this.onToggleForm()
 				}
