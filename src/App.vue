@@ -66,15 +66,6 @@ a[href]:hover:active {
 	@apply bg-pink-light;
 }
 
-/* Hover */
-
-.hover-outer .hover-inner {
-	@apply invisible;
-}
-.hover-outer:hover .hover-inner, .selected .hover-inner {
-	@apply visible;
-}
-
 /* Form */
 
 button, input {

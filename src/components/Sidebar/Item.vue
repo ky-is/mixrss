@@ -1,11 +1,11 @@
 <template>
-<li v-if="item" @click="onItem" class="sidebar-item hover-outer animate" :class="{ selected }">
+<li v-if="item" @click="onItem" class="sidebar-item outer-group animate" :class="{ selected }">
 	<div class="bg-image wh-8 mr-1 rounded-full" :style="{ 'background-image': `url(${item.icon})` }" />
 	<div>
 		<div v-if="item.title" class="title">{{ item.title }}</div>
 		<div v-else class="title italic">Untitled Mix</div>
 		<div class="text-grey-darker text-sm">{{ item.items ? item.items.length : 0 }} songs ・ {{ item.author.name || 'Unknown' }}</div>
-		<a :href="selected ? url : null" target="_blank" class="text-grey-darker text-xs hover-inner" rel="noopener">{{ shortUrl }}</a>
+		<a :href="selected ? url : null" target="_blank" class="text-grey-darker text-xs inner-hover inner-selected" rel="noopener">{{ shortUrl }}</a>
 	</div>
 </li>
 </template>

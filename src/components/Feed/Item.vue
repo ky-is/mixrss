@@ -1,5 +1,5 @@
 <template>
-<li class="feed-item hover-outer animate">
+<li class="feed-item outer-group animate">
 	<button @click="onItem" class="item-icon bg-image borderless animate" :class="{ youtubeAlign }" :style="{ 'background-image': `url(${item.image})`, 'background-position': imageAlign }" />
 	<div class="song-details flex-grow">
 		<div class="items-baseline">
@@ -11,7 +11,7 @@
 				<button @click="onTitleToggle" class="unstyled text-left">{{ item.title }}</button>
 			</div>
 		</div>
-		<div class="text-sm text-grey-darker hover-inner">
+		<div class="text-sm text-grey-darker inner-hover inner-selected">
 			<div>
 				<span>{{ item._duration || item.summary }}</span>
 				<span> ・ </span>
@@ -33,7 +33,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="hover-inner">
+	<div class="inner-hover">
 		<button @click="onDelete" class="button-delete unstyled wh-12 font-black text-red">✕</button>
 	</div>
 </li>
@@ -74,7 +74,6 @@ export default Vue.extend({
 		},
 
 		imageAlign (): string | undefined {
-			console.log(this.id, this.item._imageAlign)
 			return this.item._imageAlign
 		},
 		youtubeAlign (): boolean {
@@ -156,10 +155,6 @@ export default Vue.extend({
 }
 
 /* SONG DETAILS */
-
-.selected .song-details .hover-inner {
-	@apply visible;
-}
 
 .button-modify {
 	@apply mr-1 px-1 pb-px rounded border-transparent;

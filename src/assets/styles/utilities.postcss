@@ -2,11 +2,23 @@
 	@apply bg-cover bg-center flex-no-shrink flex;
 }
 
-.animate, a, button {
+.animate, a, button, .inner-hover, .inner-selected {
 	transition-duration: 250ms;
-	transition-property: background-color border-color box-shadow color;
+	transition-property: background-color border-color box-shadow color, opacity;
 }
 
 .flex-grow-all {
 	flex-grow: 9 !important;
+}
+
+/* Visibility groups */
+
+.outer-group  {
+	& .inner-hover, & .inner-selected {
+		@apply opacity-0;
+		transition-duration: 150ms;
+	}
+	&:hover .inner-hover, &.selected .inner-selected {
+		@apply opacity-100;
+	}
 }
