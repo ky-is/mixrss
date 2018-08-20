@@ -1,5 +1,5 @@
 <template>
-<div class="h-16 bg-grey-lighter  flex flex-no-shrink items-stretch justify-center">
+<div class="h-16 bg-grey-lighter border-t  flex flex-no-shrink items-stretch justify-center">
 	<button @click="onPrevious" :disabled="!hasPreviousSong">⇤</button> <!-- ⇤↩︎⏮ -->
 	<button @click="onPlay" :disabled="!songs.length">{{ hasSong && !paused ? '◼︎' : '▶︎' }}</button> <!-- ▶︎▶️◼︎⏸ -->
 	<button @click="onNext" :disabled="!hasNextSong">⇥</button> <!-- ⇥↪︎⏭ -->

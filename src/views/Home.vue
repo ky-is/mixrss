@@ -1,6 +1,6 @@
 <template>
 <div class="flex h-full">
-	<div v-if="feedData" class="sidebar-container absolute pin-t z-10 sm:static scrolls animate" :class="{ showsSidebar }">
+	<div v-if="feedData" class="sidebar-container absolute z-20 sm:static scrolls animate" :class="{ showsSidebar }">
 		<TheSidebar :feedList="feedList" />
 	</div>
 	<div class="scrolls w-full">
@@ -66,7 +66,7 @@ export default Vue.extend({
 }
 
 .sidebar-container {
-	@apply bg-grey-lightest;
+	@apply bg-grey-lightest border-r;
 	width: 288px;
 	left: -288px;
 	transition-property: left;
