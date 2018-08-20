@@ -2,21 +2,38 @@
 	@apply bg-cover bg-center flex-no-shrink flex;
 }
 
-.animate, a, button, .inner-hover, .inner-selected {
+.flex-grow-all {
+	flex-grow: 9 !important;
+}
+
+/* Animate */
+
+.animation-duration {
 	transition-duration: 250ms;
+}
+.animation-duration-fast {
+	transition-duration: 150ms;
+}
+
+.animate, a, button, .inner-hover, .inner-selected {
+	@apply animation-duration;
 	transition-property: background-color border-color box-shadow color, opacity;
 }
 
-.flex-grow-all {
-	flex-grow: 9 !important;
+/* SVG */
+
+svg {
+	@apply fill-current;
+	& path {
+		@apply animation-duration;
+	}
 }
 
 /* Visibility groups */
 
 .outer-group {
 	& .inner-hover, & .inner-selected {
-		@apply opacity-0;
-		transition-duration: 150ms;
+		@apply animation-duration-fast opacity-0;
 	}
 	&:hover .inner-hover, &.selected .inner-selected {
 		@apply opacity-100;
