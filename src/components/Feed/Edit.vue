@@ -1,5 +1,5 @@
 <template>
-<form @submit.prevent="onSubmit" class="my-2">
+<form @submit.prevent="onSubmit" :disabled="loading" class="my-2">
 	<div v-if="showEdit">
 		<div class="halves">
 			<input type="text" v-model.trim="feedTitle" placeholder="Mix title" autocomplete="off" autocorrect="on">
@@ -41,6 +41,7 @@ import { FeedState } from '@/types/store'
 export default Vue.extend({
 	data () {
 		return {
+			loading: false,
 			showForm: false,
 			showEdit: false,
 
@@ -176,14 +177,20 @@ export default Vue.extend({
 			} else {
 				const submitUrl = this.itemUrl
 				if (submitUrl) {
-					store.dispatch('ADD_FEED_ITEM', submitUrl).then(() => {
-						if (submitUrl === this.itemUrl) {
-							this.itemUrl = null
-							this.onToggleForm()
-						}
-					}, error => {
-						console.log('ADD_FEED_ITEM', error)
-					})
+					this.loading = true
+					store.dispatch('ADD_FEED_ITEM', submitUrl)
+						.then(() => {
+							if (submitUrl === this.itemUrl) {
+								this.itemUrl = null
+								this.onToggleForm()
+							}
+						})
+						.catch(error => {
+							console.log('ADD_FEED_ITEM', error)
+						})
+						.finally(() => {
+							this.loading = false
+						})
 				} else {
 					this.onToggleForm()
 				}
