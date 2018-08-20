@@ -13,11 +13,13 @@
 			<button @click.prevent="onDelete">Delete</button>
 		</div>
 	</div>
-	<div v-else-if="!showForm" class="halves">
+	<div v-else-if="!showForm" class="line">
 		<button @click.prevent="onToggleForm">Add new entry...</button>
 		<button @click.prevent="onToggleEdit">Edit metadata</button>
-		<button v-if="songs.length" @click.prevent="onExportFeed">Download</button>
-		<a ref="downloadLink" style="display:none" :download="fileName" />
+		<button v-if="songs.length" @click.prevent="onExportFeed" class="w-4">
+			<svg class="fill-current w-4 h-4" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
+		</button>
+		<a ref="downloadLink" class="hidden" :download="fileName" />
 	</div>
 	<div v-else-if="feedData" class="line">
 		<input type="url" v-model.trim="itemUrl" class="flex-grow-all" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
