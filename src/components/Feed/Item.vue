@@ -1,6 +1,6 @@
 <template>
 <li class="feed-item outer-group animate">
-	<button @click="onItem" class="item-icon bg-image borderless animate" :class="{ youtubeAlign }" :style="{ 'background-image': `url(${item.image})`, 'background-position': imageAlign }" />
+	<button @click="onPlay" class="borderless"><AlbumArt :url="item.image" size="16" :align="item._imageAlign" /></button>
 	<div class="song-details  flex-grow">
 		<div class="items-baseline">
 			<div v-if="editTitle" class="flex">
@@ -46,7 +46,13 @@ import store from '@/store'
 
 import { JSONFeedItem } from '@/types/jsonfeed'
 
+import AlbumArt from '@/components/Feed/AlbumArt.vue'
+
 export default Vue.extend({
+	components: {
+		AlbumArt,
+	},
+
 	props: {
 		item: Object as () => JSONFeedItem, //TODO https://github.com/vuejs/vue/pull/6856
 	},
@@ -72,17 +78,10 @@ export default Vue.extend({
 			const tags = this.item.tags
 			return tags && tags.length ? tags : null
 		},
-
-		imageAlign (): string | undefined {
-			return this.item._imageAlign
-		},
-		youtubeAlign (): boolean {
-			return this.imageAlign === 'youtube'
-		},
 	},
 
 	methods: {
-		onItem () {
+		onPlay () {
 			store.commit('SET_PLAYBACK_ID', this.id)
 		},
 
@@ -138,20 +137,6 @@ export default Vue.extend({
 	&.selected {
 		@apply bg-pink-lightest;
 	}
-}
-
-/* ALBUM ART */
-
-.item-icon {
-	@apply mr-2 wh-16 rounded cursor-pointer;
-	box-shadow: 0 1px 3px #bbb;
-	&.youtubeAlign {
-		background-size: 262%;
-		background-position: -9.5px -9.5px;
-	}
-}
-.selected .item-icon {
-	box-shadow: 0 1px 3px #777;
 }
 
 /* SONG DETAILS */
