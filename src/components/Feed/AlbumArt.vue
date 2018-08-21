@@ -1,5 +1,5 @@
 <template>
-<div class="item-icon bg-image mr-2 rounded animate" :class="classes" :style="{ 'background-image': `url(${url})`, 'background-position': align }" />
+<div class="item-icon bg-image rounded animate wh-full" :class="{ youtubeAlign }" :style="{ 'background-image': `url(${url})`, 'background-position': align }" />
 </template>
 
 <script lang="ts">
@@ -13,11 +13,8 @@ export default Vue.extend({
 	},
 
 	computed: {
-		classes (): object {
-			return {
-				[`wh-${this.size}`]: true,
-				youtube: this.align === 'youtube',
-			}
+		youtubeAlign (): boolean {
+			return this.align === 'youtube'
 		},
 	},
 })
@@ -26,7 +23,7 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 .item-icon {
 	box-shadow: 0 1px 3px #bbb;
-	&.youtube {
+	&.youtubeAlign {
 		background-size: 262%;
 		background-position: -9.5px -9.5px;
 	}

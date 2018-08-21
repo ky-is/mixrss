@@ -1,6 +1,6 @@
 <template>
 <li class="feed-item outer-group animate">
-	<button @click="onPlay" class="borderless"><AlbumArt :url="item.image" size="16" :align="item._imageAlign" /></button>
+	<button @click="onPlay" class="borderless wh-16 flex-no-shrink mr-2"><AlbumArt :url="item.image" :align="item._imageAlign" /></button>
 	<div class="song-details  flex-grow">
 		<div class="items-baseline">
 			<div v-if="editTitle" class="flex">

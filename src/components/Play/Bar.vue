@@ -1,23 +1,34 @@
 <template>
-<div class="h-16 bg-grey-lighter border-t  flex flex-no-shrink items-stretch justify-center">
-	<button @click="onPrevious" :disabled="!hasPreviousSong">
-		<svg class="seek-previous wh-9" viewBox="0 0 24 19">
-			<path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/>
-			<path d="M0 0h24v24H0z" fill="none"/>
-		</svg>
-	</button>
-	<button @click="onPlay" :disabled="!songs.length">
-		<svg width="63" height="63" viewBox="0 0 36 36" >
-			<path v-if="hasSong && !paused" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
-			<path v-else d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
-		</svg>
-	</button>
-	<button @click="onNext" :disabled="!hasNextSong">
-		<svg class="seek-next wh-9" viewBox="0 0 24 19">
-			<path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/>
-			<path d="M0 0h24v24H0z" fill="none"/>
-		</svg>
-	</button>
+<div class="bg-grey-lighter border-t  flex justify-center">
+	<div class="w-64 ml-2 flex-shrink min-w-0  flex items-center">
+		<div class="wh-12 flex-no-shrink"><AlbumArt v-if="item" :url="item.image" :align="item._imageAlign" size="full" /></div>
+		<div class="ml-2 overflow-hidden cursor-default flex-initial">
+			<template v-if="item">
+				<div class="text-sm truncate" :title="songTitle">{{ songTitle }}</div>
+				<div v-if="albumTitle" class="text-xs leading-tight truncate" :title="albumTitle">{{ albumTitle }}</div>
+			</template>
+		</div>
+	</div>
+	<div class="w-64  flex items-stretch">
+		<button @click="onPrevious" :disabled="!hasPreviousSong">
+			<svg class="seek-previous wh-9" viewBox="0 0 24 19">
+				<path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/>
+				<path d="M0 0h24v24H0z" fill="none"/>
+			</svg>
+		</button>
+		<button @click="onPlay" :disabled="!songs.length">
+			<svg width="63" height="63" viewBox="0 0 36 36" >
+				<path v-if="hasSong && !paused" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
+				<path v-else d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
+			</svg>
+		</button>
+		<button @click="onNext" :disabled="!hasNextSong">
+			<svg class="seek-next wh-9" viewBox="0 0 24 19">
+				<path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/>
+				<path d="M0 0h24v24H0z" fill="none"/>
+			</svg>
+		</button>
+	</div>
 </div>
 </template>
 
@@ -28,8 +39,40 @@ import store from '@/store'
 
 import { JSONFeedItem } from '@/types/jsonfeed'
 
+import AlbumArt from '@/components/Feed/AlbumArt.vue'
+
 export default Vue.extend({
+	components: {
+		AlbumArt,
+	},
+
+	data () {
+		return {
+			item: undefined as JSONFeedItem | undefined,
+		}
+	},
+
 	computed: {
+		splitTitle (): string[] | undefined {
+			const item = this.item
+			if (item && item.title) { //?.
+				let split = item.title.split(' - ')
+				if (split.length !== 2) {
+					split = item.title.split(' | ')
+				}
+				if (split.length === 2) {
+					return split
+				}
+			}
+			return undefined
+		},
+		songTitle (): string | undefined {
+			return this.splitTitle ? this.splitTitle[1] : (this.item && this.item.title)
+		},
+		albumTitle (): string | undefined {
+			return this.splitTitle && this.splitTitle[0]
+		},
+
 		playId (): string | null {
 			return store.state.playback.id
 		},
@@ -54,6 +97,16 @@ export default Vue.extend({
 
 		paused (): boolean {
 			return store.state.playback.paused
+		},
+	},
+
+	watch: {
+		playId (playId) {
+			const data = store.state.feed.data
+			if (data && data.items) { //?.
+				this.item = data.items.find(item => item.id === playId)
+				console.log(playId, this.item)
+			}
 		},
 	},
 
