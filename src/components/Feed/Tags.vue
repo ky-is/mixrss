@@ -1,5 +1,5 @@
 <template>
-<ul class="flex">
+<ul class="flex mb-1">
 	<li v-for="tag in tags" :key="tag">
 		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>
 	</li>

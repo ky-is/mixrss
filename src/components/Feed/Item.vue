@@ -21,7 +21,7 @@
 				<span class="tags">
 					<span v-if="tags">
 						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag group" :key="tag">
-							{{ tag }}<span class="ml-px pl-px leading-none text-xs group-hover:visible">✖︎</span>
+							{{ tag }}<span class="ml-px pl-px leading-none text-xs invisible group-hover:visible">✖︎</span>
 						</button>
 					</span>
 					<button @click="onTagAdd" class="button-modify button-outline">+Tag</button>
@@ -164,6 +164,6 @@ export default Vue.extend({
 }
 
 button.button-outline, .button-tag:hover {
-	@apply border-grey-darker;
+	@apply border-grey-dark;
 }
 </style>
