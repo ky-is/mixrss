@@ -1,6 +1,6 @@
 <template>
 <div class="bg-grey-lighter border-t  flex justify-center">
-	<div class="w-64 ml-2 flex-shrink min-w-0  flex items-center">
+	<div class="w-64 ml-2 min-w-0  flex items-center">
 		<div class="wh-12 flex-no-shrink"><AlbumArt v-if="item" :url="item.image" :align="item._imageAlign" size="full" /></div>
 		<div class="ml-2 overflow-hidden cursor-default flex-initial">
 			<template v-if="item">

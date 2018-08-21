@@ -71,7 +71,7 @@ const actions: ActionTree<PlaybackState, any> = {
 			}
 			for (let index = songs.length - 1; index >= 0; index -= 1) {
 				const song = songs[index]
-				const externalUrl = song.external_url //TODO ?.
+				const externalUrl = song.external_url //?.
 				if ((externalUrl && externalUrl.includes(url)) || (id && song.id === id)) {
 					dispatch('PLAY_SONG_INDEX', index)
 					commit('TOGGLE_PAUSED', true)

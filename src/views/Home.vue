@@ -1,9 +1,9 @@
 <template>
 <div class="flex h-full">
-	<div v-if="feedData" class="sidebar-container scrolls animate" :class="{ showsSidebar }">
+	<div v-if="feedData" class="sidebar-container scroll animate" :class="{ showsSidebar }">
 		<TheSidebar :feedList="feedList" />
 	</div>
-	<div class="scrolls w-full">
+	<div class="scroll w-full">
 		<div class="feed-content m-auto p-2">
 			<FeedCreate v-if="!feedData || addingFeed" />
 			<div v-else>
@@ -61,8 +61,8 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.scrolls {
-	@apply h-full overflow-y-scroll;
+.scroll {
+	@apply h-full overflow-y-scroll scrolling-touch;
 }
 
 .sidebar-container {

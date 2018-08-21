@@ -18,12 +18,12 @@
 				<time :datetime="date">{{ date.toLocaleDateString() }}</time>
 				<span> ・</span>
 				<span v-if="item.author"> {{ item.author.name }} ・</span>
-				<span class="tags">
-					<span v-if="tags">
+				<span>
+					<template v-if="tags">
 						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag group" :key="tag">
 							{{ tag }}<span class="ml-px pl-px leading-none text-xs invisible group-hover:visible">✖︎</span>
 						</button>
-					</span>
+					</template>
 					<button @click="onTagAdd" class="button-modify button-outline">+Tag</button>
 				</span>
 			</div>
