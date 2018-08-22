@@ -47,23 +47,23 @@ a {
 	@apply no-underline;
 }
 a[href] {
-	@apply text-pink-dark;
+	@apply text-brand-dark;
 }
 a[href]:hover {
-	@apply text-pink-darker;
+	@apply text-brand-darker;
 }
 a[href]:hover:active {
-	@apply text-pink-darkest;
+	@apply text-brand-darkest;
 }
 
 /* Theme colors */
 
 ::selection {
-	@apply bg-pink-lighter;
+	@apply bg-brand-lighter;
 }
 
 .backed, button.selected {
-	@apply bg-pink-light;
+	@apply bg-brand-light;
 }
 
 /* Form */

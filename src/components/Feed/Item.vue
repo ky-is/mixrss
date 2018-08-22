@@ -34,7 +34,7 @@
 		</div>
 	</div>
 	<div class="inner-hover">
-		<button @click="onDelete" class="button-delete unstyled wh-12 font-black text-red">✕</button>
+		<button @click="onDelete" class="button-delete unstyled wh-12 font-black text-danger">✕</button>
 	</div>
 </li>
 </template>
@@ -135,7 +135,7 @@ export default Vue.extend({
 		}
 	}
 	&.selected {
-		@apply bg-pink-lightest;
+		@apply bg-brand-lightest;
 	}
 }
 

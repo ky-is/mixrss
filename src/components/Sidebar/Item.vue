@@ -68,7 +68,7 @@ export default Vue.extend({
 .sidebar-item {
 	@apply my-4 p-2 cursor-pointer  flex items-center;
 	&:hover {
-		@apply bg-pink-lightest;
+		@apply bg-brand-lightest;
 	}
 	&.selected {
 		@apply bg-white cursor-default;
