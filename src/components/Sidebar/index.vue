@@ -1,6 +1,6 @@
 <template>
 <div>
-	<ul>
+	<ul class="pt-4">
 		<SidebarItem :url="null" :selected="currentUrl === null" />
 		<SidebarItem v-for="url in feedList" :url="url" :selected="currentUrl === url" :key="url" />
 	</ul>

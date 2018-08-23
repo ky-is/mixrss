@@ -1,5 +1,6 @@
 <template>
-<li v-if="item" @click="onItem" class="sidebar-item outer-group animate" :class="{ selected }">
+<li v-if="item" @click="onItem" class="sidebar-item outer-group animate relative border-t border-b" :class="{ selected, 'border-transparent': !selected }">
+	<div v-if="selected" class="sm-max:hidden absolute bg-white w-px pin-t pin-r pin-b z-50" />
 	<div class="bg-image wh-8 mr-1 rounded-full" :style="{ 'background-image': `url(${item.icon})` }" />
 	<div>
 		<div v-if="item.title" class="title">{{ item.title }}</div>
@@ -66,7 +67,7 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .sidebar-item {
-	@apply my-4 p-2 cursor-pointer  flex items-center;
+	@apply mb-4 p-2 cursor-pointer  flex items-center;
 	&:hover {
 		@apply bg-brand-lightest;
 	}

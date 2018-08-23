@@ -1,7 +1,10 @@
 <template>
 <div class="flex h-full">
 	<div v-if="feedData" class="sidebar-container scroll animate" :class="{ showsSidebar }">
-		<TheSidebar :feedList="feedList" />
+		<div class="relative wh-full">
+			<TheSidebar :feedList="feedList" />
+			<div class="absolute bg-grey-light w-px h-full pin-t pin-r" />
+		</div>
 	</div>
 	<div class="scroll w-full">
 		<div class="feed-content m-auto p-2">
@@ -66,7 +69,7 @@ export default Vue.extend({
 }
 
 .sidebar-container {
-	@apply bg-grey-lightest border-r;
+	@apply bg-grey-lightest;
 	width: 288px;
 	left: -288px;
 	transition-property: left;
