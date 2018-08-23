@@ -1,5 +1,5 @@
 <template>
-<div id="app" class="antialiased text-lg font-sans  flex flex-col">
+<div id="app" class="antialiased text-lg font-sans text-black  flex flex-col">
 	<NavBar />
 	<HomeView />
 	<PlayBar />

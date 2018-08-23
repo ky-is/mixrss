@@ -105,7 +105,6 @@ export default Vue.extend({
 			const data = store.state.feed.data
 			if (data && data.items) { //?.
 				this.item = data.items.find(item => item.id === playId)
-				console.log(playId, this.item)
 			}
 		},
 	},
