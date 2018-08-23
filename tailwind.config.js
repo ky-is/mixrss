@@ -789,18 +789,7 @@ module.exports = {
 	*/
 
 	plugins: [
-		function ({ addUtilities, config, e }) {
-			const heightConfig = config('height')
-			const equalWidthHeightUtilities = {}
-			for (const key in heightConfig) {
-				const size = heightConfig[key]
-				const escapedClassName = e(`wh-${key}`)
-				equalWidthHeightUtilities[`.${escapedClassName}`] = { width: size, height: size }
-			}
-			addUtilities(equalWidthHeightUtilities, {
-				variants: [ 'responsive' ],
-			})
-		},
+		require('@ky-is/tailwindcss-plugin-width-height')({ variants: ['responsive'] }),
 	],
 
 	/*
