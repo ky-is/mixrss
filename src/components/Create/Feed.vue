@@ -7,7 +7,7 @@
 	<div v-else>
 		<form @submit.prevent="onEnterFeedUrl" class="h-10  flex">
 			<input class="flex-grow" type="url" v-model.trim="url" placeholder="https://some.playlist/feed.json" autocomplete="off" autocorrect="off">
-			<button type="submit" class="w-24  flex-initial">Load</button>
+			<button type="submit" class="w-24 flex-initial">Load</button>
 		</form>
 		<div v-if="!hasLocalFeed" class="text-center">
 			<div class="my-8">~ or ~</div>
@@ -42,13 +42,15 @@ export default Vue.extend({
 
 	methods: {
 		onEnterFeedUrl () {
-			store.dispatch('LOAD_FEED_URL', { url: this.url, adding: true }).then(loadedUrl => {
-				if (loadedUrl === this.url) {
-					store.commit('TOGGLE_ADD_FEED', false)
-				}
-			}, error => {
-				window.alert('A valid feed could not be found at this URL, please try again. ' + error)
-			})
+			store.dispatch('LOAD_FEED_URL', { url: this.url, adding: true })
+				.then(loadedUrl => {
+					if (loadedUrl === this.url) {
+						store.commit('TOGGLE_ADD_FEED', false)
+					}
+				})
+				.catch(error => {
+					window.alert('A valid feed could not be found at this URL, please try again. ' + error)
+				})
 		},
 
 		onCreateFeed () {

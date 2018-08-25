@@ -1,9 +1,3 @@
-interface Storage {
-	getItem(key: string): string | null
-	setItem(key: string, value: any): void
-	removeItem(key: string): void
-}
-
 let storage: Storage
 {
 	const sampleDate = new Date().toString()

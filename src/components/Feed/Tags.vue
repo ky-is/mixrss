@@ -37,7 +37,7 @@ export default Vue.extend({
 				}
 			}
 			const tags = Array.from(tagMap.values())
-			return tags.sort(((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())))
+			return tags.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
 		},
 
 		selectedTagIds (): string[] {
