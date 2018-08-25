@@ -24,8 +24,8 @@ export default Vue.extend({
 .item-icon {
 	box-shadow: 0 1px 3px #bbb;
 	&.youtubeAlign {
-		background-size: 262%;
-		background-position: -9.5px -9.5px;
+		background-size: 263.5%;
+		background-position: 9.5% 32%;
 	}
 }
 
