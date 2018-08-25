@@ -1,7 +1,9 @@
 <template>
 <div class="bg-grey-lighter border-t  flex justify-center">
 	<div class="w-64 ml-2 min-w-0  flex items-center">
-		<div class="wh-12 flex-no-shrink"><AlbumArt v-if="item" :url="item.image" :align="item._imageAlign" size="full" /></div>
+		<div class="wh-12 flex-no-shrink">
+			<AlbumArt v-if="item" :url="item.image" :align="item._imageAlign" size="full" />
+		</div>
 		<div class="ml-2 overflow-hidden cursor-default flex-initial">
 			<template v-if="item">
 				<div class="text-sm truncate" :title="songTitle">{{ songTitle }}</div>
@@ -16,7 +18,7 @@
 				<path d="M0 0h24v24H0z" fill="none"/>
 			</svg>
 		</button>
-		<button @click="onPlay" :disabled="!songs.length">
+		<button @click="onPlay" :disabled="!canPlayPause">
 			<svg width="63" height="63" viewBox="0 0 36 36" >
 				<path v-if="hasSong && !paused" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
 				<path v-else d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
@@ -76,9 +78,16 @@ export default Vue.extend({
 		playId (): string | null {
 			return store.state.playback.id
 		},
-
 		hasSong (): boolean {
 			return this.playId !== null
+		},
+
+		songs (): JSONFeedItem[] {
+			return store.getters.songs
+		},
+
+		canPlayPause (): boolean {
+			return this.hasSong || !!this.songs.length
 		},
 
 		playbackIndex (): number | null {
@@ -89,10 +98,6 @@ export default Vue.extend({
 		},
 		hasNextSong (): boolean {
 			return this.playbackIndex !== null && this.playbackIndex < this.songs.length - 1
-		},
-
-		songs (): JSONFeedItem[] {
-			return store.getters.songs
 		},
 
 		paused (): boolean {
