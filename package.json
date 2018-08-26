@@ -50,6 +50,9 @@
 			"not dead"
 		]
 	},
+	"eslintConfig": {
+		"extends": "@ky-is/eslint-config/vue-typescript"
+	},
 	"license": "ISC",
 	"repository": "https://github.com/ky-is/mixrss",
 	"engines": {
