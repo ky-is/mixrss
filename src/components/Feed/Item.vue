@@ -4,10 +4,10 @@
 		<AlbumArt :url="item.image" :align="item._imageAlign" />
 	</button>
 	<div class="song-details flex-grow">
-		<div class="items-baseline">
+		<div class="items-baseline mb-px">
 			<div v-if="editTitle" class="flex">
 				<input type="text" v-model.trim="itemTitle" class="flex-grow mr-1" placeholder="Mix title" autocomplete="off" autocorrect="on">
-				<button @click="onTitleSave" class="button-modify button-outline">{{ itemTitle === item.title ? 'Cancel' : 'Save' }}</button>
+				<button @click="onTitleSave" class="button-modify">{{ itemTitle === item.title ? 'Cancel' : 'Save' }}</button>
 			</div>
 			<div v-else>
 				<button @click="onTitleToggle" class="unstyled text-left">{{ item.title }}</button>
@@ -22,16 +22,16 @@
 				<span v-if="item.author"> {{ item.author.name }} ・</span>
 				<span>
 					<template v-if="tags">
-						<button v-for="tag in tags" @click="onTag(tag)" class="button-modify button-tag group" :key="tag">
-							{{ tag }}<span class="ml-px pl-px leading-none text-xs invisible group-hover:visible">✖︎</span>
+						<button v-for="tag in tags" @click="onTag(tag)" class="button-tag group" :key="tag">
+							{{ tag }}<span class="px-px leading-none text-xs invisible group-hover:visible">✖︎</span>
 						</button>
 					</template>
-					<button @click="onTagAdd" class="button-modify button-outline">+Tag</button>
+					<button @click="onTagAdd" class="button-modify">+Tag</button>
 				</span>
 			</div>
 			<div class="flex">
 				<button v-if="item.content_text" @click="onNoteEdit" class="unstyled truncate">{{ item.content_text }}</button>
-				<button v-else @click="onNoteEdit" class="button-modify button-outline">{{ item.content_text ? 'Edit' : '+Note' }}</button>
+				<button v-else @click="onNoteEdit" class="button-modify">{{ item.content_text ? 'Edit' : '+Note' }}</button>
 			</div>
 		</div>
 	</div>
@@ -143,14 +143,20 @@ export default Vue.extend({
 
 /* SONG DETAILS */
 
-.button-modify {
-	@apply mr-1 px-1 pb-px rounded border-transparent;
+.button-modify, .button-tag {
+	@apply mr-1 pb-px;
 	&:hover {
 		@apply bg-white;
 	}
 }
+.button-modify {
+	@apply px-1 rounded;
+}
+.button-tag {
+	@apply pl-1 pr-px rounded-full border-transparent;
+}
 
-button.button-outline, .button-tag:hover {
+.button-modify, .button-tag:hover {
 	@apply border-grey-dark;
 }
 </style>

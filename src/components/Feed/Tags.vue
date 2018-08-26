@@ -4,7 +4,7 @@
 		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>
 	</li>
 	<li v-if="tags.length">
-		<button @click="onTag('?')" :class="{ selected: selectedTagIds.indexOf('?') !== -1 }">?</button>
+		<button @click="onTag('?')" :class="{ selected: selectedTagIds.indexOf('?') !== -1 }">？</button>
 	</li>
 	<button v-if="selectedTagIds.length" @click="onClearTags">✕</button>
 </ul>
@@ -36,8 +36,7 @@ export default Vue.extend({
 					}
 				}
 			}
-			const tags = Array.from(tagMap.values())
-			return tags.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+			return Array.from(tagMap.values()).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
 		},
 
 		selectedTagIds (): string[] {
@@ -74,7 +73,7 @@ li {
 }
 
 button {
-	@apply rounded px-1 py-px;
-	min-width: 28px;
+	@apply rounded-full px-2 whitespace-no-wrap h-8 text-base;
+	min-width: 32px;
 }
 </style>
