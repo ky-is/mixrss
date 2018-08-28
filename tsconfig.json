@@ -3,6 +3,8 @@
 		"target": "esnext",
 		"module": "esnext",
 		"strict": true,
+		"noEmit": true,
+		"isolatedModules": true,
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": ".",
