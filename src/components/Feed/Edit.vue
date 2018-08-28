@@ -2,7 +2,7 @@
 <form @submit.prevent="onSubmit" :disabled="loading" class="my-2">
 	<div v-if="showEdit">
 		<div class="halves">
-			<input type="text" v-model.trim="feedTitle" placeholder="Mix title" autocomplete="off" autocorrect="on">
+			<input type="text" v-model.trim="feedTitle" v-focus placeholder="Mix title" autocomplete="off" autocorrect="on">
 			<input type="text" v-model.trim="feedAuthor" placeholder="Your name" autocomplete="off" autocorrect="off">
 			<input type="url" v-model.trim="feedIcon" placeholder="Icon URL (optional)" autocomplete="off" autocorrect="off">
 			<input type="url" v-model.trim="feedUrl" placeholder="URL where you'll host this feed." autocomplete="off" autocorrect="off">
@@ -22,7 +22,7 @@
 		<a ref="downloadLink" class="hidden" :download="fileName" />
 	</div>
 	<div v-else-if="feedData" class="line">
-		<input type="url" v-model.trim="itemUrl" class="flex-grow-all" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
+		<input type="url" v-model.trim="itemUrl" v-focus class="flex-grow-all" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
 		<button type="submit" class="flex-no-grow">{{ itemUrl ? 'Load' : 'Cancel' }}</button>
 	</div>
 </form>

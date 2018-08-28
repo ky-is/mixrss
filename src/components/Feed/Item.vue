@@ -5,10 +5,10 @@
 	</button>
 	<div class="song-details flex-grow">
 		<div class="items-baseline mb-px">
-			<div v-if="editTitle" class="flex">
-				<input type="text" v-model.trim="itemTitle" class="flex-grow mr-1" placeholder="Mix title" autocomplete="off" autocorrect="on">
-				<button @click="onTitleSave" class="button-modify">{{ itemTitle === item.title ? 'Cancel' : 'Save' }}</button>
-			</div>
+			<form v-if="editTitle" @submit.prevent="onTitleSave" class="flex">
+				<input type="text" v-model.trim="itemTitle" v-focus class="flex-grow mr-1" placeholder="Mix title" autocomplete="off" autocorrect="on">
+				<button type="submit" class="button-modify">{{ itemTitle === item.title ? 'Cancel' : 'Save' }}</button>
+			</form>
 			<div v-else>
 				<button @click="onTitleToggle" class="unstyled text-left">{{ item.title }}</button>
 			</div>
