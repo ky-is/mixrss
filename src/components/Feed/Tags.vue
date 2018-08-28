@@ -1,12 +1,12 @@
 <template>
-<ul class="flex mb-1">
+<ul class="mb-1  flex flex-wrap">
 	<li v-for="tag in tags" :key="tag">
 		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>
 	</li>
-	<li v-if="tags.length">
+	<li v-show="tags.length">
 		<button @click="onTag('?')" :class="{ selected: selectedTagIds.indexOf('?') !== -1 }">？</button>
 	</li>
-	<button v-if="selectedTagIds.length" @click="onClearTags">✕</button>
+	<button v-show="selectedTagIds.length" @click="onClearTags">✕</button>
 </ul>
 </template>
 
@@ -69,7 +69,7 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 li {
-	@apply mr-1;
+	@apply mr-1 mb-1;
 }
 
 button {
