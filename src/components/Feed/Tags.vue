@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropOptions } from 'vue'
 
 import store from '@/store'
 
@@ -19,7 +19,7 @@ import { JSONFeedItem } from '@/types/jsonfeed'
 
 export default Vue.extend({
 	props: {
-		items: Array as () => JSONFeedItem[], //TODO https://github.com/vuejs/vue/pull/6856
+		items: Array as PropOptions<JSONFeedItem[]>,
 	},
 
 	computed: {
