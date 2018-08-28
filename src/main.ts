@@ -6,9 +6,12 @@ import App from './App.vue'
 
 import store from '@/store'
 
+import Plugins from '@/helpers/plugins'
+
 Vue.config.productionTip = false
 
 Vue.use(VueYoutube)
+Vue.use(Plugins)
 
 new Vue({
 	render: h => h(App),
