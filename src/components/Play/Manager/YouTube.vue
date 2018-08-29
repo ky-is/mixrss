@@ -1,5 +1,5 @@
 <template>
-<youtube :video-id="id" :player-vars="playerVars" ref="youtube" @cued="onCued" @playing="onPaused(false)" @paused="onPaused(true)" @ended="onEnded" width="200" height="200" />
+<youtube :videoId="id" :playerVars="playerVars" ref="youtube" @cued="onCued" @playing="onPaused(false)" @paused="onPaused(true)" @ended="onEnded" width="200" height="200" />
 </template>
 
 <script lang="ts">
@@ -30,7 +30,7 @@ export default Vue.extend({
 		id () {
 			this.loading = true
 		},
-	
+
 		paused (paused: boolean) {
 			if (!this.id) {
 				return

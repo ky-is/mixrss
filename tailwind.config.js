@@ -1,3 +1,4 @@
+/* eslint-disable array-bracket-spacing */
 const tailwindColorPalette = require('@ky-is/tailwind-color-palette')
 
 /*
