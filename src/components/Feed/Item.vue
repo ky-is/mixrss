@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from 'vue'
+import Vue from 'vue'
 
 import store from '@/store'
 
@@ -56,7 +56,10 @@ export default Vue.extend({
 	},
 
 	props: {
-		item: Object as PropOptions<JSONFeedItem>,
+		item: {
+			type: Object as () => JSONFeedItem,
+			required: true,
+		},
 	},
 
 	data () {

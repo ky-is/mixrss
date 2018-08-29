@@ -7,9 +7,18 @@ import Vue from 'vue'
 
 export default Vue.extend({
 	props: {
-		align: String,
-		url: String,
-		size: String,
+		align: {
+			type: String,
+			required: true,
+		},
+		url: {
+			type: String,
+			required: true,
+		},
+		size: {
+			type: String,
+			required: true,
+		},
 	},
 
 	computed: {

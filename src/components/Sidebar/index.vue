@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from 'vue'
+import Vue from 'vue'
 
 import store from '@/store'
 
@@ -21,7 +21,10 @@ export default Vue.extend({
 	},
 
 	props: {
-		feedList: Array as PropOptions<string[]>,
+		feedList: {
+			type: Array as () => string[],
+			required: true,
+		},
 	},
 
 	computed: {

@@ -6,8 +6,14 @@ import soundcloudIds from '@/helpers/soundcloud_ids'
 
 export default Vue.extend({
 	props: {
-		id: String,
-		paused: Boolean,
+		id: {
+			type: String,
+			required: true,
+		},
+		paused: {
+			type: Boolean,
+			required: true,
+		},
 	},
 
 	data () {
