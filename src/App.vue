@@ -37,6 +37,10 @@ html, body, #app {
 	@apply wh-full;
 }
 
+ul {
+	@apply list-reset;
+}
+
 /* Links */
 
 a {
