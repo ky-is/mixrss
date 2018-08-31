@@ -37,23 +37,19 @@ html, body, #app {
 	@apply wh-full;
 }
 
-ul {
-	@apply list-reset;
-}
-
 /* Links */
 
 a {
 	@apply no-underline;
-}
-a[href] {
-	@apply text-brand-dark;
-}
-a[href]:hover {
-	@apply text-brand-darker;
-}
-a[href]:hover:active {
-	@apply text-brand-darkest;
+	&[href] {
+		@apply text-brand-dark;
+		&:hover {
+			@apply text-brand-darker;
+			&:active {
+				@apply text-brand-darkest;
+			}
+		}
+	}
 }
 
 /* Theme colors */

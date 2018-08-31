@@ -64,17 +64,13 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.scroll {
-	@apply h-full overflow-y-scroll scrolling-touch;
-}
-
 .sidebar-container {
 	@apply bg-grey-lightest;
 	width: 288px;
 	left: -288px;
 	transition-property: left;
 	&.showsSidebar {
-		left: 0;
+		@apply pin-l;
 	}
 	@media (width < 576px) {
 		@apply absolute z-20;
