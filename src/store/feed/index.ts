@@ -262,10 +262,8 @@ const mutations: MutationTree<FeedState> = {
 		if (!feedData.items) {
 			Vue.set(feedData, 'items', items)
 		}
-		for (const item of items) {
-			if (item.id === uniqueId) {
-				return window.alert('This song is already in your mix!')
-			}
+		if (items.some(item => item.id === uniqueId)) {
+			return window.alert('This song is already in your mix!')
 		}
 		const authorName = rawAuthor && localAuthor.toLowerCase() !== rawAuthor.toLowerCase() ? localAuthor : undefined
 		const feedItem: JSONFeedItem = {
@@ -338,10 +336,8 @@ const getters: GetterTree<FeedState, RootState> = {
 			const itemTags = item.tags
 			if (itemTags && itemTags.length) {
 				const itemTagIds = itemTags.map(tag => tag.toLowerCase())
-				for (const filterTagId of selectedTagIds) {
-					if (itemTagIds.indexOf(filterTagId) !== -1) {
-						return true
-					}
+				if (selectedTagIds.some(tagId => itemTagIds.includes(tagId))) {
+					return true
 				}
 			} else if (selectedTagIds.indexOf('?') !== -1) {
 				return true

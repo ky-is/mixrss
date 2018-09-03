@@ -27,19 +27,10 @@ export default Vue.extend({
 
 	computed: {
 		tags (): string[] {
-			const tagMap = new Map<string, string>()
-			for (const item of this.items) {
-				if (!item.tags) {
-					continue
-				}
-				for (const tag of item.tags) {
-					const id = tag.toLowerCase()
-					if (!tagMap.has(id)) {
-						tagMap.set(id, tag)
-					}
-				}
-			}
-			return Array.from(tagMap.values()).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+			const rawTagNames = this.items.filter(item => item.tags).flatMap(item => item.tags!)
+			const tagIdMap = new Map(rawTagNames.map(tag => [ tag.toLowerCase(), tag ] as [string, string]))
+			const uniqueTagsSorted = Array.from(tagIdMap.values()).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+			return uniqueTagsSorted
 		},
 
 		selectedTagIds (): string[] {
@@ -50,11 +41,9 @@ export default Vue.extend({
 	watch: {
 		tags (tags: string[]) {
 			const tagIds = tags.map(tag => tag.toLowerCase())
-			for (const selectedTagId of this.selectedTagIds) {
-				if (selectedTagId !== '?' && tagIds.indexOf(selectedTagId) === -1) {
-					store.commit('TOGGLE_TAG_ID', selectedTagId)
-				}
-			}
+			this.selectedTagIds
+				.filter(tagId => tagId !== '?' && !tagIds.includes(tagId))
+				.forEach(tagId => store.commit('TOGGLE_TAG_ID', tagId))
 		},
 	},
 

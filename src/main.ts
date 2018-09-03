@@ -23,12 +23,8 @@ if (queryString) {
 	const queryObject = querystring.parse(queryString.substring(1))
 	const feeds = queryObject.feeds as string | undefined
 	if (feeds) {
-		const feedUrls = feeds.split(',')
-		if (feedUrls.length) {
-			for (const url of feedUrls) {
-				store.dispatch('LOAD_FEED_URL', { url, adding: true })
-			}
-		}
+		feeds.split(',')
+			.forEach(url => store.dispatch('LOAD_FEED_URL', { url, adding: true }))
 	}
 	const play = queryObject.play as string | undefined
 	if (play) {
