@@ -1,10 +1,10 @@
 <template>
 <ul class="mb-1  flex flex-wrap">
 	<li v-for="tag in tags" :key="tag">
-		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.indexOf(tag.toLowerCase()) !== -1 }">{{ tag }}</button>
+		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.includes(tag.toLowerCase()) }">{{ tag }}</button>
 	</li>
 	<li v-show="tags.length">
-		<button @click="onTag('?')" :class="{ selected: selectedTagIds.indexOf('?') !== -1 }">？</button>
+		<button @click="onTag('?')" :class="{ selected: selectedTagIds.includes('?') }">？</button>
 	</li>
 	<button v-show="selectedTagIds.length" @click="onClearTags">✕</button>
 </ul>

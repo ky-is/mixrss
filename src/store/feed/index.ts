@@ -228,7 +228,7 @@ const mutations: MutationTree<FeedState> = {
 
 	WRITE_CURRENT_FEED (state, { url }) {
 		writeFeedData(state)
-		if (url && state.list.indexOf(url) === -1) {
+		if (url && !state.list.includes(url)) {
 			state.list.unshift(url)
 			storage.setJSON('FEED_LIST', state.list)
 		}
@@ -339,7 +339,7 @@ const getters: GetterTree<FeedState, RootState> = {
 				if (selectedTagIds.some(tagId => itemTagIds.includes(tagId))) {
 					return true
 				}
-			} else if (selectedTagIds.indexOf('?') !== -1) {
+			} else if (selectedTagIds.includes('?')) {
 				return true
 			}
 			return false
