@@ -115,15 +115,15 @@ export default Vue.extend({
 	},
 
 	methods: {
+		onPlay () {
+			store.dispatch('PRESS_PAUSE')
+		},
+
 		onPrevious () {
 			store.dispatch('SEEK_DIRECTION', -1)
 		},
 		onNext () {
 			store.dispatch('SEEK_DIRECTION', 1)
-		},
-
-		onPlay () {
-			store.dispatch('PRESS_PAUSE')
 		},
 	},
 })

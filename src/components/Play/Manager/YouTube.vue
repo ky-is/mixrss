@@ -8,8 +8,8 @@ import Vue from 'vue'
 export default Vue.extend({
 	props: {
 		id: {
-			type: String,
-			required: true,
+			type: String as () => string | null,
+			default: null,
 		},
 		paused: {
 			type: Boolean,

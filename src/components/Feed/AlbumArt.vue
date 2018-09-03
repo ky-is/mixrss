@@ -9,13 +9,9 @@ export default Vue.extend({
 	props: {
 		align: {
 			type: String,
-			required: true,
+			default: undefined,
 		},
 		url: {
-			type: String,
-			required: true,
-		},
-		size: {
 			type: String,
 			required: true,
 		},

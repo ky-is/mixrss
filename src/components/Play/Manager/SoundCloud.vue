@@ -7,8 +7,8 @@ import soundcloudIds from '@/helpers/soundcloud_ids'
 export default Vue.extend({
 	props: {
 		id: {
-			type: String,
-			required: true,
+			type: String as () => string | null,
+			default: null,
 		},
 		paused: {
 			type: Boolean,
@@ -26,7 +26,7 @@ export default Vue.extend({
 	watch: {
 		id: {
 			immediate: true,
-			handler (id) {
+			handler (id: string | null) {
 				if (id) {
 					this.loading = true
 					SoundCloud.stream(`tracks/${id}`)

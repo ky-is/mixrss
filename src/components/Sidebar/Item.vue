@@ -21,8 +21,8 @@ import { JSONFeedItem } from '@/types/jsonfeed'
 export default Vue.extend({
 	props: {
 		url: {
-			type: String,
-			required: true,
+			type: String as () => string | null,
+			default: null,
 		},
 		selected: {
 			type: Boolean,
