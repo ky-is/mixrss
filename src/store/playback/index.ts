@@ -1,7 +1,7 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
 
 import { JSONFeedItem } from '@/types/jsonfeed'
-import { PlaybackState } from '@/types/store'
+import { PlaybackState, RootGetters, RootState } from '@/types/store'
 
 import importSoundCloud from '@/import/SoundCloud'
 import importYouTube from '@/import/YouTube'
@@ -84,8 +84,8 @@ const actions: ActionTree<PlaybackState, any> = {
 
 //GETTERS
 
-const getters: GetterTree<PlaybackState, any> = {
-	playbackIndex (state, getters): number | null {
+const getters: GetterTree<PlaybackState, RootState> = {
+	playbackIndex (state, getters: RootGetters): number | null {
 		const id = state.id
 		if (id) {
 			const songs = getters.songs

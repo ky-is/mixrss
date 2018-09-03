@@ -2,7 +2,7 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 
 import storage from '@/helpers/storage'
 
-import { LocalState } from '@/types/store'
+import { LocalState, RootGetters, RootState } from '@/types/store'
 
 //STATE
 
@@ -37,8 +37,8 @@ const actions: ActionTree<LocalState, any> = {
 
 //GETTERS
 
-const getters: GetterTree<LocalState, any> = {
-	showsSidebar (state, getters, rootState) {
+const getters: GetterTree<LocalState, RootState> = {
+	showsSidebar (state, getters: RootGetters, rootState): boolean {
 		return state.toggleSidebar && rootState.feed.data !== null
 	},
 }

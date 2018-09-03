@@ -10,7 +10,7 @@ import importSoundCloud from '@/import/SoundCloud'
 import importYouTube from '@/import/YouTube'
 
 import { JSONFeed, JSONFeedAuthor, JSONFeedItem } from '@/types/jsonfeed'
-import { FeedState } from '@/types/store'
+import { FeedState, RootState } from '@/types/store'
 
 //LOCAL
 
@@ -321,7 +321,7 @@ const mutations: MutationTree<FeedState> = {
 
 //GETTERS
 
-const getters: GetterTree<FeedState, any> = {
+const getters: GetterTree<FeedState, RootState> = {
 	feedForUrl: () => getLocalFeed,
 
 	songs (state): JSONFeedItem[] {

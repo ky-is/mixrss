@@ -1,4 +1,4 @@
-import { JSONFeed } from '@/types/jsonfeed'
+import { JSONFeed, JSONFeedItem } from '@/types/jsonfeed'
 
 export interface FeedState {
 	list: string[]
@@ -25,4 +25,14 @@ export interface RootState {
 	feed: FeedState
 	local: LocalState
 	playback: PlaybackState
+}
+
+export interface RootGetters {
+	//FEED
+	feedForUrl: JSONFeedItem | null,
+	songs: JSONFeedItem[]
+	//LOCAL
+	showsSidebar: boolean
+	//PLAYBACK
+	playbackIndex: number | null
 }
