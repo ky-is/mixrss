@@ -40,7 +40,7 @@ export default Vue.extend({
 			return store.state.feed.url
 		},
 
-		currentUrl () {
+		currentUrl (): string | null | undefined {
 			return this.addingFeed ? undefined : this.feedUrl
 		},
 	},

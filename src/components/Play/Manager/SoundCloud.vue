@@ -72,10 +72,9 @@ export default Vue.extend({
 		},
 
 		onPaused () {
-			if (!this.id || !this.player) {
-				return
+			if (this.id && this.player) {
+				this.$emit('playing', false)
 			}
-			this.$emit('playing', false)
 		},
 
 		onEnded () {
