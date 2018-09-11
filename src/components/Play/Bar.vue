@@ -12,19 +12,19 @@
 		</div>
 	</div>
 	<div class="w-64  flex items-stretch">
-		<button @click="onPrevious" :disabled="!hasPreviousSong">
+		<button :disabled="!hasPreviousSong" class="media-button" @click="onPrevious">
 			<svg class="seek-previous wh-9" viewBox="0 0 24 19">
 				<path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/>
 				<path d="M0 0h24v24H0z" fill="none"/>
 			</svg>
 		</button>
-		<button @click="onPlay" :disabled="!canPlayPause">
+		<button :disabled="!canPlayPause" class="media-button" @click="onPlay">
 			<svg width="63" height="63" viewBox="0 0 36 36" >
 				<path v-if="hasSong && !paused" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
 				<path v-else d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
 			</svg>
 		</button>
-		<button @click="onNext" :disabled="!hasNextSong">
+		<button :disabled="!hasNextSong" class="media-button" @click="onNext">
 			<svg class="seek-next wh-9" viewBox="0 0 24 19">
 				<path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/>
 				<path d="M0 0h24v24H0z" fill="none"/>
@@ -130,20 +130,19 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-button {
+.media-button {
 	@apply w-24 border-none text-4xl text-brand overflow-hidden;
+	&:not([disabled]):hover {
+		& .seek-previous:active {
+			transform: translateX(-12px);
+		}
+		& .seek-next:active {
+			transform: translateX(12px);
+		}
+	}
 }
 
 .seek-previous, .seek-next {
 	transition: 100ms transform;
-}
-
-button:hover:not([disabled]) {
-	& .seek-previous:active {
-		transform: translateX(-12px);
-	}
-	& .seek-next:active {
-		transform: translateX(12px);
-	}
 }
 </style>

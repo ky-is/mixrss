@@ -72,7 +72,7 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-li.selected {
+.selected {
 	@apply bg-white cursor-default;
 }
 </style>

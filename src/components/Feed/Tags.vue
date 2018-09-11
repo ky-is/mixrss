@@ -1,12 +1,12 @@
 <template>
 <ul class="mb-1  flex flex-wrap">
-	<li v-for="tag in tags" :key="tag">
-		<button @click="onTag(tag)" :class="{ selected: selectedTagIds.includes(tag.toLowerCase()) }">{{ tag }}</button>
+	<li v-for="tag in tags" :key="tag" class="tag">
+		<button :class="{ selected: selectedTagIds.includes(tag.toLowerCase()) }" class="tag-button" @click="onTag(tag)">{{ tag }}</button>
 	</li>
-	<li v-show="tags.length">
-		<button @click="onTag('?')" :class="{ selected: selectedTagIds.includes('?') }">？</button>
+	<li v-show="tags.length" class="tag">
+		<button :class="{ selected: selectedTagIds.includes('?') }" class="tag-button" @click="onTag('?')">？</button>
 	</li>
-	<button v-show="selectedTagIds.length" @click="onClearTags">✕</button>
+	<button v-show="selectedTagIds.length" class="tag-button" @click="onClearTags">✕</button>
 </ul>
 </template>
 
@@ -60,11 +60,11 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-li {
+.tag {
 	@apply mr-1 mb-1;
 }
 
-button {
+.tag-button {
 	@apply rounded-full px-2 whitespace-no-wrap h-8 text-base;
 	min-width: 32px;
 }
