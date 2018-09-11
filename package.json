@@ -40,7 +40,10 @@
 		]
 	},
 	"eslintConfig": {
-		"extends": "@ky-is/eslint-config/vue-typescript"
+		"extends": "@ky-is/eslint-config/vue-typescript",
+		"rules": {
+			"vue/attributes-order": "error"
+		}
 	},
 	"browserslist": {
 		"production": [

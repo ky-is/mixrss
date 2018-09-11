@@ -1,6 +1,6 @@
 <template>
 <div class="flex h-full">
-	<div v-if="feedData" class="sidebar-container scroll animate" :class="{ showsSidebar }">
+	<div v-if="feedData" :class="{ showsSidebar }" class="sidebar-container scroll animate">
 		<div class="relative wh-full">
 			<TheSidebar :feedList="feedList" />
 			<div class="absolute bg-grey-light w-px h-full pin-t pin-r" />

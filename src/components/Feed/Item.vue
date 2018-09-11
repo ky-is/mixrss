@@ -1,16 +1,16 @@
 <template>
 <li class="feed-item outer-group animate">
-	<button @click="onPlay" class="borderless wh-16 flex-no-shrink mr-2">
+	<button class="borderless wh-16 flex-no-shrink mr-2" @click="onPlay">
 		<AlbumArt :url="item.image" :align="item._imageAlign" />
 	</button>
 	<div class="song-details flex-grow">
 		<div class="items-baseline mb-px">
-			<form v-if="editTitle" @submit.prevent="onTitleSave" class="flex">
-				<input type="text" v-model.trim="itemTitle" v-focus class="flex-grow mr-1" placeholder="Mix title" autocomplete="off" autocorrect="on">
+			<form v-if="editTitle" class="flex" @submit.prevent="onTitleSave">
+				<input v-focus v-model.trim="itemTitle" type="text" class="flex-grow mr-1" placeholder="Mix title" autocomplete="off" autocorrect="on">
 				<button type="submit" class="button-modify">{{ itemTitle === item.title ? 'Cancel' : 'Save' }}</button>
 			</form>
 			<div v-else>
-				<button @click="onTitleToggle" class="unstyled text-left">{{ item.title }}</button>
+				<button class="unstyled text-left" @click="onTitleToggle">{{ item.title }}</button>
 			</div>
 		</div>
 		<div class="text-sm text-grey-darker inner-hover inner-selected">
@@ -22,21 +22,21 @@
 				<span v-if="item.author"> {{ item.author.name }} ・</span>
 				<span>
 					<template v-if="tags">
-						<button v-for="tag in tags" @click="onTag(tag)" class="button-tag group" :key="tag">
+						<button v-for="tag in tags" :key="tag" class="button-tag group" @click="onTag(tag)">
 							{{ tag }}<span class="px-px leading-none text-xs invisible group-hover:visible">✖︎</span>
 						</button>
 					</template>
-					<button @click="onTagAdd" class="button-modify">+Tag</button>
+					<button class="button-modify" @click="onTagAdd">+Tag</button>
 				</span>
 			</div>
 			<div class="flex">
-				<button v-if="item.content_text" @click="onNoteEdit" class="unstyled truncate">{{ item.content_text }}</button>
-				<button v-else @click="onNoteEdit" class="button-modify">{{ item.content_text ? 'Edit' : '+Note' }}</button>
+				<button v-if="item.content_text" class="unstyled truncate" @click="onNoteEdit">{{ item.content_text }}</button>
+				<button v-else class="button-modify" @click="onNoteEdit">{{ item.content_text ? 'Edit' : '+Note' }}</button>
 			</div>
 		</div>
 	</div>
 	<div class="inner-hover">
-		<button @click="onDelete" class="button-delete unstyled wh-12 font-black text-danger">✕</button>
+		<button class="button-delete unstyled wh-12 font-black text-danger" @click="onDelete">✕</button>
 	</div>
 </li>
 </template>

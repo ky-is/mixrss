@@ -1,7 +1,10 @@
 <template>
-<li v-if="item" @click="onItem" :class="{ selected, 'border-transparent': !selected }" class="outer-group animate relative border-t border-b mb-4 p-2 cursor-pointer hover:bg-brand-lightest  flex items-center">
+<li v-if="item"
+	:class="{ selected, 'border-transparent': !selected }" class="outer-group animate relative border-t border-b mb-4 p-2 cursor-pointer hover:bg-brand-lightest  flex items-center"
+	@click="onItem"
+>
 	<div v-if="selected" class="sm-max:hidden absolute bg-white w-px pin-t pin-r pin-b z-50" />
-	<div class="bg-image wh-8 mr-1 rounded-full" :style="{ 'background-image': `url(${item.icon})` }" />
+	<div :style="{ 'background-image': `url(${item.icon})` }" class="bg-image wh-8 mr-1 rounded-full" />
 	<div>
 		<div v-if="item.title" class="title">{{ item.title }}</div>
 		<div v-else class="title italic">Untitled Mix</div>

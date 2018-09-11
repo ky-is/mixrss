@@ -1,5 +1,5 @@
 <template>
-<youtube :videoId="id" :playerVars="playerVars" ref="youtube" @cued="onCued" @playing="onPaused(false)" @paused="onPaused(true)" @ended="onEnded" width="200" height="200" />
+<youtube ref="youtube" :videoId="id" :playerVars="playerVars" width="200" height="200" @cued="onCued" @playing="onPaused(false)" @paused="onPaused(true)" @ended="onEnded" />
 </template>
 
 <script lang="ts">

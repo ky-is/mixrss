@@ -6,8 +6,8 @@
 		</div>
 		<div class="ml-2 overflow-hidden cursor-default flex-initial">
 			<template v-if="item">
-				<div class="text-sm truncate" :title="songTitle">{{ songTitle }}</div>
-				<div v-if="albumTitle" class="text-xs leading-tight truncate" :title="albumTitle">{{ albumTitle }}</div>
+				<div :title="songTitle" class="text-sm truncate">{{ songTitle }}</div>
+				<div v-if="albumTitle" :title="albumTitle" class="text-xs leading-tight truncate">{{ albumTitle }}</div>
 			</template>
 		</div>
 	</div>

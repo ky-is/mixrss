@@ -1,6 +1,6 @@
 <template>
 <nav class="sm:hidden h-12 bg-grey-lighter border-b  flex items-stretch justify-between">
-	<button @click="onToggleSidebar" class="side-item borderless text-xl">♬</button>
+	<button class="side-item borderless text-xl" @click="onToggleSidebar">♬</button>
 	<div class="m-auto">{{ title }}</div>
 	<div class="side-item"><!--  --></div>
 </nav>

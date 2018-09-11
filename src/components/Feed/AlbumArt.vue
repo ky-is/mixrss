@@ -1,5 +1,8 @@
 <template>
-<div class="item-icon bg-image rounded animate wh-full" :class="{ youtubeAlign }" :style="{ 'background-image': `url(${url})`, 'background-position': align }" />
+<div
+	:style="{ 'background-image': `url(${url})`, 'background-position': align }"
+	:class="{ youtubeAlign }" class="item-icon bg-image rounded animate wh-full"
+/>
 </template>
 
 <script lang="ts">

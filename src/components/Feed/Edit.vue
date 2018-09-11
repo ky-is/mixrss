@@ -1,11 +1,11 @@
 <template>
-<form @submit.prevent="onSubmit" :disabled="loading" class="my-2">
+<form :disabled="loading" class="my-2" @submit.prevent="onSubmit">
 	<div v-if="showEdit">
 		<div class="halves">
-			<input type="text" v-model.trim="feedTitle" v-focus placeholder="Mix title" autocomplete="off" autocorrect="on">
-			<input type="text" v-model.trim="feedAuthor" placeholder="Your name" autocomplete="off" autocorrect="off">
-			<input type="url" v-model.trim="feedIcon" placeholder="Icon URL (optional)" autocomplete="off" autocorrect="off">
-			<input type="url" v-model.trim="feedUrl" placeholder="URL where you'll host this feed." autocomplete="off" autocorrect="off">
+			<input v-focus v-model.trim="feedTitle" type="text" placeholder="Mix title" autocomplete="off" autocorrect="on">
+			<input v-model.trim="feedAuthor" type="text" placeholder="Your name" autocomplete="off" autocorrect="off">
+			<input v-model.trim="feedIcon" type="url" placeholder="Icon URL (optional)" autocomplete="off" autocorrect="off">
+			<input v-model.trim="feedUrl" type="url" placeholder="URL where you'll host this feed." autocomplete="off" autocorrect="off">
 		</div>
 		<div class="line">
 			<button type="submit">Save</button>
@@ -16,13 +16,13 @@
 	<div v-else-if="!showForm" class="line">
 		<button @click.prevent="onToggleForm">Add new entry...</button>
 		<button @click.prevent="onToggleEdit">Edit metadata</button>
-		<button v-if="songs.length" @click.prevent="onExportFeed" class="w-4">
+		<button v-if="songs.length" class="w-4" @click.prevent="onExportFeed">
 			<svg class="wh-4" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
 		</button>
-		<a ref="downloadLink" class="hidden" :download="fileName" />
+		<a ref="downloadLink" :download="fileName" class="hidden" />
 	</div>
 	<div v-else-if="feedData" class="line">
-		<input type="url" v-model.trim="itemUrl" v-focus class="flex-grow-all" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
+		<input v-focus v-model.trim="itemUrl" type="url" class="flex-grow-all" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
 		<button type="submit" class="flex-no-grow">{{ itemUrl ? 'Load' : 'Cancel' }}</button>
 	</div>
 </form>
