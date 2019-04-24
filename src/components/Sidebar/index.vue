@@ -2,7 +2,10 @@
 <div>
 	<ul class="pt-4">
 		<SidebarItem :url="null" :selected="currentUrl === null" />
-		<SidebarItem v-for="url in feedList" :url="url" :selected="currentUrl === url" :key="url" />
+		<SidebarItem
+			v-for="url in feedList" :key="url"
+			:url="url" :selected="currentUrl === url"
+		/>
 	</ul>
 	<button class="unstyled w-full text-brand-light font-bold h-12" @click="onAddFeed">{{ !showsSidebar && addingFeed ? 'Cancel' : 'Add new feed' }}</button>
 </div>

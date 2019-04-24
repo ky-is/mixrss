@@ -6,7 +6,7 @@
 	<div class="song-details flex-grow">
 		<div class="items-baseline mb-px">
 			<form v-if="editTitle" class="flex" @submit.prevent="onTitleSave">
-				<input v-focus v-model.trim="itemTitle" type="text" class="flex-grow mr-1" placeholder="Mix title" autocomplete="off" autocorrect="on">
+				<input v-model.trim="itemTitle" v-focus type="text" class="flex-grow mr-1" placeholder="Mix title" autocomplete="off" autocorrect="on">
 				<button type="submit" class="button-modify">{{ itemTitle === item.title ? 'Cancel' : 'Save' }}</button>
 			</form>
 			<div v-else>

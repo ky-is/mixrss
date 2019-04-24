@@ -1,6 +1,9 @@
 <template>
 <ul>
-	<FeedItem v-for="item in items" :item="item" :class="{ selected: playId === item.id }" :key="item.id" />
+	<FeedItem
+		v-for="item in items" :key="item.id"
+		:item="item" :class="{ selected: playId === item.id }"
+	/>
 </ul>
 </template>
 

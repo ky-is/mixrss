@@ -6,7 +6,7 @@
 	</div>
 	<div v-else>
 		<form class="h-10  flex" @submit.prevent="onEnterFeedUrl">
-			<input v-focus v-model.trim="url" class="flex-grow" type="url" placeholder="https://some.playlist/feed.json" autocomplete="off" autocorrect="off">
+			<input v-model.trim="url" v-focus class="flex-grow" type="url" placeholder="https://some.playlist/feed.json" autocomplete="off" autocorrect="off">
 			<button type="submit" class="w-24 flex-initial">Load</button>
 		</form>
 		<div v-if="!hasLocalFeed" class="text-center">

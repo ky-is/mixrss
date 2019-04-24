@@ -35,7 +35,7 @@ export default {
 	},
 
 	load (id: string, callback: Function) {
-		const youtubeUrl =`https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${YOUTUBE_API}&part=snippet,contentDetails,status`
+		const youtubeUrl = `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${YOUTUBE_API}&part=snippet,contentDetails,status`
 		fetchJsonp(youtubeUrl).then((response: any) => response.json())
 			.then((data: any) => {
 				data = data.items[0]

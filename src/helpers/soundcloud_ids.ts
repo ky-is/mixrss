@@ -1,11 +1,5 @@
 import random from '@/helpers/random'
 
-export default {
-	next (): string {
-		return random.item(ids)
-	},
-}
-
 const ids = [
 	'032773f164c34b4485bbb2092307cdfb',
 	'0f7c969c815f51078c1de513f666ecdb',
@@ -117,3 +111,9 @@ const ids = [
 	'ZK1PFak9B2aJ1OTFowuzncoHAJvPoUsQ',
 	'ZsXqrJ5fvCT0kw8AbbJARqxuRVYqAVEX',
 ]
+
+export default {
+	next (): string {
+		return random.item(ids)
+	},
+}

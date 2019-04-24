@@ -32,5 +32,5 @@ if (queryString) {
 			store.dispatch('QUEUE_PLAY_URL', play)
 		})
 	}
-	window.history.replaceState(null, undefined, window.location.pathname)
+	window.history.replaceState(null, '', window.location.pathname)
 }
