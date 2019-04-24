@@ -1,6 +1,6 @@
 # mixrss
 
-Create, remix, and play [JSON Feed](https://jsonfeed.org) RSS playlists. It's a collaborative way to share and discover music. Try out a sample playlist: **https://mixrss.suzu.online?feeds=https://ky.is/music/sample.feed.json**
+Create, remix, and play [JSON Feed](https://jsonfeed.org) RSS playlists. It's a collaborative way to share and discover music. Try out a sample playlist: **https://mixrss.netlify.com?feeds=https://ky.is/music/sample.feed.json**
 
 ## Supported providers
 
@@ -14,8 +14,8 @@ mixrss is decentralized. It allows you to build a playlist feed, host it yoursel
 
 ### Query parameters
 
-- feeds: A comma-separated list of URLs pointing to JSON Feeds.
-- play: The `id` (same as its url by default) of the song to autoplay on page load. (Requires a feed to be specified in the `feeds` parameter.)
+- `feeds`: A comma-separated list of URLs pointing to JSON Feeds.
+- `play`: The `id` of the song (same as its url by default) to autoplay on page load. This requires a feed to be specified in the `feeds` parameter.
 
 Use these parameters to link directly to feeds you want to share!
 
@@ -25,18 +25,14 @@ mixrss generates standard JSON Feed files, compatible with all modern RSS client
 
 ### Custom Fields
 
-In addition to the JSON Feed spec, mixrss adds some custom fields for each object in the `items` array, with the standard _ prefix:
-- _duration: (HH:)mm:ss time string of the song duration.
-- _imageAlign: Describes the CSS `background-position` that should be applied to the `image` url, to focus the album art in a non-square image (such as a widescreen YouTube video). The custom value `"youtube"` instead applies a custom class for YouTube's auto-generated song videos which have an off-center, zoomed out album cover image.
+In addition to the JSON Feed spec, mixrss adds some custom fields for each object in the `items` array, with the standard `_` prefix:
+- `_duration`: (HH:)mm:ss time string of the song duration.
+- `_imageAlign`: Describes the CSS `background-position` that should be applied to the `image` url, to focus the album art in a non-square image (such as a widescreen YouTube video). The custom value `"youtube"` instead applies a custom class for YouTube's auto-generated song videos which have an off-center, zoomed out album cover image.
 
 ## Development
 
 ```bash
 cd mixrss
 npm install
-```
-
-```bash
-npm run serve # Dev hot reload
-npm run build # Production build
+npm run serve
 ```

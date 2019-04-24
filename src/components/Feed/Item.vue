@@ -79,7 +79,7 @@ export default Vue.extend({
 		},
 
 		tags (): string[] | null {
-			// return [ 'Post-Rock' ]
+			// return [ 'Post-Rock' ] //SAMPLE
 			const tags = this.item.tags
 			return tags && tags.length ? tags : null
 		},

@@ -34,7 +34,8 @@
 			[
 				"@vue/app",
 				{
-					"jsx": false
+					"jsx": false,
+					"loose": true
 				}
 			]
 		]
