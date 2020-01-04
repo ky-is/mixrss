@@ -1,7 +1,7 @@
 <template>
-<div class="bg-grey-lighter border-t  flex justify-center">
+<div class="bg-gray-300 border-t  flex justify-center">
 	<div class="w-64 ml-2 min-w-0  flex items-center">
-		<div class="wh-12 flex-no-shrink">
+		<div class="wh-12 flex-shrink-0">
 			<AlbumArt v-if="item" :url="item.image" :align="item._imageAlign" size="full" />
 		</div>
 		<div class="ml-2 overflow-hidden cursor-default flex-initial">
@@ -13,7 +13,7 @@
 	</div>
 	<div class="w-64  flex items-stretch">
 		<button :disabled="!hasPreviousSong" class="media-button" @click="onPrevious">
-			<svg class="seek-previous wh-9" viewBox="0 0 24 19">
+			<svg class="seek-previous" viewBox="0 0 24 24">
 				<path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z" />
 				<path d="M0 0h24v24H0z" fill="none" />
 			</svg>
@@ -25,7 +25,7 @@
 			</svg>
 		</button>
 		<button :disabled="!hasNextSong" class="media-button" @click="onNext">
-			<svg class="seek-next wh-9" viewBox="0 0 24 19">
+			<svg class="seek-next" viewBox="0 0 24 24">
 				<path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" />
 				<path d="M0 0h24v24H0z" fill="none" />
 			</svg>
@@ -131,7 +131,10 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .media-button {
-	@apply w-24 border-none text-4xl text-brand overflow-hidden;
+	@apply w-24 border-none text-brand-500 overflow-hidden;
+	& svg {
+		@apply mx-auto;
+	}
 	&:not([disabled]):hover {
 		& .seek-previous:active {
 			transform: translateX(-12px);
@@ -143,6 +146,7 @@ export default Vue.extend({
 }
 
 .seek-previous, .seek-next {
+	@apply wh-10;
 	transition: 100ms transform;
 }
 </style>

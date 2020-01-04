@@ -8,22 +8,22 @@
 			<input v-model.trim="feedUrl" type="url" placeholder="URL where you'll host this feed." autocomplete="off" autocorrect="off">
 		</div>
 		<div class="line">
-			<button type="submit">Save</button>
-			<button @click.prevent="onToggleEdit">Cancel</button>
-			<button @click.prevent="onDelete">Delete</button>
+			<button type="submit" class="flex-grow">Save</button>
+			<button class="flex-grow" @click.prevent="onToggleEdit">Cancel</button>
+			<button class="text-danger-500" @click.prevent="onDelete">Delete...</button>
 		</div>
 	</div>
 	<div v-else-if="!showForm" class="line">
-		<button @click.prevent="onToggleForm">Add new entry...</button>
-		<button @click.prevent="onToggleEdit">Edit metadata</button>
-		<button v-if="songs.length" class="w-4" @click.prevent="onExportFeed">
-			<svg class="wh-4" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
+		<button class="flex-grow" @click.prevent="onToggleForm">Add new entry</button>
+		<button class="flex-grow" @click.prevent="onToggleEdit">Edit metadata</button>
+		<button v-if="songs.length" @click.prevent="onExportFeed">
+			<svg class="wh-4 mx-auto" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
 		</button>
 		<a ref="downloadLink" :download="fileName" class="hidden" />
 	</div>
 	<div v-else-if="feedData" class="line">
 		<input v-model.trim="itemUrl" v-focus type="url" class="flex-grow-all" placeholder="YouTube/SoundCloud URL" autocomplete="off" autocorrect="off">
-		<button type="submit" class="flex-no-grow">{{ itemUrl ? 'Load' : 'Cancel' }}</button>
+		<button type="submit" class="flex-grow-0">{{ itemUrl ? 'Load' : 'Cancel' }}</button>
 	</div>
 </form>
 </template>
@@ -221,8 +221,5 @@ input, button {
 
 .line {
 	@apply flex;
-	& input, & button {
-		@apply flex-grow;
-	}
 }
 </style>

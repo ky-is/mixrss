@@ -1,5 +1,5 @@
 <template>
-<nav class="sm:hidden h-12 bg-grey-lighter border-b  flex items-stretch justify-between">
+<nav class="sm:hidden h-12 bg-gray-300 border-b  flex items-stretch justify-between">
 	<button class="side-item borderless text-xl" @click="onToggleSidebar">♬</button>
 	<div class="m-auto">{{ title }}</div>
 	<div class="side-item"><!--  --></div>
@@ -12,7 +12,6 @@ import Vue from 'vue'
 import store from '@/store'
 
 import { JSONFeed } from '@/types/jsonfeed'
-import { FeedState } from '@/types/store'
 
 export default Vue.extend({
 	computed: {

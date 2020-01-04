@@ -1,6 +1,6 @@
 <template>
 <li class="feed-item outer-group animate">
-	<button class="borderless wh-16 flex-no-shrink mr-2" @click="onPlay">
+	<button class="borderless wh-16 flex-shrink-0 mr-2" @click="onPlay">
 		<AlbumArt :url="item.image" :align="item._imageAlign" />
 	</button>
 	<div class="song-details flex-grow">
@@ -13,7 +13,7 @@
 				<button class="unstyled text-left" @click="onTitleToggle">{{ item.title }}</button>
 			</div>
 		</div>
-		<div class="text-sm text-grey-darker inner-hover inner-selected">
+		<div class="text-sm text-gray-700 inner-hover inner-selected">
 			<div>
 				<span>{{ item._duration || item.summary }}</span>
 				<span> ・ </span>
@@ -36,7 +36,7 @@
 		</div>
 	</div>
 	<div class="inner-hover">
-		<button class="button-delete unstyled wh-12 font-black text-danger" @click="onDelete">✕</button>
+		<button class="button-delete unstyled wh-12 font-black text-danger-500" @click="onDelete">✕</button>
 	</div>
 </li>
 </template>
@@ -134,13 +134,13 @@ export default Vue.extend({
 .feed-item {
 	@apply p-2 rounded-sm  flex items-center;
 	&:not(.selected):hover {
-		@apply bg-grey-lightest;
+		@apply bg-gray-200;
 		&:active {
-			@apply bg-grey-light;
+			@apply bg-gray-400;
 		}
 	}
 	&.selected {
-		@apply bg-brand-lightest;
+		@apply bg-brand-200;
 	}
 }
 
@@ -160,6 +160,6 @@ export default Vue.extend({
 }
 
 .button-modify, .button-tag:hover {
-	@apply border-grey-dark;
+	@apply border-gray-600;
 }
 </style>

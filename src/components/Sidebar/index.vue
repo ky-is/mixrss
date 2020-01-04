@@ -7,7 +7,7 @@
 			:url="url" :selected="currentUrl === url"
 		/>
 	</ul>
-	<button class="unstyled w-full text-brand-light font-bold h-12" @click="onAddFeed">{{ !showsSidebar && addingFeed ? 'Cancel' : 'Add new feed' }}</button>
+	<button class="unstyled w-full text-brand-400 font-bold h-12" @click="onAddFeed">{{ !showsSidebar && addingFeed ? 'Cancel' : 'Add new feed' }}</button>
 </div>
 </template>
 

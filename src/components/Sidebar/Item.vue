@@ -1,15 +1,15 @@
 <template>
 <li v-if="item"
-	:class="{ selected, 'border-transparent': !selected }" class="outer-group animate relative border-t border-b mb-4 p-2 cursor-pointer hover:bg-brand-lightest  flex items-center"
+	:class="{ selected, 'border-transparent': !selected }" class="outer-group animate relative border-t border-b mb-4 p-2 cursor-pointer hover:bg-brand-100  flex items-center"
 	@click="onItem"
 >
-	<div v-if="selected" class="sm-max:hidden absolute bg-white w-px pin-t pin-r pin-b z-50" />
+	<div v-if="selected" class="sm-max:hidden absolute bg-white w-px top-0 right-0 bottom-0 z-50" />
 	<div :style="{ 'background-image': `url(${item.icon})` }" class="bg-image wh-8 mr-1 rounded-full" />
 	<div>
 		<div v-if="item.title" class="title">{{ item.title }}</div>
 		<div v-else class="title italic">Untitled Mix</div>
-		<div class="text-grey-darker text-sm">{{ item.items ? item.items.length : 0 }} songs ・ {{ item.author.name || 'Unknown' }}</div>
-		<a :href="selected ? url : null" target="_blank" class="text-grey-darker text-xs inner-hover inner-selected" rel="noopener">{{ shortUrl }}</a>
+		<div class="text-gray-700 text-sm">{{ item.items ? item.items.length : 0 }} songs ・ {{ item.author.name || 'Unknown' }}</div>
+		<a :href="selected ? url : null" target="_blank" class="text-gray-700 text-xs inner-hover inner-selected" rel="noopener">{{ shortUrl }}</a>
 	</div>
 </li>
 </template>

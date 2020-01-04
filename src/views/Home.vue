@@ -3,7 +3,7 @@
 	<div v-if="feedData" :class="{ showsSidebar }" class="sidebar-container scroll animate">
 		<div class="relative wh-full">
 			<TheSidebar :feedList="feedList" />
-			<div class="absolute bg-grey-light w-px h-full pin-t pin-r" />
+			<div class="absolute bg-gray-400 w-px h-full top-0 right-0" />
 		</div>
 	</div>
 	<div class="scroll w-full">
@@ -65,12 +65,12 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .sidebar-container {
-	@apply bg-grey-lightest;
+	@apply bg-gray-200;
 	width: 288px;
 	left: -288px;
 	transition-property: left;
 	&.showsSidebar {
-		@apply pin-l;
+		@apply left-0;
 	}
 	@media (width < 576px) {
 		@apply absolute z-20;

@@ -37,20 +37,16 @@ html, body, #app {
 	@apply wh-full;
 }
 
-ul {
-	@apply list-reset;
-}
-
 /* Links */
 
 a {
 	@apply no-underline;
 	&[href] {
-		@apply text-brand-dark;
+		@apply text-brand-600;
 		&:hover {
-			@apply text-brand-darker;
+			@apply text-brand-800;
 			&:active {
-				@apply text-brand-darkest;
+				@apply text-brand-900;
 			}
 		}
 	}
@@ -59,17 +55,17 @@ a {
 /* Theme colors */
 
 ::selection {
-	@apply bg-brand-lighter;
+	@apply bg-brand-300;
 }
 
 .backed, button.selected {
-	@apply bg-brand-light;
+	@apply bg-brand-400;
 }
 
 /* Form */
 
 button, input {
-	@apply border border-grey-light;
+	@apply border border-gray-400;
 	outline: none !important;
 	color: inherit;
 }

@@ -1,5 +1,5 @@
 <template>
-<div id="play-manager" class="absolute pin-t">
+<div id="play-manager" class="absolute top-0">
 	<SoundCloudManager :id="soundcloudId" :paused="paused" @playing="onPlaying" @ended="onEnded" />
 	<YouTubeManager :id="youtubeId" :paused="paused" @playing="onPlaying" @ended="onEnded" />
 </div>
