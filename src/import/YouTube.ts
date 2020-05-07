@@ -1,7 +1,7 @@
 import fetchJsonp from 'fetch-jsonp'
 import Vue from 'vue'
 
-const YOUTUBE_API = 'AIzaSyCWalFG38MaNJ_aQdHmEG5aVurjfWlzOj4'
+const YOUTUBE_API = 'AIzaSyCAVtfaI8ZPeexeYgAKNuMZNnROqrPw6to'
 
 const TITLE_STRIP = [ 'official', 'official video', 'audio' ].map(t => `(\\[|\\()${t}(\\]|\\))`).join('|')
 const TITLE_REGEX = new RegExp(TITLE_STRIP, 'ig')
@@ -38,8 +38,8 @@ export default {
 		const youtubeUrl = `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${YOUTUBE_API}&part=snippet,contentDetails,status`
 		fetchJsonp(youtubeUrl).then((response: any) => response.json())
 			.then((data: any) => {
-				data = data.items[0]
 				// console.log(data) //SAMPLE
+				data = data.items[0]
 				if (!data || data.status.embeddable === false) {
 					return window.alert(`Sorry, this video is not allowed to be played externally. Please use another version, or try finding a version on SoundCloud.`)
 				}

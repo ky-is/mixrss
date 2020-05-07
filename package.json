@@ -72,9 +72,5 @@
 	},
 	"license": "ISC",
 	"repository": "https://github.com/ky-is/mixrss",
-	"engines": {
-		"node": "^10.0.0",
-		"npm": "^6.0.0"
-	},
 	"description": "Collaborative playlists built on RSS."
 }
