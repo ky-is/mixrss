@@ -1,8 +1,6 @@
 import fetchJsonp from 'fetch-jsonp'
 import Vue from 'vue'
 
-const YOUTUBE_API = 'AIzaSyCAVtfaI8ZPeexeYgAKNuMZNnROqrPw6to'
-
 const TITLE_STRIP = [ 'official', 'official video', 'audio' ].map(t => `(\\[|\\()${t}(\\]|\\))`).join('|')
 const TITLE_REGEX = new RegExp(TITLE_STRIP, 'ig')
 const DURATION_REGEX = /PT(\d+H)?(\d+M)?(\d+S)?/
@@ -35,10 +33,16 @@ export default {
 	},
 
 	load (id: string, callback: Function) {
-		const youtubeUrl = `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${YOUTUBE_API}&part=snippet,contentDetails,status`
-		fetchJsonp(youtubeUrl).then((response: any) => response.json())
+		const youtubeUrl = `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${process.env.VUE_APP_YOUTUBE_API}&part=snippet,contentDetails,status`
+		fetchJsonp(youtubeUrl)
+			.then((response: any) => response.json())
 			.then((data: any) => {
-				// console.log(data) //SAMPLE
+				if (data.error) {
+					console.log(data.error)
+					callback()
+					window.alert('YouTube denied the API metadata request. Please try again with another provider.')
+					return
+				}
 				data = data.items[0]
 				if (!data || data.status.embeddable === false) {
 					return window.alert(`Sorry, this video is not allowed to be played externally. Please use another version, or try finding a version on SoundCloud.`)
@@ -74,7 +78,7 @@ export default {
 			.catch((error: any) => {
 				callback()
 				console.error(error)
-				window.alert('Unable to load from SoundCloud. Please check your URL and try again.')
+				window.alert('Unable to connect to YouTube. Please check your URL and try again.')
 			})
 	},
 

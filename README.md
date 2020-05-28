@@ -31,6 +31,8 @@ In addition to the JSON Feed spec, mixrss adds some custom fields for each objec
 
 ## Development
 
+Set `VUE_APP_YOUTUBE_API` to your YouTube Data API v3 key from https://console.developers.google.com/apis/credentials. For local development, place it in an `.env` file at the project root.
+
 ```bash
 cd mixrss
 npm install
