@@ -15,6 +15,8 @@
 		</div>
 		<div class="text-sm text-gray-700 inner-hover inner-selected">
 			<div>
+				<a :href="item.external_url" class="inline-block" target="_blank">{{ sourceLabel }} <span class="inline-block" style="transform:rotate(90deg)">⇱</span></a>
+				<span> ・ </span>
 				<span>{{ item._duration || item.summary }}</span>
 				<span> ・ </span>
 				<time :datetime="date">{{ date.toLocaleDateString() }}</time>
@@ -82,6 +84,18 @@ export default Vue.extend({
 			// return [ 'Post-Rock' ] //SAMPLE
 			const tags = this.item.tags
 			return tags && tags.length ? tags : null
+		},
+
+		sourceLabel (): string {
+			const url = this.item.external_url
+			console.log(url)
+			if (url?.includes('youtube')) {
+				return 'YT'
+			}
+			if (url?.includes('soundcloud')) {
+				return 'SC'
+			}
+			return ''
 		},
 	},
 
