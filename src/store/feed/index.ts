@@ -14,7 +14,7 @@ import { FeedState, RootState } from '@/types/store'
 
 //LOCAL
 
-const jsonpUrls = [ 'http://jsonpwrapper.com/?urls%5B%5D', 'https://json2jsonp.com/?url' ]
+const jsonpUrls = [ 'https://jsonp.afeld.me/?url' ]
 let jsonpUrl = jsonpUrls.pop()
 
 const currentFeed: string | null = storage.get('CURRENT_FEED_URL')
